@@ -1,6 +1,6 @@
-<Introduce aquí tu DNI o NIE sin la letra final, si es un NIE con la letra inicial en mayúsculas>
+48563029
 
 # Prácticas de Programación 3: Juego de la vida de Conway
-**Alumno/a:** <Introduce aquí tu nombre y apellidos>
+**Alumno/a:** Alfonso Aracil Andrés
 
-**Grupo de prácticas:** <Introduce aquí tu grupo de prácticas>
+**Grupo de prácticas:** 06 (jueves 17:00-19:00)
