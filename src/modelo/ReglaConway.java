@@ -1,5 +1,5 @@
 /**
- * Esta clase especifica un tablero de juego...
+ * Esta clase no parece tener ninguna utilidad por el momento...
  * 
  * @author Alfonso Aracil Andres. 48563029
  */
@@ -10,11 +10,25 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * The Class ReglaConway.
+ */
 public class ReglaConway
 {
+	
+	/**
+	 * Instantiates a new regla conway.
+	 */
 	public ReglaConway()
 	{}
 
+	/**
+	 * Calcula siguiente estado celda.
+	 *
+	 * @param tablero the tablero
+	 * @param posicion the posicion
+	 * @return the estado celda
+	 */
 	public EstadoCelda calculaSiguienteEstadoCelda(Tablero tablero, Coordenada posicion)
 	{
 		int cuenta = 0;

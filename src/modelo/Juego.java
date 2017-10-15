@@ -1,5 +1,5 @@
 /**
- * Esta clase especifica un tablero de juego...
+ * Esta clase especifica una partida...
  * 
  * @author Alfonso Aracil Andres. 48563029
  */
@@ -16,20 +16,39 @@ import java.util.Map;
 import modelo.Tablero;
 import modelo.ReglaConway;
 
+/**
+ * The Class Juego.
+ */
 public class Juego
 {
+	
+	/** The tablero. */
 	private Tablero tablero;
 
+	/** The regla conway. */
 	private ReglaConway reglaConway;
 
+	/** The patrones usados. */
 	private ArrayList<Patron> patronesUsados;
 
+	/**
+	 * Instantiates a new juego.
+	 *
+	 * @param tablero the tablero
+	 * @param reglaconway the reglaconway
+	 */
 	public Juego (Tablero tablero, ReglaConway reglaconway)
 	{
 		this.tablero = tablero;
 		reglaConway = reglaconway;
 	}
 
+	/**
+	 * Carga patron.
+	 *
+	 * @param p the p
+	 * @param posicionInicial the posicion inicial
+	 */
 	public void cargaPatron(Patron p, Coordenada posicionInicial)
 	{
 		if(tablero.cargaPatron(p, posicionInicial))
@@ -42,6 +61,9 @@ public class Juego
 		}
 	}
 
+	/**
+	 * Actualiza.
+	 */
 	public void actualiza()
 	{
 		Collection<Coordenada> cds = sortColeccion(tablero.getPosiciones());
@@ -54,16 +76,32 @@ public class Juego
 		}
 	}
 
+	/**
+	 * Gets the tablero.
+	 *
+	 * @return the tablero
+	 */
 	public Tablero getTablero()
 	{
 		return tablero;
 	}
 
+	/**
+	 * Gets the patrones.
+	 *
+	 * @return the patrones
+	 */
 	public ArrayList<Patron> getPatrones()
 	{
 		return patronesUsados;
 	}
 
+	/**
+	 * Sort coleccion.
+	 *
+	 * @param poss the poss
+	 * @return the collection
+	 */
 	private Collection<Coordenada> sortColeccion(Collection<Coordenada> poss)
 	{// las primeras 5 lineas son una tonteria mia para poder inicializar una coleccion vacia...
 		List<Coordenada> NOSEINICIALIZARCOLECCIONES = new ArrayList<Coordenada>(Arrays.asList(new Coordenada(0, 0)));

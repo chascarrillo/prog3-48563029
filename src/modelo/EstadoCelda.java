@@ -6,7 +6,14 @@
 
 package modelo;
 
+/**
+ * The Enum EstadoCelda.
+ */
 public enum EstadoCelda
 {
-	MUERTA, VIVA
+	
+	/** The muerta. */
+	MUERTA, 
+ /** The viva. */
+ VIVA
 }

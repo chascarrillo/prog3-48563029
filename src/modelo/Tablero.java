@@ -18,10 +18,20 @@ import modelo.Coordenada;
 import modelo.EstadoCelda;
 import modelo.Patron;
 
+/**
+ * The Class Tablero.
+ */
 public class Tablero
 {
+	
+	/** The celdas. */
 	private HashMap<Coordenada,EstadoCelda> celdas;
 
+	/**
+	 * Instantiates a new tablero.
+	 *
+	 * @param dimensiones the dimensiones
+	 */
 	public Tablero(Coordenada dimensiones)
 	{
 		if(dimensiones.getX() >= 0)
@@ -72,17 +82,44 @@ public class Tablero
 		}
 	}
 
+	/**
+	 * Gets the dimensiones.
+	 *
+	 * @return the dimensiones
+	 */
+	public Coordenada getDimensiones()
+	{
+		return new Coordenada(anchuraColeccion(sortColeccion(getPosiciones())), alturaColeccion(sortColeccion(getPosiciones())));
+	}
+
+	/**
+	 * Gets the posiciones.
+	 *
+	 * @return coleccion de coordenadas
+	 */
 	public Collection<Coordenada> getPosiciones()
 	{
 		return (Collection<Coordenada>)celdas.keySet();
 	}
 
+	/**
+	 * Obtiene el estado de la celda
+	 *
+	 * @param posicion the posicion
+	 * @return celda viva/muerta
+	 */
 	public EstadoCelda getCelda(Coordenada posicion)
 	{
 		muestraErrorPosicionInvalida(posicion);
 		return celdas.get(posicion);
 	}
 
+	/**
+	 * Sets the celda.
+	 *
+	 * @param posicion the posicion
+	 * @param e el estado
+	 */
 	public void setCelda(Coordenada posicion, EstadoCelda e)
 	{
 		int xmin = Integer.MAX_VALUE, xmax = Integer.MIN_VALUE, ymin = Integer.MAX_VALUE, ymax = Integer.MIN_VALUE;
@@ -117,49 +154,55 @@ public class Tablero
 		}
 	}
 
+	/**
+	 * Gets the posiciones vecinas CCW.
+	 *
+	 * @param posicion the posicion
+	 * @return las coordenadas circundantes
+	 */
 	public ArrayList<Coordenada> getPosicionesVecinasCCW(Coordenada posicion)
 	{
 		ArrayList<Coordenada> cds = null;
-		if(celdas.containsKey(posicion))
+		if(contiene(posicion))
 		{
 			cds = new ArrayList<Coordenada>();
 			Coordenada aux = new Coordenada(posicion.getX()-1, posicion.getY()-1);
-			if(celdas.containsKey(aux))
+			if(contiene(aux))
 			{
 				cds.add(aux);
 			}
 			aux = new Coordenada(posicion.getX()-1, posicion.getY());
-			if(celdas.containsKey(aux))
+			if(contiene(aux))
 			{
 				cds.add(aux);
 			}
 			aux = new Coordenada(posicion.getX()-1, posicion.getY()+1);
-			if(celdas.containsKey(aux))
+			if(contiene(aux))
 			{
 				cds.add(aux);
 			}
 			aux = new Coordenada(posicion.getX(), posicion.getY()+1);
-			if(celdas.containsKey(aux))
+			if(contiene(aux))
 			{
 				cds.add(aux);
 			}
 			aux = new Coordenada(posicion.getX()+1, posicion.getY()+1);
-			if(celdas.containsKey(aux))
+			if(contiene(aux))
 			{
 				cds.add(aux);
 			}
 			aux = new Coordenada(posicion.getX()+1, posicion.getY());
-			if(celdas.containsKey(aux))
+			if(contiene(aux))
 			{
 				cds.add(aux);
 			}
 			aux = new Coordenada(posicion.getX()+1, posicion.getY()-1);
-			if(celdas.containsKey(aux))
+			if(contiene(aux))
 			{
 				cds.add(aux);
 			}
 			aux = new Coordenada(posicion.getX(), posicion.getY()-1);
-			if(celdas.containsKey(aux))
+			if(contiene(aux))
 			{
 				cds.add(aux);
 			}
@@ -167,14 +210,26 @@ public class Tablero
 		return cds;
 	}
 
+	/**
+	 * Muestra error posicion invalida.
+	 *
+	 * @param c la coordenada
+	 */
 	private void muestraErrorPosicionInvalida(Coordenada c)
 	{
-		if(!celdas.containsKey(c))
+		if(!contiene(c))
 		{
 			System.err.println("Error: La celda " + c + " no existe");
 		}
 	}
 
+	/**
+	 * Carga patron.
+	 *
+	 * @param patron the patron
+	 * @param coordenadaInicial the coordenada inicial
+	 * @return true, if successful
+	 */
 	public boolean cargaPatron(Patron patron, Coordenada coordenadaInicial)
 	{
 		Coordenada caux = null;
@@ -205,6 +260,12 @@ public class Tablero
 		return control;
 	}
 
+	/**
+	 * Contiene.
+	 *
+	 * @param posicion la posicion
+	 * @return true, if successful
+	 */
 	public boolean contiene(Coordenada posicion)
 	{
 		if (getPosiciones().contains(posicion))
@@ -214,6 +275,11 @@ public class Tablero
 		else return false;
 	}
 
+	/**
+	 * to String
+	 *
+	 * @return string con un cierto formato
+	 */
 	@Override
 	public String toString()
 	{
@@ -267,6 +333,12 @@ public class Tablero
 		return salida;
 	}
 
+	/**
+	 * Anchura coleccion.
+	 *
+	 * @param c la coleccion
+	 * @return la anchura de la coleccion
+	 */
 	private int anchuraColeccion(Collection<Coordenada> c)
 	{
 		if (c.isEmpty())
@@ -296,6 +368,12 @@ public class Tablero
 		return devuelto;
 	}
 
+	/**
+	 * Altura coleccion.
+	 *
+	 * @param c la coleccion
+	 * @return la altura de la coleccion
+	 */
 	private int alturaColeccion(Collection<Coordenada> c)
 	{
 		if (c.isEmpty())
@@ -324,6 +402,13 @@ public class Tablero
 		return devuelto;
 	}
 
+	/**
+	 * Recortar coleccion hasta que la coordenada sea la nueva esquina superior izquierda
+	 *
+	 * @param col la coleccion
+	 * @param c la coordenada
+	 * @return la coleccion recortada
+	 */
 	private Collection<Coordenada> recortarColeccion(Collection<Coordenada> col, Coordenada c)
 	{// las primeras 5 lineas son una tonteria mia para poder inicializar una coleccion vacia...
 		List<Coordenada> NOSEINICIALIZARCOLECCIONES = new ArrayList<Coordenada>(Arrays.asList(new Coordenada(0, 0)));
@@ -362,6 +447,12 @@ public class Tablero
 		return devuelto;
 	}
 
+	/**
+	 * Sort coleccion.
+	 *
+	 * @param poss las posiciones
+	 * @return la coleccion ordenada de izquierda a derecha y arriba a abajo
+	 */
 	private Collection<Coordenada> sortColeccion(Collection<Coordenada> poss)
 	{
 		List<Coordenada> NOSEINICIALIZARCOLECCIONES = new ArrayList<Coordenada>(Arrays.asList(new Coordenada(0, 0)));
@@ -411,10 +502,5 @@ public class Tablero
 		}
 
 		return collreturn;
-	}
-
-	public Coordenada getDimensiones()
-	{
-		return new Coordenada(anchuraColeccion(sortColeccion(getPosiciones())), alturaColeccion(sortColeccion(getPosiciones())));
 	}
 }
