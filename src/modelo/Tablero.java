@@ -7,10 +7,12 @@
 package modelo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import modelo.Coordenada;
 import modelo.EstadoCelda;
@@ -203,9 +205,73 @@ public class Tablero
 		return control;
 	}
 
+	public boolean contiene(Coordenada posicion)
+	{
+		if (getPosiciones().contains(posicion))
+		{
+			return true;
+		}
+		else return false;
+	}
+
+	@Override
+	public String toString()
+	{
+		String salida = "+";
+		int anchura = anchuraColeccion(getPosiciones());
+
+		for (int abc = 0; abc < anchura; abc++)
+		{
+			salida += "-";
+		}
+		salida += "+\n|";
+
+		Collection<Coordenada> cds = sortColeccion(getPosiciones());
+		Iterator<Coordenada> iterator = cds.iterator();
+		Coordenada cauxa = (Coordenada)((Map.Entry) iterator.next()).getKey(), cauxn = null;
+
+		
+		while(iterator.hasNext())
+		{
+			cauxn = (Coordenada)((Map.Entry) iterator.next()).getKey();
+
+			if(cauxa.getY() == cauxn.getY())
+			{
+				if(getCelda(cauxa) == EstadoCelda.MUERTA)
+					salida += " ";
+				else salida += "*";
+				cauxa = cauxn;
+			}
+			else if (iterator.hasNext())
+			{
+				if(getCelda(cauxa) == EstadoCelda.MUERTA)
+					salida += " |\n|";
+				else salida += "*|\n|";
+				cauxa = cauxn;
+			}
+			else
+			{
+				if(getCelda(cauxa) == EstadoCelda.MUERTA)
+					salida += " |\n";
+				else salida += "*|\n+";
+				cauxa = cauxn;
+				cauxn = null;
+			}
+		}
+
+		for (int abc = 0; abc < anchura; abc++)
+		{
+			salida += "-";
+		}
+		salida += "+";
+		return salida;
+	}
+
 	private int anchuraColeccion(Collection<Coordenada> c)
 	{
-		int xmin = Integer.MAX_VALUE, xmax = Integer.MIN_VALUE, ymin = Integer.MAX_VALUE, ymax = Integer.MIN_VALUE;
+		if (c.isEmpty())
+			return 0;
+		int xmin = Integer.MAX_VALUE, xmax = Integer.MIN_VALUE;
 		int devuelto = 1;
 		Iterator<Coordenada> iterator = c.iterator();
 		while(iterator.hasNext())
@@ -232,6 +298,8 @@ public class Tablero
 
 	private int alturaColeccion(Collection<Coordenada> c)
 	{
+		if (c.isEmpty())
+			return 0;
 		int ymin = Integer.MAX_VALUE, ymax = Integer.MIN_VALUE, devuelto = 1;
 		Iterator<Coordenada> iterator = c.iterator();
 		while(iterator.hasNext())
@@ -246,6 +314,7 @@ public class Tablero
 				ymax = caux.getY();
 			}
 		}
+		// hago esto y no xmax - xmin + 1 para poder trabajar con xmax positivo y xmin negativo sin problemas
 		while(ymin < ymax)
 		{
 			ymin++;
@@ -256,8 +325,14 @@ public class Tablero
 	}
 
 	private Collection<Coordenada> recortarColeccion(Collection<Coordenada> col, Coordenada c)
-	{
-		Collection<Coordenada> devuelto = null;
+	{// las primeras 5 lineas son una tonteria mia para poder inicializar una coleccion vacia...
+		List<Coordenada> NOSEINICIALIZARCOLECCIONES = new ArrayList<Coordenada>(Arrays.asList(new Coordenada(0, 0)));
+		Iterator<Coordenada> SIGOSINSABERINICIALIZARCOLECCIONES = NOSEINICIALIZARCOLECCIONES.iterator();
+		while (SIGOSINSABERINICIALIZARCOLECCIONES.hasNext())
+		{
+			SIGOSINSABERINICIALIZARCOLECCIONES.remove();
+		}
+		Collection<Coordenada> devuelto = (Collection<Coordenada>) NOSEINICIALIZARCOLECCIONES;
 		if(col.contains(c))
 		{
 			Coordenada caux = null;
@@ -273,13 +348,30 @@ public class Tablero
 				}
 				else iterator.remove();
 			}
+
+			Coordenada caux2 = null;
+			while (iterator.hasNext())
+			{
+				caux2 = (Coordenada)((Map.Entry) iterator.next()).getKey();
+				if (caux2.getX() < caux.getX())
+				{
+					iterator.remove();
+				}
+			}
 		}
 		return devuelto;
 	}
 
 	private Collection<Coordenada> sortColeccion(Collection<Coordenada> poss)
 	{
-		Collection<Coordenada> collreturn = null, arg = null;
+		List<Coordenada> NOSEINICIALIZARCOLECCIONES = new ArrayList<Coordenada>(Arrays.asList(new Coordenada(0, 0)));
+		Iterator<Coordenada> SIGOSINSABERINICIALIZARCOLECCIONES = NOSEINICIALIZARCOLECCIONES.iterator();
+		while (SIGOSINSABERINICIALIZARCOLECCIONES.hasNext())
+		{
+			SIGOSINSABERINICIALIZARCOLECCIONES.remove();
+		}
+
+		Collection<Coordenada> collreturn = (Collection<Coordenada>) NOSEINICIALIZARCOLECCIONES, arg = (Collection<Coordenada>) NOSEINICIALIZARCOLECCIONES;
 		arg.addAll(poss);
 		Coordenada caux = null, cauxxm = null, cauxym = null;
 		Iterator<Coordenada> iterator = null;
@@ -319,5 +411,10 @@ public class Tablero
 		}
 
 		return collreturn;
+	}
+
+	public Coordenada getDimensiones()
+	{
+		return new Coordenada(anchuraColeccion(sortColeccion(getPosiciones())), alturaColeccion(sortColeccion(getPosiciones())));
 	}
 }

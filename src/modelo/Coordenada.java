@@ -35,7 +35,6 @@ public class Coordenada
 		NUMERO_COORDENADAS++;
 	}
 
-
 	@Override
 	public String toString()
 	{
