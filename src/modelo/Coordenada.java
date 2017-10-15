@@ -94,7 +94,6 @@ public class Coordenada
 	 * @param otro objeto con el que se compara el objeto implicito
 	 * @return cierto, si los dos objetos son iguales
 	 */
-	@Override
 	public boolean equals(Object otro)
 	{
 		if (this == otro)
