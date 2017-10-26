@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -35,9 +36,9 @@ public class Tablero
 	public Tablero(Coordenada dimensiones)
 	{
 		celdas = new HashMap<Coordenada,EstadoCelda>();
-		for(int x = 1; x <= dimensiones.getX(); x++)
+		for(int x = 0; x < dimensiones.getX(); x++)
 		{
-			for(int y = 1; y <= dimensiones.getY(); y++)
+			for(int y = 0; y < dimensiones.getY(); y++)
 			{
 				Coordenada aux = new Coordenada(x, y);
 				celdas.put(aux, EstadoCelda.MUERTA);
@@ -85,35 +86,13 @@ public class Tablero
 	 */
 	public void setCelda(Coordenada posicion, EstadoCelda e)
 	{
-		int xmin = Integer.MAX_VALUE, xmax = Integer.MIN_VALUE, ymin = Integer.MAX_VALUE, ymax = Integer.MIN_VALUE;
-		Iterator<Coordenada> iterator = getPosiciones().iterator();
-		while(iterator.hasNext())
+		if(contiene(posicion))
 		{
-			Coordenada caux = (Coordenada)((Map.Entry) iterator.next()).getKey();
-			if (xmin > caux.getX())
-			{
-				xmin = caux.getX();
-			}
-			if (xmax < caux.getX())
-			{
-				xmax = caux.getX();
-			}
-			if (ymin > caux.getY())
-			{
-				ymin = caux.getY();
-			}
-			if (ymax < caux.getY())
-			{
-				ymax = caux.getY();
-			}
-		}
-		if (posicion.getX() > xmax  ||  posicion.getY() > ymax  ||  posicion.getX() < xmin  ||  posicion.getY() < ymin)
-		{
-			muestraErrorPosicionInvalida(posicion);
+			celdas.put(posicion, e);
 		}
 		else
 		{
-			celdas.put(posicion, e);
+			muestraErrorPosicionInvalida(posicion);
 		}
 	}
 
@@ -418,25 +397,24 @@ public class Tablero
 	 */
 	private Collection<Coordenada> sortColeccion(Collection<Coordenada> poss)
 	{
-		List<Coordenada> NOSEINICIALIZARCOLECCIONES = new ArrayList<Coordenada>(Arrays.asList(new Coordenada(0, 0)));
-		Iterator<Coordenada> SIGOSINSABERINICIALIZARCOLECCIONES = NOSEINICIALIZARCOLECCIONES.iterator();
-		while (SIGOSINSABERINICIALIZARCOLECCIONES.hasNext())
+		int xmin = Integer.MAX_VALUE, ymin = Integer.MAX_VALUE;
+		Coordenada caux = null, cauxxm = null, cauxym = null;
+
+		ArrayList<Coordenada> arg = new ArrayList<Coordenada>();
+		Iterator<Coordenada> iterator = poss.iterator();
+		while(iterator.hasNext())
 		{
-			SIGOSINSABERINICIALIZARCOLECCIONES.remove();
+			arg.add(iterator.next());
 		}
 
-		Collection<Coordenada> collreturn = (Collection<Coordenada>) NOSEINICIALIZARCOLECCIONES, arg = (Collection<Coordenada>) NOSEINICIALIZARCOLECCIONES;
-		arg.addAll(poss);
-		Coordenada caux = null, cauxxm = null, cauxym = null;
-		Iterator<Coordenada> iterator = null;
-		int xmin = Integer.MAX_VALUE, ymin = Integer.MAX_VALUE;
+		ArrayList<Coordenada> collreturn = new ArrayList<Coordenada>();
 
 		while(!arg.isEmpty())
 		{
 			iterator = arg.iterator();
 			while(iterator.hasNext())
 			{
-				caux = (Coordenada)((Map.Entry) iterator.next()).getKey();
+				caux = iterator.next();
 				if (xmin > caux.getX())
 				{
 					xmin = caux.getX();
@@ -464,6 +442,6 @@ public class Tablero
 			}
 		}
 
-		return collreturn;
+		return (Collection<Coordenada>)collreturn;
 	}
 }

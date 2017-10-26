@@ -36,7 +36,7 @@ public class ReglaConway
 		Iterator<Coordenada> iterator = aux.iterator();
 		while(iterator.hasNext())
 		{
-			Coordenada caux = (Coordenada)((Map.Entry) iterator.next()).getKey();
+			Coordenada caux = iterator.next();
 			if (tablero.getCelda(caux) == EstadoCelda.VIVA)
 			{
 				cuenta++;
