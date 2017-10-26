@@ -34,50 +34,13 @@ public class Tablero
 	 */
 	public Tablero(Coordenada dimensiones)
 	{
-		if(dimensiones.getX() >= 0)
+		celdas = new HashMap<Coordenada,EstadoCelda>();
+		for(int x = 1; x <= dimensiones.getX(); x++)
 		{
-			if(dimensiones.getY() >= 0)
+			for(int y = 1; y <= dimensiones.getY(); y++)
 			{
-				for(int x = 0; x <= dimensiones.getX(); x++)
-				{
-					for(int y = 0; y <= dimensiones.getY(); y++)
-					{
-						celdas.put(new Coordenada(x, y), EstadoCelda.MUERTA);
-					}
-				}
-			}
-			else
-			{
-				for(int x = 0; x <= dimensiones.getX(); x++)
-				{
-					for(int y = 0; y > dimensiones.getY(); y--)
-					{
-						celdas.put(new Coordenada(x, y), EstadoCelda.MUERTA);
-					}
-				}
-			}
-		}
-		else
-		{
-			if(dimensiones.getY() >= 0)
-			{
-				for(int x = 0; x > dimensiones.getX(); x--)
-				{
-					for(int y = 0; y <= dimensiones.getY(); y++)
-					{
-						celdas.put(new Coordenada(x, y), EstadoCelda.MUERTA);
-					}
-				}
-			}
-			else
-			{
-				for(int x = 0; x > dimensiones.getX(); x--)
-				{
-					for(int y = 0; y > dimensiones.getY(); y--)
-					{
-						celdas.put(new Coordenada(x, y), EstadoCelda.MUERTA);
-					}
-				}
+				Coordenada aux = new Coordenada(x, y);
+				celdas.put(aux, EstadoCelda.MUERTA);
 			}
 		}
 	}
