@@ -8,7 +8,6 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Map;
 
 /**
  * The Class ReglaConway.

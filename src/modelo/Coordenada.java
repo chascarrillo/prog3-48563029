@@ -132,4 +132,21 @@ public class Coordenada
 	{
 		return new Integer(31*(31+x)+y);
 	}
+
+	private boolean menorQue(Coordenada c2)
+	{
+		if(this.y > c2.y)
+		{
+			return false;
+		}
+		else if(this.y == c2.y)
+		{
+			if(this.x < c2.x)
+			{
+				return true;
+			}
+			else return false;
+		}
+		else return true;
+	}
 }
