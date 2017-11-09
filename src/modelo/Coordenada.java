@@ -6,6 +6,9 @@
 
 package modelo;
 
+import modelo.excepciones.ExcepcionArgumentosIncorrectos;
+import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
+
 /**
  * The Class Coordenada.
  */
@@ -28,10 +31,30 @@ public class Coordenada
 	 * @param y the y
 	 */
 	public Coordenada(int x, int y)
+	throws ExcepcionCoordenadaIncorrecta
+	{	
+		if(x >= 0  &&  y >= 0)
+		{
+		  	 this.x = x;
+			 this.y = y;
+		}
+		else throw new ExcepcionCoordenadaIncorrecta(x, y);
+	}
+	
+	/**
+	 * Instantiates a new coordenada.
+	 *
+	 * @param otra the otra
+	 */
+	public Coordenada(Coordenada otra)
+	throws ExcepcionArgumentosIncorrectos
 	{
-	  	 this.x = x;
-		 this.y = y;
-		 NUMERO_COORDENADAS++;
+		if(otra != null)
+		{
+			x = otra.x;
+			y = otra.y;
+		}
+		else throw new ExcepcionArgumentosIncorrectos();
 	}
 	
 	/**
@@ -42,18 +65,6 @@ public class Coordenada
 	public static int getNumeroCoordenadas()
 	{
 		return NUMERO_COORDENADAS;
-	}
-	
-	/**
-	 * Instantiates a new coordenada.
-	 *
-	 * @param otra the otra
-	 */
-	public Coordenada(Coordenada otra)
-	{
-		x = otra.x;
-		y = otra.y;
-		NUMERO_COORDENADAS++;
 	}
 
 	/**
@@ -115,11 +126,17 @@ public class Coordenada
 	 *
 	 * @param otra the otra
 	 * @return the coordenada
+	 * @throws ExcepcionCoordenadaIncorrecta 
 	 */
 	public Coordenada suma(Coordenada otra)
+	throws ExcepcionCoordenadaIncorrecta, ExcepcionArgumentosIncorrectos
 	{
-		Coordenada nueva = new Coordenada(x+otra.x, y+otra.y);
-		return nueva;
+		if(otra != null)
+		{
+			Coordenada nueva = new Coordenada(x+otra.x, y+otra.y);
+			return nueva;
+		}
+		else throw new ExcepcionArgumentosIncorrectos();
 	}
 
 	/**
@@ -131,7 +148,7 @@ public class Coordenada
 	public int hashCode()
 	{
 		return new Integer(31*(31+x)+y);
-	}
+	}/*
 
 	private boolean menorQue(Coordenada c2)
 	{
@@ -148,5 +165,5 @@ public class Coordenada
 			else return false;
 		}
 		else return true;
-	}
+	}*/
 }

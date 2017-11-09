@@ -20,6 +20,10 @@ import modelo.Coordenada;
 import modelo.EstadoCelda;
 import modelo.ComparadorCoordenada;
 import modelo.Patron;
+import modelo.excepciones.ExcepcionArgumentosIncorrectos;
+import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
+import modelo.excepciones.ExcepcionEjecucion;
+import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
 /**
  * The Class Tablero.
@@ -34,16 +38,25 @@ public class Tablero
 	 * Instantiates a new tablero.
 	 *
 	 * @param dimensiones the dimensiones
+	 * @throws ExcepcionEjecucion 
 	 */
 	public Tablero(Coordenada dimensiones)
 	{
+		if(dimensiones == null) throw new ExcepcionArgumentosIncorrectos();
 		celdas = new HashMap<Coordenada,EstadoCelda>();
 		for(int y = 0; y < dimensiones.getY(); y++)
 		{
 			for(int x = 0; x < dimensiones.getX(); x++)
 			{
-				Coordenada aux = new Coordenada(x, y);
-				celdas.put(aux, EstadoCelda.MUERTA);
+				try
+				{
+					Coordenada aux = new Coordenada(x, y);
+					celdas.put(aux, EstadoCelda.MUERTA);
+				}
+				catch (ExcepcionCoordenadaIncorrecta e) 
+				{
+					throw new ExcepcionEjecucion(e);
+				}
 			}
 		}
 	}
@@ -55,7 +68,18 @@ public class Tablero
 	 */
 	public Coordenada getDimensiones()
 	{
-		return new Coordenada(anchuraColeccion(getPosiciones()), alturaColeccion(getPosiciones()));
+		try
+		{
+			return new Coordenada(anchuraColeccion(getPosiciones()), alturaColeccion(getPosiciones()));
+		}
+		catch (ExcepcionCoordenadaIncorrecta e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			return null;
+		}
 	}
 
 	/**
@@ -68,11 +92,6 @@ public class Tablero
 		Set<Coordenada> ts = new TreeSet <Coordenada>(ComparadorCoordenada.getComparator(ComparadorCoordenada.Y_SORT, ComparadorCoordenada.X_SORT));
 		ts.addAll(celdas.keySet());
 		return (Collection<Coordenada>) ts;
-		/*ArrayList<Coordenada> al = new ArrayList<Coordenada>();
-		al.addAll(celdas.keySet());
-		Collections.sort(al, ComparadorCoordenada.getComparator(ComparadorCoordenada.Y_SORT, ComparadorCoordenada.X_SORT));
-		
-		TreeSet<Coordenada> devuelta = new TreeSet<Coordenada>()*/
 	}
 
 	/**
@@ -80,11 +99,18 @@ public class Tablero
 	 *
 	 * @param posicion the posicion
 	 * @return celda viva/muerta
+	 * @throws ExcepcionPosicionFueraTablero 
 	 */
 	public EstadoCelda getCelda(Coordenada posicion)
+	throws ExcepcionPosicionFueraTablero
 	{
-		muestraErrorPosicionInvalida(posicion);
-		return celdas.get(posicion);
+		if(posicion == null) throw new ExcepcionArgumentosIncorrectos();
+		
+		if(contiene(posicion))
+		{
+			return celdas.get(posicion);
+		}
+		else throw new ExcepcionPosicionFueraTablero(posicion, getDimensiones());
 	}
 
 	/**
@@ -92,16 +118,16 @@ public class Tablero
 	 *
 	 * @param posicion the posicion
 	 * @param e el estado
+	 * @throws ExcepcionPosicionFueraTablero 
 	 */
 	public void setCelda(Coordenada posicion, EstadoCelda e)
+	throws ExcepcionPosicionFueraTablero
 	{
-		if(contiene(posicion))
-		{
-			celdas.put(posicion, e);
-		}
+		if(posicion == null) throw new ExcepcionArgumentosIncorrectos();
+		if(!contiene(posicion)) throw new ExcepcionPosicionFueraTablero(posicion, getDimensiones());
 		else
 		{
-			muestraErrorPosicionInvalida(posicion);
+			celdas.put(posicion, e);
 		}
 	}
 
@@ -110,68 +136,66 @@ public class Tablero
 	 *
 	 * @param posicion the posicion
 	 * @return las coordenadas circundantes
+	 * @throws ExcepcionPosicionFueraTablero 
 	 */
 	public ArrayList<Coordenada> getPosicionesVecinasCCW(Coordenada posicion)
+	throws ExcepcionPosicionFueraTablero
 	{
+		if(posicion == null) throw new ExcepcionArgumentosIncorrectos();
 		ArrayList<Coordenada> cds = null;
-		if(contiene(posicion))
+		if(!contiene(posicion)) throw new ExcepcionPosicionFueraTablero(posicion, getDimensiones());
+		else
 		{
-			cds = new ArrayList<Coordenada>();
-			Coordenada aux = new Coordenada(posicion.getX()-1, posicion.getY()-1);
-			if(contiene(aux))
+			try
 			{
-				cds.add(aux);
+				cds = new ArrayList<Coordenada>();
+				Coordenada aux = new Coordenada(posicion.getX()-1, posicion.getY()-1);
+				if(contiene(aux))
+				{
+					cds.add(aux);
+				}
+				aux = new Coordenada(posicion.getX()-1, posicion.getY());
+				if(contiene(aux))
+				{
+					cds.add(aux);
+				}
+				aux = new Coordenada(posicion.getX()-1, posicion.getY()+1);
+				if(contiene(aux))
+				{
+					cds.add(aux);
+				}
+				aux = new Coordenada(posicion.getX(), posicion.getY()+1);
+				if(contiene(aux))
+				{
+					cds.add(aux);
+				}
+				aux = new Coordenada(posicion.getX()+1, posicion.getY()+1);
+				if(contiene(aux))
+				{
+					cds.add(aux);
+				}
+				aux = new Coordenada(posicion.getX()+1, posicion.getY());
+				if(contiene(aux))
+				{
+					cds.add(aux);
+				}
+				aux = new Coordenada(posicion.getX()+1, posicion.getY()-1);
+				if(contiene(aux))
+				{
+					cds.add(aux);
+				}
+				aux = new Coordenada(posicion.getX(), posicion.getY()-1);
+				if(contiene(aux))
+				{
+					cds.add(aux);
+				}
 			}
-			aux = new Coordenada(posicion.getX()-1, posicion.getY());
-			if(contiene(aux))
+			catch (ExcepcionCoordenadaIncorrecta e)
 			{
-				cds.add(aux);
-			}
-			aux = new Coordenada(posicion.getX()-1, posicion.getY()+1);
-			if(contiene(aux))
-			{
-				cds.add(aux);
-			}
-			aux = new Coordenada(posicion.getX(), posicion.getY()+1);
-			if(contiene(aux))
-			{
-				cds.add(aux);
-			}
-			aux = new Coordenada(posicion.getX()+1, posicion.getY()+1);
-			if(contiene(aux))
-			{
-				cds.add(aux);
-			}
-			aux = new Coordenada(posicion.getX()+1, posicion.getY());
-			if(contiene(aux))
-			{
-				cds.add(aux);
-			}
-			aux = new Coordenada(posicion.getX()+1, posicion.getY()-1);
-			if(contiene(aux))
-			{
-				cds.add(aux);
-			}
-			aux = new Coordenada(posicion.getX(), posicion.getY()-1);
-			if(contiene(aux))
-			{
-				cds.add(aux);
+				throw new ExcepcionEjecucion(e);
 			}
 		}
 		return cds;
-	}
-
-	/**
-	 * Muestra error posicion invalida.
-	 *
-	 * @param c la coordenada
-	 */
-	private void muestraErrorPosicionInvalida(Coordenada c)
-	{
-		if(!contiene(c))
-		{
-			System.err.println("Error: La celda " + c + " no existe");
-		}
 	}
 
 	/**
@@ -180,9 +204,12 @@ public class Tablero
 	 * @param patron the patron
 	 * @param coordenadaInicial the coordenada inicial
 	 * @return true, if successful
+	 * @throws ExcepcionPosicionFueraTablero 
 	 */
 	public boolean cargaPatron(Patron patron, Coordenada coordenadaInicial)
+	throws ExcepcionPosicionFueraTablero
 	{
+		if(patron == null  ||  coordenadaInicial == null) throw new ExcepcionArgumentosIncorrectos();
 		Coordenada caux = null;
 		Iterator<Coordenada> iterator = null;
 		boolean control;
@@ -195,7 +222,18 @@ public class Tablero
 			while(iterator.hasNext())
 			{
 				caux = (Coordenada) iterator.next();
-				setCelda(caux.suma(coordenadaInicial), patron.getCelda(caux));
+				try
+				{
+					setCelda(caux.suma(coordenadaInicial), patron.getCelda(caux));
+				}
+				catch (ExcepcionArgumentosIncorrectos | ExcepcionPosicionFueraTablero e)
+				{
+					e.printStackTrace();
+				}
+				catch (ExcepcionCoordenadaIncorrecta e)
+				{
+					throw new ExcepcionEjecucion(e);
+				}
 			}
 			control = true;
 		}
@@ -205,7 +243,7 @@ public class Tablero
 			posPatron.removeAll(posTablero);
 			iterator = posPatron.iterator();
 			caux = (Coordenada) iterator.next();
-			muestraErrorPosicionInvalida(caux);
+			throw new ExcepcionPosicionFueraTablero(caux, getDimensiones());
 		}
 
 		return control;
@@ -219,11 +257,15 @@ public class Tablero
 	 */
 	public boolean contiene(Coordenada posicion)
 	{
-		if (getPosiciones().contains(posicion))
+		if(posicion != null)
 		{
-			return true;
+			if (getPosiciones().contains(posicion))
+			{
+				return true;
+			}
+			else return false;
 		}
-		else return false;
+		else throw new ExcepcionArgumentosIncorrectos();
 	}
 
 	/**
@@ -234,53 +276,65 @@ public class Tablero
 	@Override
 	public String toString()
 	{
-		String salida = "+";
-		int anchura = anchuraColeccion(getPosiciones());
-
-		for (int abc = 0; abc < anchura; abc++)
+		String salida = "";
+		try
 		{
-			salida += "-";
-		}
-		salida += "+\n|";
-
-		Collection<Coordenada> cds = getPosiciones();
-		Iterator<Coordenada> iterator = cds.iterator();
-		Coordenada cauxa = (Coordenada) iterator.next(), cauxn = null;
-		if(getCelda(cauxa) == EstadoCelda.MUERTA)
-		{
-			salida += " ";
-		}
-		else salida += "*";
-
-		while(iterator.hasNext())
-		{
-			cauxn = (Coordenada) iterator.next();
-
-			if(cauxa.getY() == cauxn.getY())
+			salida = "+";
+			int anchura = anchuraColeccion(getPosiciones());
+	
+			for (int abc = 0; abc < anchura; abc++)
 			{
-				if(getCelda(cauxn) == EstadoCelda.MUERTA)
-					salida += " ";
-				else salida += "*";
-				cauxa = cauxn;
-				cauxn = null;
+				salida += "-";
 			}
-			else if (iterator.hasNext())
+			salida += "+\n|";
+	
+			Collection<Coordenada> cds = getPosiciones();
+			Iterator<Coordenada> iterator = cds.iterator();
+			Coordenada cauxa = (Coordenada) iterator.next(), cauxn = null;
+			if(getCelda(cauxa) == EstadoCelda.MUERTA)
 			{
-				if(getCelda(cauxn) == EstadoCelda.MUERTA)
-					salida += "|\n| ";
-				else salida += "|\n|*";
-				cauxa = cauxn;
-				cauxn = null;
+				salida += " ";
 			}
+			else salida += "*";
+	
+			while(iterator.hasNext())
+			{
+				cauxn = (Coordenada) iterator.next();
+	
+				if(cauxa.getY() == cauxn.getY())
+				{
+					if(getCelda(cauxn) == EstadoCelda.MUERTA)
+						salida += " ";
+					else salida += "*";
+					cauxa = cauxn;
+					cauxn = null;
+				}
+				else if (iterator.hasNext())
+				{
+					if(getCelda(cauxn) == EstadoCelda.MUERTA)
+						salida += "|\n| ";
+					else salida += "|\n|*";
+					cauxa = cauxn;
+					cauxn = null;
+				}
+			}
+	
+			salida += "|\n+";
+			for (int abc = 0; abc < anchura; abc++)
+			{
+				salida += "-";
+			}
+			salida += "+\n";
 		}
-
-		salida += "|\n+";
-		for (int abc = 0; abc < anchura; abc++)
+		catch (Exception e)
 		{
-			salida += "-";
+			e.getMessage();
+			e.printStackTrace();
 		}
-		salida += "+\n";
-		return salida;
+		finally
+		{
+			return salida;
+		}
 	}
 
 	/**
