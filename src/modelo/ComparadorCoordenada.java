@@ -8,9 +8,14 @@ package modelo;
 
 import java.util.Comparator;
 
+/**
+ * The Enum ComparadorCoordenada.
+ */
 public enum ComparadorCoordenada
 implements Comparator<Coordenada>
 {
+	
+	/** The x sort. */
 	X_SORT
 	{
 		public int compare(Coordenada c1, Coordenada c2)
@@ -18,6 +23,8 @@ implements Comparator<Coordenada>
 			return Integer.valueOf(c1.getX()).compareTo(c2.getX());
 		}
 	},
+	
+	/** The y sort. */
 	Y_SORT
 	{
 		public int compare(Coordenada c1, Coordenada c2)
@@ -26,6 +33,12 @@ implements Comparator<Coordenada>
 		}
 	};
 
+	/**
+	 * Descending.
+	 *
+	 * @param other the comparator
+	 * @return the comparator en orden inverso
+	 */
 	public static Comparator<Coordenada> descending(final Comparator<Coordenada> other)
 	{
 		return new Comparator<Coordenada>()
@@ -37,6 +50,12 @@ implements Comparator<Coordenada>
 		};
 	}
 
+	/**
+	 * Gets the comparator.
+	 *
+	 * @param multipleOptions the multiple options
+	 * @return the comparator
+	 */
 	public static Comparator<Coordenada> getComparator(final ComparadorCoordenada... multipleOptions)
 	{
 		return new Comparator<Coordenada>()

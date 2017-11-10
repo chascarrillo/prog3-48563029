@@ -8,6 +8,9 @@ package modelo;
 
 import java.util.Collection;
 
+import modelo.excepciones.ExcepcionArgumentosIncorrectos;
+import modelo.excepciones.ExcepcionPosicionFueraTablero;
+
 /**
  * The Class Patron.
  */
@@ -28,6 +31,7 @@ public class Patron
 	 */
 	public Patron(String nombre, Tablero tablero)
 	{
+		if(nombre == null  ||  tablero == null) throw new ExcepcionArgumentosIncorrectos();
 		this.nombre = nombre;
 		this.tablero = tablero;
 	}
@@ -50,7 +54,21 @@ public class Patron
 	 */
 	public EstadoCelda getCelda(Coordenada c)
 	{
-		return tablero.getCelda(c);
+		EstadoCelda estado = null;
+		if(c == null) throw new ExcepcionArgumentosIncorrectos();
+		try
+		{
+			estado = tablero.getCelda(c);
+		}
+		catch (ExcepcionPosicionFueraTablero e)
+		{
+			e.getMessage();
+			e.printStackTrace();
+		}
+		finally
+		{
+			return estado;
+		}
 	}
 
 	/**
@@ -64,7 +82,7 @@ public class Patron
 	}
 
 	/**
-	 * to String
+	 * to String.
 	 *
 	 * @return string con un cierto formato
 	 */

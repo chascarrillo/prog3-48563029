@@ -38,7 +38,7 @@ public class Tablero
 	 * Instantiates a new tablero.
 	 *
 	 * @param dimensiones the dimensiones
-	 * @throws ExcepcionEjecucion 
+	 * @throws ExcepcionEjecucion the excepcion ejecucion
 	 */
 	public Tablero(Coordenada dimensiones)
 	{
@@ -68,9 +68,10 @@ public class Tablero
 	 */
 	public Coordenada getDimensiones()
 	{
+		Coordenada dimensiones = null;
 		try
 		{
-			return new Coordenada(anchuraColeccion(getPosiciones()), alturaColeccion(getPosiciones()));
+			dimensiones = new Coordenada(anchuraColeccion(getPosiciones()), alturaColeccion(getPosiciones()));
 		}
 		catch (ExcepcionCoordenadaIncorrecta e)
 		{
@@ -78,7 +79,7 @@ public class Tablero
 		}
 		finally
 		{
-			return null;
+			return dimensiones;
 		}
 	}
 
@@ -89,17 +90,19 @@ public class Tablero
 	 */
 	public Collection<Coordenada> getPosiciones()
 	{
-		Set<Coordenada> ts = new TreeSet <Coordenada>(ComparadorCoordenada.getComparator(ComparadorCoordenada.Y_SORT, ComparadorCoordenada.X_SORT));
+		Set<Coordenada> ts = new TreeSet <Coordenada>(
+				ComparadorCoordenada.getComparator(ComparadorCoordenada.Y_SORT, ComparadorCoordenada.X_SORT)
+				);
 		ts.addAll(celdas.keySet());
 		return (Collection<Coordenada>) ts;
 	}
 
 	/**
-	 * Obtiene el estado de la celda
+	 * Obtiene el estado de la celda.
 	 *
 	 * @param posicion the posicion
 	 * @return celda viva/muerta
-	 * @throws ExcepcionPosicionFueraTablero 
+	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
 	 */
 	public EstadoCelda getCelda(Coordenada posicion)
 	throws ExcepcionPosicionFueraTablero
@@ -118,7 +121,7 @@ public class Tablero
 	 *
 	 * @param posicion the posicion
 	 * @param e el estado
-	 * @throws ExcepcionPosicionFueraTablero 
+	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
 	 */
 	public void setCelda(Coordenada posicion, EstadoCelda e)
 	throws ExcepcionPosicionFueraTablero
@@ -136,7 +139,7 @@ public class Tablero
 	 *
 	 * @param posicion the posicion
 	 * @return las coordenadas circundantes
-	 * @throws ExcepcionPosicionFueraTablero 
+	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
 	 */
 	public ArrayList<Coordenada> getPosicionesVecinasCCW(Coordenada posicion)
 	throws ExcepcionPosicionFueraTablero
@@ -204,7 +207,7 @@ public class Tablero
 	 * @param patron the patron
 	 * @param coordenadaInicial the coordenada inicial
 	 * @return true, if successful
-	 * @throws ExcepcionPosicionFueraTablero 
+	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
 	 */
 	public boolean cargaPatron(Patron patron, Coordenada coordenadaInicial)
 	throws ExcepcionPosicionFueraTablero
@@ -269,7 +272,7 @@ public class Tablero
 	}
 
 	/**
-	 * to String
+	 * to String.
 	 *
 	 * @return string con un cierto formato
 	 */
@@ -407,7 +410,7 @@ public class Tablero
 	}
 
 	/**
-	 * Recortar coleccion hasta que la coordenada sea la nueva esquina superior izquierda
+	 * Recortar coleccion hasta que la coordenada sea la nueva esquina superior izquierda.
 	 *
 	 * @param col la coleccion
 	 * @param c la coordenada

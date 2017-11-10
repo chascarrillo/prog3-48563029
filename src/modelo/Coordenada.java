@@ -29,6 +29,7 @@ public class Coordenada
 	 *
 	 * @param x the x
 	 * @param y the y
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
 	 */
 	public Coordenada(int x, int y)
 	throws ExcepcionCoordenadaIncorrecta
@@ -45,6 +46,7 @@ public class Coordenada
 	 * Instantiates a new coordenada.
 	 *
 	 * @param otra the otra
+	 * @throws ExcepcionArgumentosIncorrectos the excepcion argumentos incorrectos
 	 */
 	public Coordenada(Coordenada otra)
 	throws ExcepcionArgumentosIncorrectos
@@ -68,7 +70,7 @@ public class Coordenada
 	}
 
 	/**
-	 * to String
+	 * to String.
 	 *
 	 * @return string con un cierto formato
 	 */
@@ -100,7 +102,7 @@ public class Coordenada
 
 
 	/**
-	 * equals
+	 * equals.
 	 *
 	 * @param otro objeto con el que se compara el objeto implicito
 	 * @return cierto, si los dos objetos son iguales
@@ -126,7 +128,8 @@ public class Coordenada
 	 *
 	 * @param otra the otra
 	 * @return the coordenada
-	 * @throws ExcepcionCoordenadaIncorrecta 
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
+	 * @throws ExcepcionArgumentosIncorrectos the excepcion argumentos incorrectos
 	 */
 	public Coordenada suma(Coordenada otra)
 	throws ExcepcionCoordenadaIncorrecta, ExcepcionArgumentosIncorrectos
@@ -140,7 +143,7 @@ public class Coordenada
 	}
 
 	/**
-	 * hashCode
+	 * hashCode.
 	 *
 	 * @return numero obtenido de aplicar la funcion al objeto implicito. 2 objetos que sean equals = true deben devolver el mismo hashcode
 	 */

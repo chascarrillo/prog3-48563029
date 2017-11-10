@@ -9,6 +9,9 @@ package modelo;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import modelo.excepciones.ExcepcionArgumentosIncorrectos;
+import modelo.excepciones.ExcepcionPosicionFueraTablero;
+
 /**
  * The Class ReglaConway.
  */
@@ -30,27 +33,41 @@ public class ReglaConway
 	 */
 	public EstadoCelda calculaSiguienteEstadoCelda(Tablero tablero, Coordenada posicion)
 	{
+		if(tablero == null  ||  posicion == null) throw new ExcepcionArgumentosIncorrectos();
 		int cuenta = 0;
-		ArrayList<Coordenada> aux = tablero.getPosicionesVecinasCCW(posicion);
-		Iterator<Coordenada> iterator = aux.iterator();
-		while(iterator.hasNext())
+		EstadoCelda estado = null;
+		try
 		{
-			Coordenada caux = iterator.next();
-			if (tablero.getCelda(caux) == EstadoCelda.VIVA)
+			ArrayList<Coordenada> aux = tablero.getPosicionesVecinasCCW(posicion);
+			Iterator<Coordenada> iterator = aux.iterator();
+			while(iterator.hasNext())
 			{
-				cuenta++;
+				Coordenada caux = iterator.next();
+				if (tablero.getCelda(caux) == EstadoCelda.VIVA)
+				{
+					cuenta++;
+				}
 			}
+			if(tablero.getCelda(posicion) == EstadoCelda.VIVA)
+			{
+				if(cuenta == 2  || cuenta == 3)
+				{
+					estado = EstadoCelda.VIVA;
+				}
+				else estado = EstadoCelda.MUERTA;
+			}
+			else if (cuenta == 2)
+				estado = EstadoCelda.VIVA;
+			else estado = EstadoCelda.MUERTA;
 		}
-		if(tablero.getCelda(posicion) == EstadoCelda.VIVA)
+		catch (ExcepcionPosicionFueraTablero e)
 		{
-			if(cuenta == 2  || cuenta == 3)
-			{
-				return EstadoCelda.VIVA;
-			}
-			else return EstadoCelda.MUERTA;
+			e.getMessage();
+			e.printStackTrace();
 		}
-		else if (cuenta == 2)
-			return EstadoCelda.VIVA;
-		else return EstadoCelda.MUERTA;
+		finally
+		{
+			return estado;
+		}
 	}
 }
