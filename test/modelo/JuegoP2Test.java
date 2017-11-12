@@ -14,41 +14,66 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author gonzalo
+ * The Class JuegoP2Test.
  *
+ * @author gonzalo
  */
 public class JuegoP2Test {
+     
+     /** The regla. */
      ReglaConway regla;
+     
+     /** The patrones. */
      ArrayList<Patron> patrones;
+     
+     /** The tablero. */
      Tablero tablero;
+     
+     /** The juego. */
      Juego juego;
+     
+     /** The patronsapo. */
      static Patron patronglider, patronbloque, patronparpadeador, patronbarco, patronsapo;
+     
+     /** The tablero 4. */
      static String tablero1, tablero2, tablero3, tablero4;
+     
+     /** The tableroconmaspatrones. */
      static Tablero tablerodelmain, tableroparpadeadores, tableroconmaspatrones;
+     
+     /** The errstd. */
      static PrintStream salstd, errstd; //salida y error standard
+     
+     /** The Constant FICHERRORES. */
      static final String FICHERRORES = "test/ficheros/salidaerrorespatron.txt";
+	
 	/**
-	 * @throws java.lang.Exception
+	 * Sets the up before class.
+	 *
+	 * @throws Exception the exception
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		
 		salstd = new PrintStream(System.out);
 		errstd = new PrintStream(System.err);
-	    tablerodelmain = IniciaTablerosResultado(new Coordenada(10,5),"test/ficheros/tablerodelmain.ent");
-	    tableroparpadeadores = IniciaTablerosResultado(new Coordenada(10,1),"test/ficheros/tablerodelmain.ent");
-	    tableroconmaspatrones = IniciaTablerosResultado(new Coordenada(10,15),"test/ficheros/tableroconmaspatrones.ent");
+	    tablerodelmain = IniciaTablerosResultado(new Coordenada2D(10,5),"test/ficheros/tablerodelmain.ent");
+	    tableroparpadeadores = IniciaTablerosResultado(new Coordenada2D(10,1),"test/ficheros/tablerodelmain.ent");
+	    tableroconmaspatrones = IniciaTablerosResultado(new Coordenada2D(10,15),"test/ficheros/tableroconmaspatrones.ent");
 	    CreaPatrones();
 	}
 
 
 	/**
-	 * @throws java.lang.Exception
+	 * Sets the up.
+	 *
+	 * @throws Exception the exception
 	 */
 	@Before
 	public void setUp() throws Exception {
-		Coordenada c = new Coordenada(10,15);
+		Coordenada2D c = new Coordenada2D(10,15);
 		tablero = new Tablero(c);
 		regla = new ReglaConway();
 		juego = new Juego(tablero,regla);
@@ -66,29 +91,29 @@ public class JuegoP2Test {
 	}
 
 	/**
-	 * Test method for {@link modelo.Juego#cargaPatron(modelo.Patron, modelo.Coordenada)}.
+	 * Test method for {@link modelo.Juego#cargaPatron(modelo.Patron, modelo.Coordenada2D)}.
 	 */
 	@Test
 	public void testCargaPatron() {
 		
 		PrintStream ps = redireccionarSalidasStandardAFichero(FICHERRORES);
 				
-		juego.cargaPatron(patronglider, new Coordenada(8,10));
+		juego.cargaPatron(patronglider, new Coordenada2D(8,10));
 		assertEquals("No carga el patrón",0,patrones.size());
-		juego.cargaPatron(patronglider, new Coordenada(7,11));
+		juego.cargaPatron(patronglider, new Coordenada2D(7,11));
 		assertEquals("Sí carga el patrón",1, patrones.size());
 		assertSame("Agregación", patronglider,patrones.get(0));
 		
-		juego.cargaPatron(patronbloque, new Coordenada(-1,2));
+		juego.cargaPatron(patronbloque, new Coordenada2D(-1,2));
 		assertEquals("No carga el patrón",1,patrones.size());
-		juego.cargaPatron(patronbloque, new Coordenada(0,2));
+		juego.cargaPatron(patronbloque, new Coordenada2D(0,2));
 		assertEquals("Sí carga el patrón",2,patrones.size());
 		assertSame("Agregación", patronbloque,patrones.get(1));
 		
-		juego.cargaPatron(patronparpadeador, new Coordenada(0,15));
-		juego.cargaPatron(patronparpadeador, new Coordenada(0,-1));
+		juego.cargaPatron(patronparpadeador, new Coordenada2D(0,15));
+		juego.cargaPatron(patronparpadeador, new Coordenada2D(0,-1));
 		assertEquals("No carga el patrón",2,patrones.size());
-		juego.cargaPatron(patronparpadeador, new Coordenada(0,14));
+		juego.cargaPatron(patronparpadeador, new Coordenada2D(0,14));
 		assertEquals("Sí carga el patrón",3,patrones.size());
 		assertSame("Agregación", patronparpadeador,patrones.get(2));
 		
@@ -114,10 +139,10 @@ public class JuegoP2Test {
 	@Test
 	public void testActualizaTableroDelMain() {
 		
-		Juego juego1 = new Juego(new Tablero(new Coordenada(10,5)),regla);
-		juego1.cargaPatron(patronglider, new Coordenada(0,0));
-		juego1.cargaPatron(patronbloque, new Coordenada(8,3)); 
-		juego1.cargaPatron(patronparpadeador, new Coordenada(7,0));
+		Juego juego1 = new Juego(new Tablero(new Coordenada2D(10,5)),regla);
+		juego1.cargaPatron(patronglider, new Coordenada2D(0,0));
+		juego1.cargaPatron(patronbloque, new Coordenada2D(8,3)); 
+		juego1.cargaPatron(patronparpadeador, new Coordenada2D(7,0));
 	
 		
 		/*Fichero con los tableros que el alumno genera.Para que pueda
@@ -131,21 +156,24 @@ public class JuegoP2Test {
 		s.close();
 		
 		//Comprobación del tablero final del alumno.
-		Coordenada c;
+		Coordenada2D c;
 		for (int i=0; i<10; i++)
 			for (int j=0; j<5; j++) {
-				c = new Coordenada(i,j);
+				c = new Coordenada2D(i,j);
 				assertEquals("Estado ("+i+","+j+")",tablerodelmain.getCelda(c),juego1.getTablero().getCelda(c));
 			}
 	}
 	
+	/**
+	 * Test actualiza parpadeadores solapados.
+	 */
 	@Test
 	public void testActualizaParpadeadoresSolapados() {
 		
-		Juego juego1 = new Juego(new Tablero(new Coordenada(10,1)),regla);
-		juego1.cargaPatron(patronparpadeador, new Coordenada(1,0));
-		juego1.cargaPatron(patronparpadeador, new Coordenada(3,0)); 
-		juego1.cargaPatron(patronparpadeador, new Coordenada(4,0));
+		Juego juego1 = new Juego(new Tablero(new Coordenada2D(10,1)),regla);
+		juego1.cargaPatron(patronparpadeador, new Coordenada2D(1,0));
+		juego1.cargaPatron(patronparpadeador, new Coordenada2D(3,0)); 
+		juego1.cargaPatron(patronparpadeador, new Coordenada2D(4,0));
 	
 		
 		/*Fichero con los tableros que el alumno genera.Para que en caso de error pueda
@@ -159,27 +187,30 @@ public class JuegoP2Test {
 		s.close();
 		
 		//Comprobamos el contenido del tablero del alumno
-		Coordenada c;
+		Coordenada2D c;
 		for (int i=0; i<10; i++)
 			for (int j=0; j<1; j++) {
-				c = new Coordenada(i,j);
+				c = new Coordenada2D(i,j);
 				assertEquals("Estado ("+i+","+j+") = MUERTA",EstadoCelda.MUERTA,juego1.getTablero().getCelda(c));
 			}
 	}
 	
+	/**
+	 * Test actualiza con mas patrones.
+	 */
 	@Test
 	public void testActualizaConMasPatrones() {
 		
-		juego.cargaPatron(patronglider, new Coordenada(0,0));
-		juego.cargaPatron(patronbloque, new Coordenada(8,3)); 
-		juego.cargaPatron(patronparpadeador, new Coordenada(7,0));
-		juego.cargaPatron(patronglider, new Coordenada(7,12));
-		juego.cargaPatron(patronbloque, new Coordenada(3,8)); 
-		juego.cargaPatron(patronparpadeador, new Coordenada(0,14));
-		juego.cargaPatron(patronbarco, new Coordenada(0,4)); 
-		juego.cargaPatron(patronsapo, new Coordenada(3,12));
-		juego.cargaPatron(patronbarco, new Coordenada(6,8)); 
-		juego.cargaPatron(patronsapo, new Coordenada(3,3));
+		juego.cargaPatron(patronglider, new Coordenada2D(0,0));
+		juego.cargaPatron(patronbloque, new Coordenada2D(8,3)); 
+		juego.cargaPatron(patronparpadeador, new Coordenada2D(7,0));
+		juego.cargaPatron(patronglider, new Coordenada2D(7,12));
+		juego.cargaPatron(patronbloque, new Coordenada2D(3,8)); 
+		juego.cargaPatron(patronparpadeador, new Coordenada2D(0,14));
+		juego.cargaPatron(patronbarco, new Coordenada2D(0,4)); 
+		juego.cargaPatron(patronsapo, new Coordenada2D(3,12));
+		juego.cargaPatron(patronbarco, new Coordenada2D(6,8)); 
+		juego.cargaPatron(patronsapo, new Coordenada2D(3,3));
 	
 		/*Fichero con los tableros que el alumno genera en cada actualización para que
 		pueda hacer un seguimiento en caso de error. */
@@ -191,22 +222,25 @@ public class JuegoP2Test {
 		s.close();
 		
 		//Comprobación del contenido del tablero del alumno
-		Coordenada c;
+		Coordenada2D c;
 		for (int i=0; i<10; i++)
 			for (int j=0; j<15; j++) {
-				c = new Coordenada(i,j);
+				c = new Coordenada2D(i,j);
 				assertEquals("Estado ("+i+","+j+")",tableroconmaspatrones.getCelda(c),juego.getTablero().getCelda(c));
 			}
 	}
 
+	/**
+	 * Test actualiza todo vivo.
+	 */
 	@Test
 	public void testActualizaTodoVivo() {
 	
-		Juego juego1 = new Juego(new Tablero(new Coordenada(4,4)),regla);
-		juego1.cargaPatron(patronbloque, new Coordenada(0,0));
-		juego1.cargaPatron(patronbloque, new Coordenada(2,0)); 
-		juego1.cargaPatron(patronbloque, new Coordenada(0,2));
-		juego1.cargaPatron(patronbloque, new Coordenada(2,2));
+		Juego juego1 = new Juego(new Tablero(new Coordenada2D(4,4)),regla);
+		juego1.cargaPatron(patronbloque, new Coordenada2D(0,0));
+		juego1.cargaPatron(patronbloque, new Coordenada2D(2,0)); 
+		juego1.cargaPatron(patronbloque, new Coordenada2D(0,2));
+		juego1.cargaPatron(patronbloque, new Coordenada2D(2,2));
 	
 	
 		/*Fichero con los tableros que el alumno genera para que pueda hacer un seguimiento
@@ -219,10 +253,10 @@ public class JuegoP2Test {
 		s.close();
 		
 		//Comprobación del contenido del tablero del alumno
-		Coordenada c;
+		Coordenada2D c;
 		for (int i=0; i<4; i++)
 			for (int j=0; j<4; j++) {
-				c = new Coordenada(i,j);
+				c = new Coordenada2D(i,j);
 				assertEquals("Estado ("+i+","+j+")=MUERTA",EstadoCelda.MUERTA,juego1.getTablero().getCelda(c));
 			}
 	}
@@ -248,68 +282,77 @@ public class JuegoP2Test {
 	
 	/* FUNCIONES AUXILIARES */
 	
+	/**
+	 * Crea patrones.
+	 */
 	private static void CreaPatrones() {
-		Tablero tableroPatron = new Tablero(new Coordenada(3,3));
-		tableroPatron.setCelda(new Coordenada(0,0), EstadoCelda.MUERTA);
-		tableroPatron.setCelda(new Coordenada(1,0), EstadoCelda.VIVA);
-		tableroPatron.setCelda(new Coordenada(2,0), EstadoCelda.MUERTA);
+		Tablero tableroPatron = new Tablero(new Coordenada2D(3,3));
+		tableroPatron.setCelda(new Coordenada2D(0,0), EstadoCelda.MUERTA);
+		tableroPatron.setCelda(new Coordenada2D(1,0), EstadoCelda.VIVA);
+		tableroPatron.setCelda(new Coordenada2D(2,0), EstadoCelda.MUERTA);
 
-		tableroPatron.setCelda(new Coordenada(0,1), EstadoCelda.MUERTA);
-		tableroPatron.setCelda(new Coordenada(1,1), EstadoCelda.MUERTA);
-		tableroPatron.setCelda(new Coordenada(2,1), EstadoCelda.VIVA);
+		tableroPatron.setCelda(new Coordenada2D(0,1), EstadoCelda.MUERTA);
+		tableroPatron.setCelda(new Coordenada2D(1,1), EstadoCelda.MUERTA);
+		tableroPatron.setCelda(new Coordenada2D(2,1), EstadoCelda.VIVA);
 
-		tableroPatron.setCelda(new Coordenada(0,2), EstadoCelda.VIVA);
-		tableroPatron.setCelda(new Coordenada(1,2), EstadoCelda.VIVA);
-		tableroPatron.setCelda(new Coordenada(2,2), EstadoCelda.VIVA);
+		tableroPatron.setCelda(new Coordenada2D(0,2), EstadoCelda.VIVA);
+		tableroPatron.setCelda(new Coordenada2D(1,2), EstadoCelda.VIVA);
+		tableroPatron.setCelda(new Coordenada2D(2,2), EstadoCelda.VIVA);
 		patronglider = new Patron("Glider", tableroPatron);	
 
 		// creamos otro patrón
-		tableroPatron = new Tablero(new Coordenada(2,2));
-		tableroPatron.setCelda(new Coordenada(0,0), EstadoCelda.VIVA);
-		tableroPatron.setCelda(new Coordenada(1,0), EstadoCelda.VIVA);
+		tableroPatron = new Tablero(new Coordenada2D(2,2));
+		tableroPatron.setCelda(new Coordenada2D(0,0), EstadoCelda.VIVA);
+		tableroPatron.setCelda(new Coordenada2D(1,0), EstadoCelda.VIVA);
 
-		tableroPatron.setCelda(new Coordenada(0,1), EstadoCelda.VIVA);
-		tableroPatron.setCelda(new Coordenada(1,1), EstadoCelda.VIVA);
+		tableroPatron.setCelda(new Coordenada2D(0,1), EstadoCelda.VIVA);
+		tableroPatron.setCelda(new Coordenada2D(1,1), EstadoCelda.VIVA);
 
 		patronbloque = new Patron("Bloque", tableroPatron);		
 		
 		// otro más
-		tableroPatron = new Tablero(new Coordenada(3,1));
-		tableroPatron.setCelda(new Coordenada(0,0), EstadoCelda.VIVA);
-		tableroPatron.setCelda(new Coordenada(1,0), EstadoCelda.VIVA);
-		tableroPatron.setCelda(new Coordenada(2,0), EstadoCelda.VIVA);
+		tableroPatron = new Tablero(new Coordenada2D(3,1));
+		tableroPatron.setCelda(new Coordenada2D(0,0), EstadoCelda.VIVA);
+		tableroPatron.setCelda(new Coordenada2D(1,0), EstadoCelda.VIVA);
+		tableroPatron.setCelda(new Coordenada2D(2,0), EstadoCelda.VIVA);
 
 		patronparpadeador = new Patron("Parpadeador", tableroPatron);	
 		
-		tableroPatron = new Tablero(new Coordenada(3,3));
-		tableroPatron.setCelda(new Coordenada(0,0), EstadoCelda.VIVA);
-		tableroPatron.setCelda(new Coordenada(1,0), EstadoCelda.VIVA);
-		tableroPatron.setCelda(new Coordenada(2,0), EstadoCelda.MUERTA);
+		tableroPatron = new Tablero(new Coordenada2D(3,3));
+		tableroPatron.setCelda(new Coordenada2D(0,0), EstadoCelda.VIVA);
+		tableroPatron.setCelda(new Coordenada2D(1,0), EstadoCelda.VIVA);
+		tableroPatron.setCelda(new Coordenada2D(2,0), EstadoCelda.MUERTA);
 
-		tableroPatron.setCelda(new Coordenada(0,1), EstadoCelda.VIVA);
-		tableroPatron.setCelda(new Coordenada(1,1), EstadoCelda.MUERTA);
-		tableroPatron.setCelda(new Coordenada(2,1), EstadoCelda.VIVA);
+		tableroPatron.setCelda(new Coordenada2D(0,1), EstadoCelda.VIVA);
+		tableroPatron.setCelda(new Coordenada2D(1,1), EstadoCelda.MUERTA);
+		tableroPatron.setCelda(new Coordenada2D(2,1), EstadoCelda.VIVA);
 
-		tableroPatron.setCelda(new Coordenada(0,2), EstadoCelda.MUERTA);
-		tableroPatron.setCelda(new Coordenada(1,2), EstadoCelda.VIVA);
-		tableroPatron.setCelda(new Coordenada(2,2), EstadoCelda.MUERTA);
+		tableroPatron.setCelda(new Coordenada2D(0,2), EstadoCelda.MUERTA);
+		tableroPatron.setCelda(new Coordenada2D(1,2), EstadoCelda.VIVA);
+		tableroPatron.setCelda(new Coordenada2D(2,2), EstadoCelda.MUERTA);
 		patronbarco = new Patron("Barco", tableroPatron);
 		
-		tableroPatron = new Tablero(new Coordenada(4,2));
-		tableroPatron.setCelda(new Coordenada(0,0), EstadoCelda.MUERTA);
-		tableroPatron.setCelda(new Coordenada(1,0), EstadoCelda.VIVA);
-		tableroPatron.setCelda(new Coordenada(2,0), EstadoCelda.VIVA);
-		tableroPatron.setCelda(new Coordenada(3,0), EstadoCelda.VIVA);
+		tableroPatron = new Tablero(new Coordenada2D(4,2));
+		tableroPatron.setCelda(new Coordenada2D(0,0), EstadoCelda.MUERTA);
+		tableroPatron.setCelda(new Coordenada2D(1,0), EstadoCelda.VIVA);
+		tableroPatron.setCelda(new Coordenada2D(2,0), EstadoCelda.VIVA);
+		tableroPatron.setCelda(new Coordenada2D(3,0), EstadoCelda.VIVA);
 
-		tableroPatron.setCelda(new Coordenada(0,1), EstadoCelda.VIVA);
-		tableroPatron.setCelda(new Coordenada(1,1), EstadoCelda.VIVA);
-		tableroPatron.setCelda(new Coordenada(2,1), EstadoCelda.VIVA);
-		tableroPatron.setCelda(new Coordenada(3,1), EstadoCelda.MUERTA);
+		tableroPatron.setCelda(new Coordenada2D(0,1), EstadoCelda.VIVA);
+		tableroPatron.setCelda(new Coordenada2D(1,1), EstadoCelda.VIVA);
+		tableroPatron.setCelda(new Coordenada2D(2,1), EstadoCelda.VIVA);
+		tableroPatron.setCelda(new Coordenada2D(3,1), EstadoCelda.MUERTA);
 		patronsapo = new Patron("Sapo", tableroPatron);
 
 	}
 	
 	
+	/**
+	 * Abrir fichero.
+	 *
+	 * @param fichero the fichero
+	 * @return the prints the stream
+	 */
 	//Abre un fichero para escribir las tablas que genera el alumno.
 	private PrintStream abrirFichero (String fichero) {
 		PrintStream s=null;
@@ -322,8 +365,15 @@ public class JuegoP2Test {
 		return s;
 	}
 	
+   /**
+    * Inicia tableros resultado.
+    *
+    * @param dim the dim
+    * @param fichero the fichero
+    * @return the tablero
+    */
    //Inicia un tablero con dimensiones dim a partir del contenido de un fichero
-   private static Tablero IniciaTablerosResultado(Coordenada dim,String fichero) {
+   private static Tablero IniciaTablerosResultado(Coordenada2D dim,String fichero) {
 	   Scanner s;
 	   Tablero tablero=null;
 	try {
@@ -337,8 +387,8 @@ public class JuegoP2Test {
 		   for (int i=0; i<tablero.getDimensiones().getX()+1; i++)
 		   {
 			 
-			  if (linea.charAt(i+1)==' ') tablero.setCelda(new Coordenada(i,j),EstadoCelda.MUERTA);
-			  else if (linea.charAt(i+1)=='*') tablero.setCelda(new Coordenada(i,j), EstadoCelda.VIVA);
+			  if (linea.charAt(i+1)==' ') tablero.setCelda(new Coordenada2D(i,j),EstadoCelda.MUERTA);
+			  else if (linea.charAt(i+1)=='*') tablero.setCelda(new Coordenada2D(i,j), EstadoCelda.VIVA);
 		   }
 		 }
 	    s.close();
@@ -349,6 +399,13 @@ public class JuegoP2Test {
 	    return tablero;
    }
    
+   /**
+    * Comprueba mensaje de error.
+    *
+    * @param sc the sc
+    * @param spatron the spatron
+    * @param scoord the scoord
+    */
    //Comprueba los errores de cargaPatron generados por el alumno y contenidos en un fichero.
    private void CompruebaMensajeDeError (Scanner sc, String spatron,String scoord){
 		String error;
@@ -361,6 +418,12 @@ public class JuegoP2Test {
 	    }
 	}
    
+/**
+ * Redireccionar salidas standard A fichero.
+ *
+ * @param fic the fic
+ * @return the prints the stream
+ */
 //Redireccionamiento de las salidas standard a un fichero
    private PrintStream redireccionarSalidasStandardAFichero(String fic) {
 	   PrintStream ps=null;
@@ -376,6 +439,9 @@ public class JuegoP2Test {
 	   return (ps);
 }
 
+/**
+ * Restaurar salidas standard.
+ */
 //Restaura las salidas standard
    private void restaurarSalidasStandard() {
 	   System.setOut(salstd);

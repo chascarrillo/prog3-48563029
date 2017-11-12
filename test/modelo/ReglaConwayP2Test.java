@@ -9,17 +9,24 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author gonzalo
+ * The Class ReglaConwayP2Test.
  *
+ * @author gonzalo
  */
 public class ReglaConwayP2Test {
 	
+	/** The tablero. */
 	private Tablero tablero;
+	
+	/** The regla. */
 	private static ReglaConway regla;
 
 	/**
-	 * @throws java.lang.Exception
+	 * Sets the up before class.
+	 *
+	 * @throws Exception the exception
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -27,7 +34,9 @@ public class ReglaConwayP2Test {
 	}
 
 	/**
-	 * @throws java.lang.Exception
+	 * Sets the up.
+	 *
+	 * @throws Exception the exception
 	 */
 	@Before
 	public void setUp() throws Exception {
@@ -36,40 +45,43 @@ public class ReglaConwayP2Test {
 		 * MMM
 		 * MMM
 		 */
-		Coordenada dim = new Coordenada (3,3);
+		Coordenada2D dim = new Coordenada2D (3,3);
 		tablero = new Tablero(dim);
 		
 		
 	}
 
 	/**
-	 * Test method for {@link modelo.ReglaConway#calculaSiguienteEstadoCelda(modelo.Tablero, modelo.Coordenada)}.
+	 * Test method for {@link modelo.ReglaConway#calculaSiguienteEstadoCelda(modelo.Tablero, modelo.Coordenada2D)}.
 	 */
 	@Test
 	public void testCalculaSiguienteEstadoCeldaTodasMuertas() {
-		Coordenada pos;
+		Coordenada2D pos;
 		for (int x=0; x<tablero.getDimensiones().getX();x++)
 			for(int y=0; y<tablero.getDimensiones().getY();y++) {
-				pos=new Coordenada(x,y);
+				pos=new Coordenada2D(x,y);
 				assertEquals ("Todas muertas", EstadoCelda.MUERTA, regla.calculaSiguienteEstadoCelda(tablero, pos));
 			}
 	}
 	
+	/**
+	 * Test calcula siguiente estado celda muerta 1 viva.
+	 */
 	@Test
 	public void testCalculaSiguienteEstadoCeldaMuerta1Viva() {
-		Coordenada pos1 =new Coordenada(0,0);
-		Coordenada pos2 =new Coordenada(0,1);
-		Coordenada pos3 =new Coordenada(1,1);
-		Coordenada pos4 =new Coordenada(2,0);
-		Coordenada pos5 =new Coordenada(2,1);
-		Coordenada pos6 =new Coordenada(0,2);
-		Coordenada pos7 =new Coordenada(1,2);
+		Coordenada2D pos1 =new Coordenada2D(0,0);
+		Coordenada2D pos2 =new Coordenada2D(0,1);
+		Coordenada2D pos3 =new Coordenada2D(1,1);
+		Coordenada2D pos4 =new Coordenada2D(2,0);
+		Coordenada2D pos5 =new Coordenada2D(2,1);
+		Coordenada2D pos6 =new Coordenada2D(0,2);
+		Coordenada2D pos7 =new Coordenada2D(1,2);
 		/*
 		 * MVM
 		 * MMM
 		 * MMM
 		 */
-		tablero.setCelda(new Coordenada(1,0), EstadoCelda.VIVA);
+		tablero.setCelda(new Coordenada2D(1,0), EstadoCelda.VIVA);
 		assertEquals ("Muerta(0,0)con 1 Viva = Muerta ",EstadoCelda.MUERTA,regla.calculaSiguienteEstadoCelda(tablero,pos1));
 		assertEquals ("Muerta(0,1)con 1 Viva = Muerta ",EstadoCelda.MUERTA,regla.calculaSiguienteEstadoCelda(tablero,pos2));
 		assertEquals ("Muerta(1,1)con 1 Viva = Muerta ",EstadoCelda.MUERTA,regla.calculaSiguienteEstadoCelda(tablero,pos3));		
@@ -87,64 +99,76 @@ public class ReglaConwayP2Test {
 		
 	}
 	
+	/**
+	 * Test calcula siguiente estado celda muerta 2 vivas.
+	 */
 	@Test
 	public void testCalculaSiguienteEstadoCeldaMuerta2Vivas() {
-		Coordenada pos1 =new Coordenada(0,0);
-		Coordenada pos2 =new Coordenada(1,1);
+		Coordenada2D pos1 =new Coordenada2D(0,0);
+		Coordenada2D pos2 =new Coordenada2D(1,1);
 		
 		/*
 		 * MVM
 		 * VMM
 		 * MMM
 		 */
-		tablero.setCelda(new Coordenada(1,0), EstadoCelda.VIVA);
-		tablero.setCelda(new Coordenada(0,1), EstadoCelda.VIVA);
+		tablero.setCelda(new Coordenada2D(1,0), EstadoCelda.VIVA);
+		tablero.setCelda(new Coordenada2D(0,1), EstadoCelda.VIVA);
 		assertEquals ("Muerta(0,0)con 2 Vivas = Muerta ",EstadoCelda.MUERTA,regla.calculaSiguienteEstadoCelda(tablero,pos1));
 		assertEquals ("Muerta(1,1)con 2 Vivas = Muerta ",EstadoCelda.MUERTA,regla.calculaSiguienteEstadoCelda(tablero,pos2));		
 	}
 		
+	/**
+	 * Test calcula siguiente estado celda muerta 3 vivas.
+	 */
 	@Test
 	public void testCalculaSiguienteEstadoCeldaMuerta3Vivas() {
-		Coordenada pos1 =new Coordenada(1,0);
-		Coordenada pos2 =new Coordenada(1,2);
+		Coordenada2D pos1 =new Coordenada2D(1,0);
+		Coordenada2D pos2 =new Coordenada2D(1,2);
 		/*
 		 * MMM
 		 * VVV
 		 * MMM
 		 */
-		tablero.setCelda(new Coordenada(0,1), EstadoCelda.VIVA);
-		tablero.setCelda(new Coordenada(1,1), EstadoCelda.VIVA);
-		tablero.setCelda(new Coordenada(2,1),EstadoCelda.VIVA);
+		tablero.setCelda(new Coordenada2D(0,1), EstadoCelda.VIVA);
+		tablero.setCelda(new Coordenada2D(1,1), EstadoCelda.VIVA);
+		tablero.setCelda(new Coordenada2D(2,1),EstadoCelda.VIVA);
 		assertEquals ("Muerta(1,0)con 3 Viva = Viva ",EstadoCelda.VIVA,regla.calculaSiguienteEstadoCelda(tablero,pos1));
 		assertEquals ("Muerta(1,2)con 3 Viva = Viva ",EstadoCelda.VIVA,regla.calculaSiguienteEstadoCelda(tablero,pos2));		
 	}	
 	
+	/**
+	 * Test calcula siguiente estado celda muerta 4 vivas.
+	 */
 	@Test
 	public void testCalculaSiguienteEstadoCeldaMuerta4Vivas() {
-		Coordenada pos1 =new Coordenada(1,0);
+		Coordenada2D pos1 =new Coordenada2D(1,0);
 		
 		/*
 		 * MMV
 		 * VVV
 		 * MMM
 		 */
-		tablero.setCelda(new Coordenada(0,1), EstadoCelda.VIVA);
-		tablero.setCelda(new Coordenada(1,1), EstadoCelda.VIVA);
-		tablero.setCelda(new Coordenada(2,1),EstadoCelda.VIVA);
-		tablero.setCelda(new Coordenada(2,0), EstadoCelda.VIVA);
+		tablero.setCelda(new Coordenada2D(0,1), EstadoCelda.VIVA);
+		tablero.setCelda(new Coordenada2D(1,1), EstadoCelda.VIVA);
+		tablero.setCelda(new Coordenada2D(2,1),EstadoCelda.VIVA);
+		tablero.setCelda(new Coordenada2D(2,0), EstadoCelda.VIVA);
 		
 		assertEquals ("Muerta(1,0)con 4 Viva = Muerta ",EstadoCelda.MUERTA,regla.calculaSiguienteEstadoCelda(tablero,pos1));
 		
 	}	
 	
+	/**
+	 * Test calcula siguiente estado celda viva 0145 vivas.
+	 */
 	@Test
 	public void testCalculaSiguienteEstadoCeldaViva0145Vivas() {
-		Coordenada pos1 =new Coordenada(0,1);
-		Coordenada pos2 =new Coordenada(1,1);	
-		Coordenada pos3 =new Coordenada(2,1);
-		Coordenada pos4 =new Coordenada(1,0);
-		Coordenada pos5 =new Coordenada(0,0);
-		Coordenada pos6 =new Coordenada(2,0);
+		Coordenada2D pos1 =new Coordenada2D(0,1);
+		Coordenada2D pos2 =new Coordenada2D(1,1);	
+		Coordenada2D pos3 =new Coordenada2D(2,1);
+		Coordenada2D pos4 =new Coordenada2D(1,0);
+		Coordenada2D pos5 =new Coordenada2D(0,0);
+		Coordenada2D pos6 =new Coordenada2D(2,0);
 		/*
 		 * MMM
 		 * VMM
@@ -181,12 +205,15 @@ public class ReglaConwayP2Test {
 		assertEquals ("Viva(1,0)con 5 Vivas = Muerta ",EstadoCelda.MUERTA,regla.calculaSiguienteEstadoCelda(tablero,pos4));
 	}	
 	
+	/**
+	 * Test calcula siguiente estado celda viva 23 vivas.
+	 */
 	@Test
 	public void testCalculaSiguienteEstadoCeldaViva23Vivas() {
-		Coordenada pos1 =new Coordenada(0,1);
-		Coordenada pos2 =new Coordenada(1,1);	
-		Coordenada pos3 =new Coordenada(2,1);
-		Coordenada pos4 =new Coordenada(1,2);
+		Coordenada2D pos1 =new Coordenada2D(0,1);
+		Coordenada2D pos2 =new Coordenada2D(1,1);	
+		Coordenada2D pos3 =new Coordenada2D(2,1);
+		Coordenada2D pos4 =new Coordenada2D(1,2);
 		/*
 		 * MMM
 		 * VVV

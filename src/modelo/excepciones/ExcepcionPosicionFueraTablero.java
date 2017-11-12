@@ -7,7 +7,9 @@
 package modelo.excepciones;
 
 import modelo.Coordenada;
+import modelo.Coordenada2D;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ExcepcionPosicionFueraTablero.
  */
@@ -15,6 +17,9 @@ public class ExcepcionPosicionFueraTablero
 extends Exception
 {
 	
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 1L;
+
 	/** The dimensiones. */
 	private Coordenada dimensiones;
 	
@@ -24,27 +29,24 @@ extends Exception
 	/**
 	 * Instantiates a new excepcion posicion fuera tablero.
 	 *
-	 * @param coordenada the coordenada
-	 * @param dimensiones the dimensiones
+	 * @param posicion the coordenada
+	 * @param coordenada2 the dimensiones
 	 */
-	public ExcepcionPosicionFueraTablero(Coordenada coordenada, Coordenada dimensiones)
+	public ExcepcionPosicionFueraTablero(Coordenada posicion, Coordenada coordenada2)
 	{
-		if(coordenada != null  &&  dimensiones != null)
-		{
-			this.dimensiones = dimensiones;
-			this.coordenada = coordenada;
-		}
-		else throw new ExcepcionArgumentosIncorrectos();
+		if(posicion == null  ||  coordenada2 == null) throw new ExcepcionArgumentosIncorrectos();
+			this.dimensiones = coordenada2;
+			this.coordenada = posicion;
 	}
 
 	/**
-	 * Devuelve un mensaje con informacion sobre la excepcion ocurrida
+	 * Devuelve un mensaje con informacion sobre la excepcion ocurrida.
 	 *
 	 * @return info
 	 */
 	public String getMessage()
 	{
-		return coordenada.toString() + "no entra en el tablero de dimensiones " + dimensiones.toString();
+		return coordenada.toString() + " no entra en el tablero de dimensiones " + dimensiones.toString();
 	}
 
 	/**

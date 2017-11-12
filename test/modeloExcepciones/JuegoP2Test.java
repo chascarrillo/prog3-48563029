@@ -14,44 +14,77 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import modelo.Coordenada2D;
+import modelo.EstadoCelda;
+import modelo.Juego;
+import modelo.Patron;
+import modelo.ReglaConway;
+import modelo.Tablero;
+import modelo.TableroCeldasCuadradas;
+import modelo.excepciones.ExcepcionCoordenada2DIncorrecta;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author gonzalo
+ * The Class JuegoP2Test.
  *
+ * @author gonzalo
  */
 public class JuegoP2Test {
+     
+     /** The regla. */
      ReglaConway regla;
+     
+     /** The patrones. */
      ArrayList<Patron> patrones;
+     
+     /** The tablero. */
      Tablero tablero;
+     
+     /** The juego. */
      Juego juego;
+     
+     /** The patronsapo. */
      static Patron patronglider, patronbloque, patronparpadeador, patronbarco, patronsapo;
+     
+     /** The tablero 4. */
      static String tablero1, tablero2, tablero3, tablero4;
+     
+     /** The tableroconmaspatrones. */
      static Tablero tablerodelmain, tableroparpadeadores, tableroconmaspatrones;
+     
+     /** The errstd. */
      static PrintStream salstd, errstd; //salida y error standard
-     static final String FICHERRORES = "testp2/ficheros/salidaerrorespatron.txt";
+     
+     /** The Constant FICHERRORES. */
+     static final String FICHERRORES = "test/ficheros/salidaerrorespatron.txt";
+	
 	/**
-	 * @throws java.lang.Exception
+	 * Sets the up before class.
+	 *
+	 * @throws Exception the exception
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		
 		salstd = new PrintStream(System.out);
 		errstd = new PrintStream(System.err);
-	    tablerodelmain = IniciaTablerosResultado(new Coordenada2D(10,5),"testp2/ficheros/tablerodelmain.ent");
-	    tableroparpadeadores = IniciaTablerosResultado(new Coordenada2D(10,1),"testp2/ficheros/tablerodelmain.ent");
-	    tableroconmaspatrones = IniciaTablerosResultado(new Coordenada2D(10,15),"testp2/ficheros/tableroconmaspatrones.ent");
+	    tablerodelmain = IniciaTablerosResultado(new Coordenada2D(10,5),"test/ficheros/tablerodelmain.ent");
+	    tableroparpadeadores = IniciaTablerosResultado(new Coordenada2D(10,1),"test/ficheros/tablerodelmain.ent");
+	    tableroconmaspatrones = IniciaTablerosResultado(new Coordenada2D(10,15),"test/ficheros/tableroconmaspatrones.ent");
 	    CreaPatrones();
 	}
 
 
 	/**
-	 * @throws java.lang.Exception
+	 * Sets the up.
+	 *
+	 * @throws Exception the exception
 	 */
 	@Before
 	public void setUp() throws Exception {
-		tablero = new TableroCeldasCuadradas(10,15);
+		tablero = new TableroCeldasCuadradas(new Coordenada2D(10,15));
 		regla = new ReglaConway();
 		juego = new Juego(tablero,regla);
 		patrones = juego.getPatrones();	
@@ -68,9 +101,10 @@ public class JuegoP2Test {
 	}
 
 	/**
-	 * Test method for {@link modelo.Juego#cargaPatron(modelo.Patron, modelo.Coordenada)}.
-	 * @throws ExcepcionCoordenadaIncorrecta 
-	 * @throws ExcepcionPosicionFueraTablero 
+	 * Test method for {@link modelo.Juego#cargaPatron(modelo.Patron, modelo.Coordenada2D)}.
+	 *
+	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
 	 */
 	@Test(expected = ExcepcionPosicionFueraTablero.class)
 	public void testNoCargaPatron() throws ExcepcionPosicionFueraTablero, ExcepcionCoordenadaIncorrecta {				
@@ -78,9 +112,10 @@ public class JuegoP2Test {
 	}
 
 	/**
-	 * Test method for {@link modelo.Juego#cargaPatron(modelo.Patron, modelo.Coordenada)}.
-	 * @throws ExcepcionCoordenadaIncorrecta 
-	 * @throws ExcepcionPosicionFueraTablero 
+	 * Test method for {@link modelo.Juego#cargaPatron(modelo.Patron, modelo.Coordenada2D)}.
+	 *
+	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
 	 */
 	@Test(expected = ExcepcionPosicionFueraTablero.class)
 	public void testNoCargaPatron2() throws ExcepcionPosicionFueraTablero, ExcepcionCoordenadaIncorrecta {				
@@ -88,9 +123,10 @@ public class JuegoP2Test {
 	}
 
 	/**
-	 * Test method for {@link modelo.Juego#cargaPatron(modelo.Patron, modelo.Coordenada)}.
-	 * @throws ExcepcionCoordenadaIncorrecta 
-	 * @throws ExcepcionPosicionFueraTablero 
+	 * Test method for {@link modelo.Juego#cargaPatron(modelo.Patron, modelo.Coordenada2D)}.
+	 *
+	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
 	 */
 	@Test
 	public void testCargaPatron() throws ExcepcionPosicionFueraTablero, ExcepcionCoordenadaIncorrecta {
@@ -112,13 +148,14 @@ public class JuegoP2Test {
 
 	/**
 	 * Test method for {@link modelo.Juego#actualiza()}.
-	 * @throws ExcepcionCoordenadaIncorrecta 
-	 * @throws ExcepcionPosicionFueraTablero 
+	 *
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
+	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
 	 */
 	@Test
 	public void testActualizaTableroDelMain() throws ExcepcionCoordenadaIncorrecta, ExcepcionPosicionFueraTablero {
 		
-		Juego juego1 = new Juego(new TableroCeldasCuadradas(10,5),regla);
+		Juego juego1 = new Juego(new TableroCeldasCuadradas(new Coordenada2D(10,5)),regla);
 		juego1.cargaPatron(patronglider, new Coordenada2D(0,0));
 		juego1.cargaPatron(patronbloque, new Coordenada2D(8,3)); 
 		juego1.cargaPatron(patronparpadeador, new Coordenada2D(7,0));
@@ -126,7 +163,7 @@ public class JuegoP2Test {
 		
 		/*Fichero con los tableros que el alumno genera.Para que pueda
 		analizar sus actualizaciones sucesivas en caso de error */
-		PrintStream s = abrirFichero("testp2/ficheros/tablerosdelmaindelalumno.sal"); 
+		PrintStream s = abrirFichero("test/ficheros/tablerosdelmaindelalumno.sal"); 
 		for (int i=0; i<5; i++) {
 
 			s.print(juego1.getTablero().toString()); //Guarda tablero del alumno
@@ -135,7 +172,7 @@ public class JuegoP2Test {
 		s.close();
 		
 		//Comprobación del tablero final del alumno.
-		Coordenada c;
+		Coordenada2D c;
 		for (int i=0; i<10; i++)
 			for (int j=0; j<5; j++) {
 				c = new Coordenada2D(i,j);
@@ -143,10 +180,16 @@ public class JuegoP2Test {
 			}
 	}
 	
+	/**
+	 * Test actualiza parpadeadores solapados.
+	 *
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
+	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
+	 */
 	@Test
 	public void testActualizaParpadeadoresSolapados() throws ExcepcionCoordenadaIncorrecta, ExcepcionPosicionFueraTablero {
 		
-		Juego juego1 = new Juego(new TableroCeldasCuadradas(10,1),regla);
+		Juego juego1 = new Juego(new TableroCeldasCuadradas(new Coordenada2D(10,1)),regla);
 		juego1.cargaPatron(patronparpadeador, new Coordenada2D(1,0));
 		juego1.cargaPatron(patronparpadeador, new Coordenada2D(3,0)); 
 		juego1.cargaPatron(patronparpadeador, new Coordenada2D(4,0));
@@ -154,7 +197,7 @@ public class JuegoP2Test {
 		
 		/*Fichero con los tableros que el alumno genera.Para que en caso de error pueda
 		hacer un seguimiento de sus actualizaciones */
-		PrintStream s = abrirFichero("testp2/ficheros/tablerosparpadeadores.sal"); 
+		PrintStream s = abrirFichero("test/ficheros/tablerosparpadeadores.sal"); 
 		for (int i=0; i<4; i++) {
 
 			s.print(juego1.getTablero().toString()); //Guarda tablero del alumno 
@@ -171,6 +214,12 @@ public class JuegoP2Test {
 			}
 	}
 	
+	/**
+	 * Test actualiza con mas patrones.
+	 *
+	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
+	 */
 	@Test
 	public void testActualizaConMasPatrones() throws ExcepcionPosicionFueraTablero, ExcepcionCoordenadaIncorrecta {
 		
@@ -187,7 +236,7 @@ public class JuegoP2Test {
 	
 		/*Fichero con los tableros que el alumno genera en cada actualización para que
 		pueda hacer un seguimiento en caso de error. */
-		PrintStream s = abrirFichero("testp2/ficheros/tablerosconmaspatrones.sal"); 
+		PrintStream s = abrirFichero("test/ficheros/tablerosconmaspatrones.sal"); 
 		for (int i=0; i<9; i++) {
 			s.print(juego.getTablero().toString()); //Guarda tablero del alumno 
 			juego.actualiza();
@@ -203,10 +252,16 @@ public class JuegoP2Test {
 			}
 	}
 
+	/**
+	 * Test actualiza todo vivo.
+	 *
+	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
+	 */
 	@Test
 	public void testActualizaTodoVivo() throws ExcepcionPosicionFueraTablero, ExcepcionCoordenadaIncorrecta {
 	
-		Juego juego1 = new Juego(new TableroCeldasCuadradas(4,4),regla);
+		Juego juego1 = new Juego(new TableroCeldasCuadradas(new Coordenada2D(4,4)),regla);
 		juego1.cargaPatron(patronbloque, new Coordenada2D(0,0));
 		juego1.cargaPatron(patronbloque, new Coordenada2D(2,0)); 
 		juego1.cargaPatron(patronbloque, new Coordenada2D(0,2));
@@ -215,7 +270,7 @@ public class JuegoP2Test {
 	
 		/*Fichero con los tableros que el alumno genera para que pueda hacer un seguimiento
 		de sus actualizaciones en caso de error. */
-		PrintStream s = abrirFichero("testp2/ficheros/tablerostodovivo.sal"); 
+		PrintStream s = abrirFichero("test/ficheros/tablerostodovivo.sal"); 
 		for (int i=0; i<3; i++) {
 			s.print(juego1.getTablero().toString()); //Guarda tablero del alumno 
 			juego1.actualiza();
@@ -252,8 +307,14 @@ public class JuegoP2Test {
 	
 	/* FUNCIONES AUXILIARES */
 	
+	/**
+	 * Crea patrones.
+	 *
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
+	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
+	 */
 	private static void CreaPatrones() throws ExcepcionCoordenadaIncorrecta, ExcepcionPosicionFueraTablero {
-		Tablero tableroPatron = new TableroCeldasCuadradas(3,3);
+		Tablero tableroPatron = new TableroCeldasCuadradas(new Coordenada2D(3,3));
 		tableroPatron.setCelda(new Coordenada2D(0,0), EstadoCelda.MUERTA);
 		tableroPatron.setCelda(new Coordenada2D(1,0), EstadoCelda.VIVA);
 		tableroPatron.setCelda(new Coordenada2D(2,0), EstadoCelda.MUERTA);
@@ -268,7 +329,7 @@ public class JuegoP2Test {
 		patronglider = new Patron("Glider", tableroPatron);	
 
 		// creamos otro patrón
-		tableroPatron = new TableroCeldasCuadradas(2,2);
+		tableroPatron = new TableroCeldasCuadradas(new Coordenada2D(2,2));
 		tableroPatron.setCelda(new Coordenada2D(0,0), EstadoCelda.VIVA);
 		tableroPatron.setCelda(new Coordenada2D(1,0), EstadoCelda.VIVA);
 
@@ -278,14 +339,14 @@ public class JuegoP2Test {
 		patronbloque = new Patron("Bloque", tableroPatron);		
 		
 		// otro más
-		tableroPatron = new TableroCeldasCuadradas(3,1);
+		tableroPatron = new TableroCeldasCuadradas(new Coordenada2D(3,1));
 		tableroPatron.setCelda(new Coordenada2D(0,0), EstadoCelda.VIVA);
 		tableroPatron.setCelda(new Coordenada2D(1,0), EstadoCelda.VIVA);
 		tableroPatron.setCelda(new Coordenada2D(2,0), EstadoCelda.VIVA);
 
 		patronparpadeador = new Patron("Parpadeador", tableroPatron);	
 		
-		tableroPatron = new TableroCeldasCuadradas(3,3);
+		tableroPatron = new TableroCeldasCuadradas(new Coordenada2D(3,3));
 		tableroPatron.setCelda(new Coordenada2D(0,0), EstadoCelda.VIVA);
 		tableroPatron.setCelda(new Coordenada2D(1,0), EstadoCelda.VIVA);
 		tableroPatron.setCelda(new Coordenada2D(2,0), EstadoCelda.MUERTA);
@@ -299,7 +360,7 @@ public class JuegoP2Test {
 		tableroPatron.setCelda(new Coordenada2D(2,2), EstadoCelda.MUERTA);
 		patronbarco = new Patron("Barco", tableroPatron);
 		
-		tableroPatron = new TableroCeldasCuadradas(4,2);
+		tableroPatron = new TableroCeldasCuadradas(new Coordenada2D(4,2));
 		tableroPatron.setCelda(new Coordenada2D(0,0), EstadoCelda.MUERTA);
 		tableroPatron.setCelda(new Coordenada2D(1,0), EstadoCelda.VIVA);
 		tableroPatron.setCelda(new Coordenada2D(2,0), EstadoCelda.VIVA);
@@ -314,6 +375,12 @@ public class JuegoP2Test {
 	}
 	
 	
+	/**
+	 * Abrir fichero.
+	 *
+	 * @param fichero the fichero
+	 * @return the prints the stream
+	 */
 	//Abre un fichero para escribir las tablas que genera el alumno.
 	private PrintStream abrirFichero (String fichero) {
 		PrintStream s=null;
@@ -326,15 +393,24 @@ public class JuegoP2Test {
 		return s;
 	}
 	
+   /**
+    * Inicia tableros resultado.
+    *
+    * @param dim the dim
+    * @param fichero the fichero
+    * @return the tablero
+    * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
+    * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
+    */
    //Inicia un tablero con dimensiones dim a partir del contenido de un fichero
-   private static Tablero IniciaTablerosResultado(Coordenada dim,String fichero) throws ExcepcionCoordenadaIncorrecta, ExcepcionPosicionFueraTablero {
+   private static Tablero IniciaTablerosResultado(Coordenada2D dim,String fichero) throws ExcepcionCoordenadaIncorrecta, ExcepcionPosicionFueraTablero {
 	   Scanner s;
 	   Tablero tablero=null;
 	try {
 		s = new Scanner(new File(fichero));
 		int x =((Coordenada2D)dim).getX();
 		int y =((Coordenada2D)dim).getY();
-	   tablero = new TableroCeldasCuadradas(x,y);
+	   tablero = new TableroCeldasCuadradas(new Coordenada2D(x,y));
 	   s.nextLine();
 	   String linea;
 	   for (int j=0; j<y; j++) {
@@ -354,6 +430,13 @@ public class JuegoP2Test {
 	    return tablero;
    }
    
+   /**
+    * Comprueba mensaje de error.
+    *
+    * @param sc the sc
+    * @param spatron the spatron
+    * @param scoord the scoord
+    */
    //Comprueba los errores de cargaPatron generados por el alumno y contenidos en un fichero.
    private void CompruebaMensajeDeError (Scanner sc, String spatron,String scoord){
 		String error;
@@ -366,6 +449,12 @@ public class JuegoP2Test {
 	    }
 	}
    
+/**
+ * Redireccionar salidas standard A fichero.
+ *
+ * @param fic the fic
+ * @return the prints the stream
+ */
 //Redireccionamiento de las salidas standard a un fichero
    private PrintStream redireccionarSalidasStandardAFichero(String fic) {
 	   PrintStream ps=null;
@@ -381,6 +470,9 @@ public class JuegoP2Test {
 	   return (ps);
 }
 
+/**
+ * Restaurar salidas standard.
+ */
 //Restaura las salidas standard
    private void restaurarSalidasStandard() {
 	   System.setOut(salstd);

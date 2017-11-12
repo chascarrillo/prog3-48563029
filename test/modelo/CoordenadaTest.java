@@ -5,18 +5,31 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+// TODO: Auto-generated Javadoc
 /**
-@author jgonzalo
- **/
+ * The Class CoordenadaTest.
+ *
+ * @author jgonzalo
+ */
 public class CoordenadaTest {
-	Coordenada c;
 	
+	/** The c. */
+	Coordenada2D c;
+	
+	/**
+	 * Sets the up.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Before
 	public void setUp() throws Exception {
-		c = new Coordenada(3, 5);
+		c = new Coordenada2D(3, 5);
 				
 	}
 
+	/**
+	 * Test getters.
+	 */
 	@Test
 	public final void testGetters() {
 		assertEquals("x", 3, c.getX());
@@ -24,20 +37,26 @@ public class CoordenadaTest {
 		
 	}
 
+	/**
+	 * Test inicializacion.
+	 */
 	@Test
 	public final void testInicializacion() {
 	
-		Coordenada c2 = new Coordenada(c);
+		Coordenada2D c2 = new Coordenada2D(c);
 		assertEquals("c2.x", c2.getX(), c.getX());
 		assertEquals("c2.y", c2.getY(), c.getY());
 		
 	}
 	
+	/**
+	 * Test equals.
+	 */
 	@Test
 	public final void testEquals() {
-		Coordenada c4 = new Coordenada(3,5);
-		Coordenada c5 = new Coordenada(3,6);
-		Coordenada c6 = new Coordenada(4,5);
+		Coordenada2D c4 = new Coordenada2D(3,5);
+		Coordenada2D c5 = new Coordenada2D(3,6);
+		Coordenada2D c6 = new Coordenada2D(4,5);
 		String s = new String();
 		assertFalse(c.equals(null));
 		assertFalse(c.equals(s));
@@ -50,15 +69,21 @@ public class CoordenadaTest {
 	}
 	
 		
+	/**
+	 * Test to string.
+	 */
 	@Test
 	public final void testToString() {
-		assertEquals("Coordenada.toString()","(3,5)",c.toString());
+		assertEquals("Coordenada2D.toString()","(3,5)",c.toString());
 		
 	}
 	
+	/**
+	 * Test suma.
+	 */
 	@Test
 	public final void testSuma() {
-		Coordenada c7 = new Coordenada(c.suma(c));
+		Coordenada2D c7 = new Coordenada2D(c.suma(c));
 		assertEquals("c.suma(c).x",6,c7.getX());
 		assertEquals("c.suma(c).y",10,c7.getY());
 		assertEquals("c.suma(c7)","(9,15)",c.suma(c7).toString());

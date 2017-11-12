@@ -11,6 +11,7 @@ import java.util.Collection;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Patron.
  */
@@ -49,26 +50,18 @@ public class Patron
 	/**
 	 * Gets the celda.
 	 *
-	 * @param c the c
+	 * @param caux the c
 	 * @return the celda
+	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
 	 */
-	public EstadoCelda getCelda(Coordenada c)
+	public EstadoCelda getCelda(Coordenada caux)
+	throws ExcepcionPosicionFueraTablero
 	{
 		EstadoCelda estado = null;
-		if(c == null) throw new ExcepcionArgumentosIncorrectos();
-		try
-		{
-			estado = tablero.getCelda(c);
-		}
-		catch (ExcepcionPosicionFueraTablero e)
-		{
-			e.getMessage();
-			e.printStackTrace();
-		}
-		finally
-		{
-			return estado;
-		}
+		if(caux == null) throw new ExcepcionArgumentosIncorrectos();
+		estado = tablero.getCelda(caux);
+
+		return estado;
 	}
 
 	/**

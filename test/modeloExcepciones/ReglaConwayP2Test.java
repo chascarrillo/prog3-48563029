@@ -9,23 +9,38 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import modelo.Coordenada2D;
+import modelo.EstadoCelda;
+import modelo.ReglaConway;
+import modelo.Tablero;
+import modelo.TableroCeldasCuadradas;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author gonzalo
+ * The Class ReglaConwayP2Test.
  *
+ * @author gonzalo
  */
 public class ReglaConwayP2Test {
 	
+	/** The tablero. */
 	private Tablero tablero;
+	
+	/** The regla. */
 	private static ReglaConway regla;
 	
+	/** The xtab. */
 	private int xtab;
+	
+	/** The ytab. */
 	private int ytab;
 
 	/**
-	 * @throws java.lang.Exception
+	 * Sets the up before class.
+	 *
+	 * @throws Exception the exception
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -33,7 +48,9 @@ public class ReglaConwayP2Test {
 	}
 
 	/**
-	 * @throws java.lang.Exception
+	 * Sets the up.
+	 *
+	 * @throws Exception the exception
 	 */
 	@Before
 	public void setUp() throws Exception {
@@ -49,13 +66,14 @@ public class ReglaConwayP2Test {
 	}
 
 	/**
-	 * Test method for {@link modelo.ReglaConway#calculaSiguienteEstadoCelda(modelo.Tablero, modelo.Coordenada)}.
-	 * @throws ExcepcionCoordenadaIncorrecta 
-	 * @throws ExcepcionPosicionFueraTablero 
+	 * Test method for {@link modelo.ReglaConway#calculaSiguienteEstadoCelda(modelo.Tablero, modelo.Coordenada2D)}.
+	 *
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
+	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
 	 */
 	@Test
 	public void testCalculaSiguienteEstadoCeldaTodasMuertas() throws ExcepcionCoordenadaIncorrecta, ExcepcionPosicionFueraTablero {
-		Coordenada pos;
+		Coordenada2D pos;
 		for (int x=0; x<xtab;x++)
 			for(int y=0; y<ytab;y++) {
 				pos=new Coordenada2D(x,y);
@@ -63,15 +81,21 @@ public class ReglaConwayP2Test {
 			}
 	}
 	
+	/**
+	 * Test calcula siguiente estado celda muerta 1 viva.
+	 *
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
+	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
+	 */
 	@Test
 	public void testCalculaSiguienteEstadoCeldaMuerta1Viva() throws ExcepcionCoordenadaIncorrecta, ExcepcionPosicionFueraTablero {
-		Coordenada pos1 =new Coordenada2D(0,0);
-		Coordenada pos2 =new Coordenada2D(0,1);
-		Coordenada pos3 =new Coordenada2D(1,1);
-		Coordenada pos4 =new Coordenada2D(2,0);
-		Coordenada pos5 =new Coordenada2D(2,1);
-		Coordenada pos6 =new Coordenada2D(0,2);
-		Coordenada pos7 =new Coordenada2D(1,2);
+		Coordenada2D pos1 =new Coordenada2D(0,0);
+		Coordenada2D pos2 =new Coordenada2D(0,1);
+		Coordenada2D pos3 =new Coordenada2D(1,1);
+		Coordenada2D pos4 =new Coordenada2D(2,0);
+		Coordenada2D pos5 =new Coordenada2D(2,1);
+		Coordenada2D pos6 =new Coordenada2D(0,2);
+		Coordenada2D pos7 =new Coordenada2D(1,2);
 		/*
 		 * MVM
 		 * MMM
@@ -95,10 +119,16 @@ public class ReglaConwayP2Test {
 		
 	}
 	
+	/**
+	 * Test calcula siguiente estado celda muerta 2 vivas.
+	 *
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
+	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
+	 */
 	@Test
 	public void testCalculaSiguienteEstadoCeldaMuerta2Vivas() throws ExcepcionCoordenadaIncorrecta, ExcepcionPosicionFueraTablero {
-		Coordenada pos1 =new Coordenada2D(0,0);
-		Coordenada pos2 =new Coordenada2D(1,1);
+		Coordenada2D pos1 =new Coordenada2D(0,0);
+		Coordenada2D pos2 =new Coordenada2D(1,1);
 		
 		/*
 		 * MVM
@@ -111,10 +141,16 @@ public class ReglaConwayP2Test {
 		assertEquals ("Muerta(1,1)con 2 Vivas = Muerta ",EstadoCelda.MUERTA,regla.calculaSiguienteEstadoCelda(tablero,pos2));		
 	}
 		
+	/**
+	 * Test calcula siguiente estado celda muerta 3 vivas.
+	 *
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
+	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
+	 */
 	@Test
 	public void testCalculaSiguienteEstadoCeldaMuerta3Vivas() throws ExcepcionCoordenadaIncorrecta, ExcepcionPosicionFueraTablero {
-		Coordenada pos1 =new Coordenada2D(1,0);
-		Coordenada pos2 =new Coordenada2D(1,2);
+		Coordenada2D pos1 =new Coordenada2D(1,0);
+		Coordenada2D pos2 =new Coordenada2D(1,2);
 		/*
 		 * MMM
 		 * VVV
@@ -127,9 +163,15 @@ public class ReglaConwayP2Test {
 		assertEquals ("Muerta(1,2)con 3 Viva = Viva ",EstadoCelda.VIVA,regla.calculaSiguienteEstadoCelda(tablero,pos2));		
 	}	
 	
+	/**
+	 * Test calcula siguiente estado celda muerta 4 vivas.
+	 *
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
+	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
+	 */
 	@Test
 	public void testCalculaSiguienteEstadoCeldaMuerta4Vivas() throws ExcepcionCoordenadaIncorrecta, ExcepcionPosicionFueraTablero {
-		Coordenada pos1 =new Coordenada2D(1,0);
+		Coordenada2D pos1 =new Coordenada2D(1,0);
 		
 		/*
 		 * MMV
@@ -145,14 +187,20 @@ public class ReglaConwayP2Test {
 		
 	}	
 	
+	/**
+	 * Test calcula siguiente estado celda viva 0145 vivas.
+	 *
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
+	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
+	 */
 	@Test
 	public void testCalculaSiguienteEstadoCeldaViva0145Vivas() throws ExcepcionCoordenadaIncorrecta, ExcepcionPosicionFueraTablero {
-		Coordenada pos1 =new Coordenada2D(0,1);
-		Coordenada pos2 =new Coordenada2D(1,1);	
-		Coordenada pos3 =new Coordenada2D(2,1);
-		Coordenada pos4 =new Coordenada2D(1,0);
-		Coordenada pos5 =new Coordenada2D(0,0);
-		Coordenada pos6 =new Coordenada2D(2,0);
+		Coordenada2D pos1 =new Coordenada2D(0,1);
+		Coordenada2D pos2 =new Coordenada2D(1,1);	
+		Coordenada2D pos3 =new Coordenada2D(2,1);
+		Coordenada2D pos4 =new Coordenada2D(1,0);
+		Coordenada2D pos5 =new Coordenada2D(0,0);
+		Coordenada2D pos6 =new Coordenada2D(2,0);
 		/*
 		 * MMM
 		 * VMM
@@ -189,12 +237,18 @@ public class ReglaConwayP2Test {
 		assertEquals ("Viva(1,0)con 5 Vivas = Muerta ",EstadoCelda.MUERTA,regla.calculaSiguienteEstadoCelda(tablero,pos4));
 	}	
 	
+	/**
+	 * Test calcula siguiente estado celda viva 23 vivas.
+	 *
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
+	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
+	 */
 	@Test
 	public void testCalculaSiguienteEstadoCeldaViva23Vivas() throws ExcepcionCoordenadaIncorrecta, ExcepcionPosicionFueraTablero {
-		Coordenada pos1 =new Coordenada2D(0,1);
-		Coordenada pos2 =new Coordenada2D(1,1);	
-		Coordenada pos3 =new Coordenada2D(2,1);
-		Coordenada pos4 =new Coordenada2D(1,2);
+		Coordenada2D pos1 =new Coordenada2D(0,1);
+		Coordenada2D pos2 =new Coordenada2D(1,1);	
+		Coordenada2D pos3 =new Coordenada2D(2,1);
+		Coordenada2D pos4 =new Coordenada2D(1,2);
 		/*
 		 * MMM
 		 * VVV

@@ -14,25 +14,43 @@ import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;
 
+import modelo.Coordenada2D;
+import modelo.EstadoCelda;
+import modelo.Patron;
+import modelo.Tablero;
+import modelo.TableroCeldasCuadradas;
+import modelo.excepciones.ExcepcionCoordenada2DIncorrecta;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author gonzalo
+ * The Class PatronP2Test.
  *
+ * @author gonzalo
  */
 public class PatronP2Test {
 
+	/** The tablero. */
 	Tablero tablero;
+	
+	/** The patron. */
 	Patron patron;
+	
+	/** The snombre. */
 	String snombre;
 	
+	/** The xtab. */
 	int xtab;
+	
+	/** The ytab. */
 	int ytab;
 	
 
 	/**
-	 * @throws java.lang.Exception
+	 * Sets the up.
+	 *
+	 * @throws Exception the exception
 	 */
 	@Before
 	public void setUp() throws Exception {
@@ -57,13 +75,14 @@ public class PatronP2Test {
 	}
 
 	/**
-	 * Test method for {@link modelo.Patron#getCelda(modelo.Coordenada)}.
-	 * @throws ExcepcionCoordenadaIncorrecta 
-	 * @throws ExcepcionPosicionFueraTablero 
+	 * Test method for {@link modelo.Patron#getCelda(modelo.Coordenada2D)}.
+	 *
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
+	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
 	 */
 	@Test
 	public void testGetCelda() throws ExcepcionCoordenadaIncorrecta, ExcepcionPosicionFueraTablero {
-		Coordenada c;
+		Coordenada2D c;
 		for (int x=0; x<xtab; x++)
 			for (int y=0; y<ytab; y++) {
 				c = new Coordenada2D(x,y);
@@ -74,11 +93,12 @@ public class PatronP2Test {
 
 	/**
 	 * Test method for {@link modelo.Patron#getPosiciones()}.
-	 * @throws ExcepcionCoordenadaIncorrecta 
+	 *
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
 	 */
 	@Test
 	public void testGetPosiciones() throws ExcepcionCoordenadaIncorrecta {
-		HashSet<Coordenada> sctab =new HashSet<Coordenada>();
+		HashSet<Coordenada2D> sctab =new HashSet<Coordenada2D>();
 		
 		for (int x=0; x<xtab; x++)
 			for (int y=0; y<ytab; y++) {

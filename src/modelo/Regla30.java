@@ -1,9 +1,3 @@
-/**
- * Esta clase no parece tener ninguna utilidad por el momento...
- * 
- * @author Alfonso Aracil Andres. 48563029
- */
-
 package modelo;
 
 import java.util.ArrayList;
@@ -14,17 +8,11 @@ import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ReglaConway.
+ * The Class Regla30.
  */
-public class ReglaConway
+public class Regla30
 extends Regla
 {
-	
-	/**
-	 * Instantiates a new regla conway.
-	 */
-	public ReglaConway()
-	{}
 
 	/**
 	 * Decide si una celda debe vivir... o morir...
@@ -37,31 +25,28 @@ extends Regla
 	public EstadoCelda calculaSiguienteEstadoCelda(Tablero tablero, Coordenada posicion)
 	{
 		if(tablero == null  ||  posicion == null) throw new ExcepcionArgumentosIncorrectos();
-		int cuenta = 0;
 		EstadoCelda estado = null;
 		try
 		{
 			ArrayList<Coordenada> aux = tablero.getPosicionesVecinasCCW(posicion);
-			Iterator<Coordenada> iterator = aux.iterator();
-			while(iterator.hasNext())
+			if (aux.size() == 1)
 			{
-				Coordenada2D caux = (Coordenada2D) iterator.next();
-				if (tablero.getCelda(caux) == EstadoCelda.VIVA)
-				{
-					cuenta++;
-				}
+				estado = EstadoCelda.MUERTA;
 			}
-			if(tablero.getCelda(posicion) == EstadoCelda.VIVA)
+			else if(tablero.getCelda(aux.get(0)) == EstadoCelda.VIVA  &&  tablero.getCelda(aux.get(1)) == EstadoCelda.VIVA)
 			{
-				if(cuenta == 2  || cuenta == 3)
-				{
-					estado = EstadoCelda.VIVA;
-				}
-				else estado = EstadoCelda.MUERTA;
+				estado = EstadoCelda.MUERTA;
 			}
-			else if (cuenta == 2)
-				estado = EstadoCelda.VIVA;
-			else estado = EstadoCelda.MUERTA;
+			else if(tablero.getCelda(posicion) == EstadoCelda.VIVA  &&  tablero.getCelda(aux.get(0)) == EstadoCelda.VIVA)
+			{
+				estado = EstadoCelda.MUERTA;
+			}
+			else if(tablero.getCelda(posicion) == EstadoCelda.MUERTA  &&  tablero.getCelda(aux.get(0)) == EstadoCelda.MUERTA
+					&&  tablero.getCelda(aux.get(1)) == EstadoCelda.MUERTA)
+			{
+				estado = EstadoCelda.MUERTA;
+			}
+			else estado = EstadoCelda.VIVA;
 		}
 		catch (ExcepcionPosicionFueraTablero e)
 		{
@@ -73,4 +58,5 @@ extends Regla
 			return estado;
 		}
 	}
+
 }

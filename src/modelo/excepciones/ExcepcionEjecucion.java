@@ -6,6 +6,7 @@
 
 package modelo.excepciones;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ExcepcionEjecucion.
  */

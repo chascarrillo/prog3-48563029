@@ -5,20 +5,35 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import modelo.Coordenada2D;
+import modelo.excepciones.ExcepcionCoordenada2DIncorrecta;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 
+// TODO: Auto-generated Javadoc
 /**
-@author jgonzalo
- **/
+ * The Class CoordenadaTestP2.
+ *
+ * @author jgonzalo
+ */
 public class CoordenadaTestP2 {
+	
+	/** The c. */
 	Coordenada2D c;
 	
+	/**
+	 * Sets the up.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Before
 	public void setUp() throws Exception {
 		c = new Coordenada2D(3, 5);
 				
 	}
 
+	/**
+	 * Test getters.
+	 */
 	@Test
 	public final void testGetters() {
 		assertEquals("x", 3, c.getX());
@@ -26,15 +41,29 @@ public class CoordenadaTestP2 {
 		
 	}
 
+	/**
+	 * Test inicializacion.
+	 */
 	@Test
 	public final void testInicializacion() {
 	
-		Coordenada2D c2 = new Coordenada2D(c);
+		Coordenada2D c2;
+		try {
+			c2 = new Coordenada2D(c);
+		} catch (ExcepcionCoordenadaIncorrecta e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertEquals("c2.x", c2.getX(), c.getX());
 		assertEquals("c2.y", c2.getY(), c.getY());
 		
 	}
 	
+	/**
+	 * Test equals.
+	 *
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
+	 */
 	@Test
 	public final void testEquals() throws ExcepcionCoordenadaIncorrecta {
 		Coordenada2D c4 = new Coordenada2D(3,5);
@@ -50,12 +79,20 @@ public class CoordenadaTestP2 {
 	}
 	
 		
+	/**
+	 * Test to string.
+	 */
 	@Test
 	public final void testToString() {
-		assertEquals("Coordenada.toString()","(3,5)",c.toString());
+		assertEquals("Coordenada2D.toString()","(3,5)",c.toString());
 		
 	}
 	
+	/**
+	 * Test suma.
+	 *
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
+	 */
 	@Test
 	public final void testSuma() throws ExcepcionCoordenadaIncorrecta {
 		Coordenada2D c7 = new Coordenada2D(c.suma(c));

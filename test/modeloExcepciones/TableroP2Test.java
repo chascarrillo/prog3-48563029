@@ -16,27 +16,55 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import modelo.Coordenada;
+import modelo.Coordenada2D;
+import modelo.EstadoCelda;
+import modelo.Patron;
+import modelo.Tablero;
+import modelo.TableroCeldasCuadradas;
 import modelo.excepciones.ExcepcionCoordenada2DIncorrecta;
-import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
+import modelo.excepciones.ExcepcionCoordenada2DIncorrecta;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author gonzalo
+ * The Class TableroP2Test.
  *
+ * @author gonzalo
  */
 public class TableroP2Test {
 
+	/** The tab. */
 	Tablero tab;
-	Coordenada dim;
+	
+	/** The dim. */
+	Coordenada2D dim;
+	
+	/** The ytab. */
 	int xtab, ytab;
+	
+	/** The patronsapo. */
 	static Patron patronbloque, patronbarco, patronsapo;
+    
+    /** The tabpat. */
     static Tablero tabpat;
+    
+    /** The tablero. */
     static String tablero;	
+    
+    /** The Constant FICHERRORES. */
     static final String FICHERRORES = "testp2/ficheros/salidaerrores.txt";
+    
+    /** The Constant FICHTABLERO. */
     static final String FICHTABLERO = "testp2/ficheros/tablerotest.ent";
+    
+    /** The errstd. */
     static PrintStream salstd, errstd; //salida y error standard
+	
 	/**
-	 * @throws java.lang.Exception
+	 * Sets the up before class.
+	 *
+	 * @throws Exception the exception
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -85,7 +113,9 @@ public class TableroP2Test {
 	}
 
 	/**
-	 * @throws java.lang.Exception
+	 * Sets the up.
+	 *
+	 * @throws Exception the exception
 	 */
 	@Before
 	public void setUp() throws Exception {
@@ -96,13 +126,18 @@ public class TableroP2Test {
 	}
 	
 	/**
-	 * Test method for {@link modelo.Tablero#Tablero(modelo.Coordenada)}.
+	 * Test method for {@link modelo.Tablero#Tablero(modelo.Coordenada2D)}.
 	 */
 	@Test
 	public void testTableroComposicion() {
-		assertNotSame("Composicion Tabla-Coordenada",dim,tab.getDimensiones());
+		assertNotSame("Composicion Tabla-Coordenada2D",dim,tab.getDimensiones());
 	}
 	
+	/**
+	 * Test tablero.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testTablero() throws Exception {
 				
@@ -110,7 +145,7 @@ public class TableroP2Test {
 		for (int i=0; i<xtab;i++)
 			for (int j=0; j<ytab; j++) {
 				e = tab.getCelda(new Coordenada2D(i,j));
-				assertNotNull("Coordenada valida("+i+","+j+")",e);
+				assertNotNull("Coordenada2D valida("+i+","+j+")",e);
 				assertEquals("Celda Muerta ("+i+","+j+")",EstadoCelda.MUERTA,e);
 			}
 		
@@ -127,22 +162,23 @@ public class TableroP2Test {
 
 	/**
 	 * Test method for {@link modelo.Tablero#getPosiciones()}.
-	 * @throws Exception 
+	 *
+	 * @throws Exception the exception
 	 */
 	@Test
 	public void testGetPosiciones() throws Exception {
-		Set<Coordenada> sc = (Set<Coordenada>)tab.getPosiciones();
+		ArrayList<Coordenada> sc = (ArrayList<Coordenada>)tab.getPosiciones();
 		assertEquals("Total posiciones",40,sc.size());
 		for (int i=0; i<xtab;i++)
 			for (int j=0; j<ytab; j++) {
-				assertTrue ("Coordenada en set",sc.contains((new Coordenada2D(i,j))));
+				assertTrue ("Coordenada2D en set",sc.contains((new Coordenada2D(i,j))));
 			}
 	}
 
 	/**
-	 * Test method for {@link modelo.Tablero#getCelda(modelo.Coordenada)}.
-	 * @throws Exception 
-	 * @throws ExcepcionPosicionFueraTablero 
+	 * Test method for {@link modelo.Tablero#getCelda(modelo.Coordenada2D)}.
+	 *
+	 * @throws Exception the exception
 	 */
 	@Test(expected = ExcepcionPosicionFueraTablero.class)
 	public void testGetCeldasNoExisten() throws Exception {
@@ -150,8 +186,9 @@ public class TableroP2Test {
 	}
 
 	/**
-	 * Test method for {@link modelo.Tablero#getCelda(modelo.Coordenada)}.
-	 * @throws Exception 
+	 * Test method for {@link modelo.Tablero#getCelda(modelo.Coordenada2D)}.
+	 *
+	 * @throws Exception the exception
 	 */
 	@Test(expected =  ExcepcionPosicionFueraTablero.class)
 	public void testGetCeldasNoExisten2() throws Exception {
@@ -159,6 +196,11 @@ public class TableroP2Test {
 	}
 
 
+	/**
+	 * Test get celdas existen.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testGetCeldasExisten() throws Exception {
 		PrintStream ps = redireccionarSalidasStandardAFichero(FICHERRORES);
@@ -183,8 +225,9 @@ public class TableroP2Test {
 	
 	
 	/**
-	 * Test method for {@link modelo.Tablero#setCelda(modelo.Coordenada, modelo.EstadoCelda)}.
-	 * @throws Exception 
+	 * Test method for {@link modelo.Tablero#setCelda(modelo.Coordenada2D, modelo.EstadoCelda)}.
+	 *
+	 * @throws Exception the exception
 	 */
 	@Test
 	public void testSetCelda() throws Exception {
@@ -201,8 +244,9 @@ public class TableroP2Test {
 	}
 	
 	/**
-	 * Test method for {@link modelo.Tablero#getPosicionesVecinasCCW(modelo.Coordenada)}.
-	 * @throws Exception 
+	 * Test method for {@link modelo.Tablero#getPosicionesVecinasCCW(modelo.Coordenada2D)}.
+	 *
+	 * @throws Exception the exception
 	 */
 	@Test(expected = ExcepcionPosicionFueraTablero.class)
 	public void testGetPosicionesVecinasCCWErronea() throws Exception {
@@ -211,8 +255,9 @@ public class TableroP2Test {
 	}
 
 	/**
-	 * Test method for {@link modelo.Tablero#getPosicionesVecinasCCW(modelo.Coordenada)}.
-	 * @throws Exception 
+	 * Test method for {@link modelo.Tablero#getPosicionesVecinasCCW(modelo.Coordenada2D)}.
+	 *
+	 * @throws Exception the exception
 	 */
 	@Test(expected = ExcepcionPosicionFueraTablero.class)
 	public void testGetPosicionesVecinasCCWErronea2() throws Exception {
@@ -220,6 +265,11 @@ public class TableroP2Test {
 		vecinas = tab.getPosicionesVecinasCCW(new Coordenada2D(5,5));
 	}
 
+	/**
+	 * Test get posiciones vecinas CCW 00.
+	 *
+	 * @throws Exception the exception
+	 */
 	//Vecinas de las coordenadas de las esquinas
 	@Test
 	public void testGetPosicionesVecinasCCW00() throws Exception {
@@ -232,6 +282,11 @@ public class TableroP2Test {
 
 	}
 
+	/**
+	 * Test get posiciones vecinas CCW 70.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testGetPosicionesVecinasCCW70() throws Exception {
 		ArrayList<Coordenada> vecinas = new ArrayList<Coordenada>();
@@ -242,6 +297,11 @@ public class TableroP2Test {
 		assertEquals("Vecina (7,1)",new Coordenada2D(7,1), vecinas.get(2));
 	}
 	
+	/**
+	 * Test get posiciones vecinas CCW 04.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testGetPosicionesVecinasCCW04() throws Exception {
 		ArrayList<Coordenada> vecinas = new ArrayList<Coordenada>();
@@ -252,6 +312,11 @@ public class TableroP2Test {
 		assertEquals("Vecina (0,3)",new Coordenada2D(0,3), vecinas.get(2));
 	}
 	
+	/**
+	 * Test get posiciones vecinas CCW 74.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testGetPosicionesVecinasCCW74() throws Exception {
 		ArrayList<Coordenada> vecinas = new ArrayList<Coordenada>();
@@ -262,6 +327,11 @@ public class TableroP2Test {
 		assertEquals("Vecina (7,3)",new Coordenada2D(7,3), vecinas.get(2));
 	}
 	
+	/**
+	 * Test get posiciones vecinas CCW 40.
+	 *
+	 * @throws Exception the exception
+	 */
 	//Vecinas de coordenadas laterales
 	@Test
 	public void testGetPosicionesVecinasCCW40() throws Exception {
@@ -275,6 +345,11 @@ public class TableroP2Test {
 		assertEquals("Vecina (5,0)",new Coordenada2D(5,0), vecinas.get(4));
 	}
 	
+	/**
+	 * Test get posiciones vecinas CCW 44.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testGetPosicionesVecinasCCW44() throws Exception {
 		ArrayList<Coordenada> vecinas = new ArrayList<Coordenada>();
@@ -287,6 +362,11 @@ public class TableroP2Test {
 		assertEquals("Vecina (4,3)",new Coordenada2D(4,3), vecinas.get(4));
 	}
 	
+	/**
+	 * Test get posiciones vecinas CCW 02.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testGetPosicionesVecinasCCW02() throws Exception {
 		ArrayList<Coordenada> vecinas = new ArrayList<Coordenada>();
@@ -299,6 +379,11 @@ public class TableroP2Test {
 		assertEquals("Vecina (1,1)",new Coordenada2D(4,3), vecinas.get(4));
 	}
 	
+	/**
+	 * Test get posiciones vecinas CCW 72.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testGetPosicionesVecinasCCW72() throws Exception {
 		ArrayList<Coordenada> vecinas = new ArrayList<Coordenada>();
@@ -310,6 +395,12 @@ public class TableroP2Test {
 		assertEquals("Vecina (7,3)",new Coordenada2D(5,3), vecinas.get(3));
 		assertEquals("Vecina (7,1)",new Coordenada2D(4,3), vecinas.get(4));
 	}
+	
+	/**
+	 * Test get posiciones vecinas CCW 32.
+	 *
+	 * @throws Exception the exception
+	 */
 	//Vecinas de una coordenada central
 	@Test
 	public void testGetPosicionesVecinasCCW32() throws Exception {
@@ -325,9 +416,11 @@ public class TableroP2Test {
 		assertEquals("Vecina (4,1)",new Coordenada2D(4,1), vecinas.get(6));
 		assertEquals("Vecina (3,1)",new Coordenada2D(3,1), vecinas.get(7));
 	}
+	
 	/**
-	 * Test method for {@link modelo.Tablero#cargaPatron(modelo.Patron, modelo.Coordenada)}.
-	 * @throws Exception 
+	 * Test method for {@link modelo.Tablero#cargaPatron(modelo.Patron, modelo.Coordenada2D)}.
+	 *
+	 * @throws Exception the exception
 	 */
 	@Test(expected = ExcepcionPosicionFueraTablero.class)
 	public void testNoCargaPatron() throws Exception {
@@ -345,8 +438,9 @@ public class TableroP2Test {
 	}
 
 	/**
-	 * Test method for {@link modelo.Tablero#cargaPatron(modelo.Patron, modelo.Coordenada)}.
-	 * @throws Exception 
+	 * Test method for {@link modelo.Tablero#cargaPatron(modelo.Patron, modelo.Coordenada2D)}.
+	 *
+	 * @throws Exception the exception
 	 */
 	@Test(expected = ExcepcionPosicionFueraTablero.class)
 	public void testNoCargaPatron2() throws Exception {
@@ -364,8 +458,9 @@ public class TableroP2Test {
 	}
 
 	/**
-	 * Test method for {@link modelo.Tablero#cargaPatron(modelo.Patron, modelo.Coordenada)}.
-	 * @throws Exception 
+	 * Test method for {@link modelo.Tablero#cargaPatron(modelo.Patron, modelo.Coordenada2D)}.
+	 *
+	 * @throws Exception the exception
 	 */
 	@Test(expected = ExcepcionPosicionFueraTablero.class)
 	public void testNoCargaPatron3() throws Exception {
@@ -382,6 +477,11 @@ public class TableroP2Test {
 	}
 	}
 
+	/**
+	 * Test carga patron.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testCargaPatron() throws Exception {
 		for (int i=0; i<7; i++)
@@ -394,9 +494,11 @@ public class TableroP2Test {
 			}
 		
 	}
+	
 	/**
-	 * Test method for {@link modelo.Tablero#contiene(modelo.Coordenada)}.
-	 * @throws Exception 
+	 * Test method for {@link modelo.Tablero#contiene(modelo.Coordenada2D)}.
+	 *
+	 * @throws Exception the exception
 	 */
 	@Test
 	public void testContiene() throws Exception {
@@ -407,7 +509,7 @@ public class TableroP2Test {
 					assertTrue("Si contiene a coordenada ("+i+","+j+")",tab.contiene(new Coordenada2D(i,j)));
 				  else
 					assertFalse("No contiene a coordenada ("+i+","+j+")",tab.contiene(new Coordenada2D(i,j)));
-				} catch (ExcepcionCoordenadaIncorrecta ex) {
+				} catch (ExcepcionCoordenada2DIncorrecta ex) {
 					// ok, coordenadas negativas
 				}
 			}
@@ -415,7 +517,8 @@ public class TableroP2Test {
 
 	/**
 	 * Test method for {@link modelo.Tablero#toString()}.
-	 * @throws Exception 
+	 *
+	 * @throws Exception the exception
 	 */
 	@Test
 	public void testToString() throws Exception {
@@ -425,7 +528,7 @@ public class TableroP2Test {
 		tab.cargaPatron(patronbloque, new Coordenada2D(6,0));
 		
 		//Para que el alumno compare los ficheros si da error.
-		PrintStream ps = abrirFichero("testp2/ficheros/tablerotest.sal"); 
+		PrintStream ps = abrirFichero("test/ficheros/tablerotest.sal"); 
 		ps.print(tab.toString());
 		
 		assertEquals("Compara salida tableros",tablero,tab.toString());
@@ -437,6 +540,12 @@ public class TableroP2Test {
 	
 	//FUNCIONES AUXILIARES
 	
+	/**
+	 * Abrir fichero.
+	 *
+	 * @param fichero the fichero
+	 * @return the prints the stream
+	 */
 	//Abre un fichero para escribir las tablas que genera el alumno.
 	private PrintStream abrirFichero (String fichero) {
 		PrintStream s=null;
@@ -450,6 +559,12 @@ public class TableroP2Test {
 	}
 
 	
+	/**
+	 * Cargar tablero de fichero.
+	 *
+	 * @param fichero the fichero
+	 * @return the string
+	 */
 	/* Carga el tablero resultado desde un fichero */
 	private static String cargarTableroDeFichero(String fichero)
 	{
@@ -470,6 +585,13 @@ public class TableroP2Test {
 		return (sb.toString());
 	}
 	
+	/**
+	 * Comprobar mensaje de error.
+	 *
+	 * @param sc the sc
+	 * @param scoord the scoord
+	 * @param exacto the exacto
+	 */
 	//Comprueba que los mensajes de error son correctos
 	private void comprobarMensajeDeError (Scanner sc, String scoord, boolean exacto){
 		String error;
@@ -483,6 +605,12 @@ public class TableroP2Test {
 		else fail("Falta/n algun/os error/es por salir");
 	}
 	
+	/**
+	 * Redireccionar salidas standard A fichero.
+	 *
+	 * @param fic the fic
+	 * @return the prints the stream
+	 */
 	//Redireccionamiento de las salidas standard a un fichero
 	private PrintStream redireccionarSalidasStandardAFichero(String fic) {
 	PrintStream ps=null;
@@ -497,6 +625,9 @@ public class TableroP2Test {
 	 return (ps);
 	}
 	
+	/**
+	 * Restaurar salidas standard.
+	 */
 	//Restaura las salidas standard
 	private void restaurarSalidasStandard() {
 		System.setOut(salstd);

@@ -6,6 +6,7 @@
 
 package modelo;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Enum EstadoCelda.
  */

@@ -7,18 +7,16 @@
 package modelo;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 import modelo.Tablero;
+
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 import modelo.excepciones.ExcepcionEjecucion;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
-import modelo.ReglaConway;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Juego.
  */
@@ -29,22 +27,22 @@ public class Juego
 	private Tablero tablero;
 
 	/** The regla conway. */
-	private ReglaConway reglaConway;
+	private Regla regla;
 
 	/** The patrones usados. */
-	private ArrayList<Patron> patronesUsados;
+	private ArrayList<Patron> patronesUsados = new ArrayList<Patron>();
 
 	/**
 	 * Instantiates a new juego.
 	 *
 	 * @param tablero the tablero
-	 * @param reglaconway the reglaconway
+	 * @param regla the regla
 	 */
-	public Juego (Tablero tablero, ReglaConway reglaconway)
+	public Juego (Tablero tablero, Regla regla)
 	{
-		if(tablero == null  ||  reglaconway == null) throw new ExcepcionArgumentosIncorrectos();
+		if(tablero == null  ||  regla == null) throw new ExcepcionArgumentosIncorrectos();
 		this.tablero = tablero;
-		reglaConway = reglaconway;
+		this.regla = regla;
 	}
 
 	/**
@@ -77,10 +75,10 @@ public class Juego
 
 		while(iterator.hasNext())
 		{
-			Coordenada caux = (Coordenada)((Map.Entry) iterator.next()).getKey();
+			Coordenada2D caux = (Coordenada2D) iterator.next();
 			try
 			{
-				tablero.setCelda(caux, reglaConway.calculaSiguienteEstadoCelda(tablero, caux));
+				tablero.setCelda(caux, regla.calculaSiguienteEstadoCelda(tablero, caux));
 			}
 			catch (ExcepcionPosicionFueraTablero e)
 			{

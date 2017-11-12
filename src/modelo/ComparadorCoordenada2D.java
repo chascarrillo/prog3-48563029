@@ -8,17 +8,18 @@ package modelo;
 
 import java.util.Comparator;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Enum ComparadorCoordenada.
  */
-public enum ComparadorCoordenada
-implements Comparator<Coordenada>
+public enum ComparadorCoordenada2D
+implements Comparator<Coordenada2D>
 {
 	
 	/** The x sort. */
 	X_SORT
 	{
-		public int compare(Coordenada c1, Coordenada c2)
+		public int compare(Coordenada2D c1, Coordenada2D c2)
 		{
 			return Integer.valueOf(c1.getX()).compareTo(c2.getX());
 		}
@@ -27,7 +28,7 @@ implements Comparator<Coordenada>
 	/** The y sort. */
 	Y_SORT
 	{
-		public int compare(Coordenada c1, Coordenada c2)
+		public int compare(Coordenada2D c1, Coordenada2D c2)
 		{
 			return Integer.valueOf(c1.getY()).compareTo(c2.getY());
 		}
@@ -39,11 +40,11 @@ implements Comparator<Coordenada>
 	 * @param other the comparator
 	 * @return the comparator en orden inverso
 	 */
-	public static Comparator<Coordenada> descending(final Comparator<Coordenada> other)
+	public static Comparator<Coordenada2D> descending(final Comparator<Coordenada2D> other)
 	{
-		return new Comparator<Coordenada>()
+		return new Comparator<Coordenada2D>()
 		{
-			public int compare(Coordenada o1, Coordenada o2)
+			public int compare(Coordenada2D o1, Coordenada2D o2)
 			{
 				return -1 * other.compare(o1, o2);
 			}
@@ -56,13 +57,13 @@ implements Comparator<Coordenada>
 	 * @param multipleOptions the multiple options
 	 * @return the comparator
 	 */
-	public static Comparator<Coordenada> getComparator(final ComparadorCoordenada... multipleOptions)
+	public static Comparator<Coordenada2D> getComparator(final ComparadorCoordenada2D... multipleOptions)
 	{
-		return new Comparator<Coordenada>()
+		return new Comparator<Coordenada2D>()
 		{
-			public int compare(Coordenada o1, Coordenada o2)
+			public int compare(Coordenada2D o1, Coordenada2D o2)
 			{
-				for (ComparadorCoordenada option : multipleOptions)
+				for (ComparadorCoordenada2D option : multipleOptions)
 				{
 					int result = option.compare(o1, o2);
 					if (result != 0)
