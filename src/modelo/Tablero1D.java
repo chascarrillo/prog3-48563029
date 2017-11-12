@@ -29,7 +29,6 @@ extends Tablero
 	{
 		super(new Coordenada1D(dimensiones.getX()));
 		if(dimensiones == null) throw new ExcepcionArgumentosIncorrectos();
-		celdas = new HashMap<Coordenada,EstadoCelda>();
 
 		for(int x = 0; x < dimensiones.getX(); x++)
 		{
@@ -45,8 +44,11 @@ extends Tablero
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see modelo.Tablero#getPosicionesVecinasCCW(modelo.Coordenada)
+	/**
+	 * Devuelve las celdas contiguas a la posicion especificada
+	 *
+	 * @param posicion la celda a estudiar
+	 * @return ArrayList<Coordenada> con las celdas vecinas
 	 */
 	@Override
 	public ArrayList<Coordenada> getPosicionesVecinasCCW(Coordenada posicion)

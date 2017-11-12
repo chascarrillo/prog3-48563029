@@ -26,7 +26,6 @@ extends Tablero
 	{
 		super(new Coordenada2D(x, y));
 
-		celdas = new HashMap<Coordenada,EstadoCelda>();
 		for(int j = 0; j < y; j++)
 		{
 			for(int i = 0; i < x; i++)
