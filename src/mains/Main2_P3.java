@@ -9,7 +9,6 @@ import modelo.Patron;
 import modelo.ReglaConway;
 import modelo.Tablero;
 import modelo.TableroCeldasCuadradas;
-import modelo.excepciones.ExcepcionCoordenada2DIncorrecta;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 

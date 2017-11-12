@@ -32,7 +32,7 @@ public abstract class Tablero
 {
 	
 	/** The celdas. */
-	protected HashMap<Coordenada,EstadoCelda> celdas;
+	protected HashMap<Coordenada,EstadoCelda> celdas = new HashMap<Coordenada,EstadoCelda>();
 
 	/** The dimensiones. */
 	protected Coordenada dimensiones;
@@ -42,7 +42,8 @@ public abstract class Tablero
 	 *
 	 * @param dimensiones the dimensiones
 	 */
-	public Tablero(Coordenada dimensiones)
+	protected Tablero(Coordenada dimensiones)
+	throws ExcepcionCoordenadaIncorrecta
 	{
 		if(dimensiones == null) throw new ExcepcionArgumentosIncorrectos();
 		this.dimensiones = dimensiones;

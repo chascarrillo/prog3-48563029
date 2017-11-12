@@ -3,7 +3,6 @@ package mains;
 import java.util.ArrayList;
 
 import modelo.Coordenada2D;
-import modelo.excepciones.ExcepcionCoordenada2DIncorrecta;
 
 // TODO: Auto-generated Javadoc
 /**
