@@ -8,7 +8,6 @@ package modelo;
 
 import java.util.Comparator;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Enum ComparadorCoordenada.
  */
@@ -33,23 +32,6 @@ implements Comparator<Coordenada2D>
 			return Integer.valueOf(c1.getY()).compareTo(c2.getY());
 		}
 	};
-
-	/**
-	 * Descending.
-	 *
-	 * @param other the comparator
-	 * @return the comparator en orden inverso
-	 */
-	public static Comparator<Coordenada2D> descending(final Comparator<Coordenada2D> other)
-	{
-		return new Comparator<Coordenada2D>()
-		{
-			public int compare(Coordenada2D o1, Coordenada2D o2)
-			{
-				return -1 * other.compare(o1, o2);
-			}
-		};
-	}
 
 	/**
 	 * Gets the comparator.

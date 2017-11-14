@@ -8,7 +8,6 @@ package modelo;
 
 import java.util.Comparator;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Enum ComparadorCoordenada.
  */

@@ -1,45 +1,28 @@
-/**
- * 
- */
 package modelo;
+
 
 import static org.junit.Assert.*;
 
-
 import java.util.HashSet;
 
-
-
+import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 
 import org.junit.Before;
 import org.junit.Test;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class PatronP2Test.
- *
- * @author gonzalo
- */
-public class PatronP2Test {
+public class Patron2DTest {
 
-	/** The tablero. */
 	Tablero tablero;
-	
-	/** The patron. */
 	Patron patron;
-	
-	/** The snombre. */
 	String snombre;
 	
 
 	/**
-	 * Sets the up.
-	 *
-	 * @throws Exception the exception
+	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
-		tablero = new Tablero(new Coordenada2D(3,3));
+		tablero = new TableroCeldasCuadradas(3,3);
 		tablero.setCelda(new Coordenada2D(0,0),EstadoCelda.VIVA);
 		tablero.setCelda(new Coordenada2D(1,1),EstadoCelda.VIVA);
 		tablero.setCelda(new Coordenada2D(2,2),EstadoCelda.VIVA);
@@ -47,9 +30,7 @@ public class PatronP2Test {
 		patron = new Patron(snombre,tablero);
 	}
 
-	/**
-	 * Test method for {@link modelo.Patron#getNombre()}.
-	 */
+	
 	@Test
 	public void testGetNombre() {
 		
@@ -62,12 +43,16 @@ public class PatronP2Test {
 	 */
 	@Test
 	public void testGetCelda() {
-		Coordenada2D c;
-		for (int x=0; x<tablero.getDimensiones().getX(); x++)
-			for (int y=0; y<tablero.getDimensiones().getY(); y++) {
-				c = new Coordenada2D(x,y);
-				if (x==y) assertEquals("Estado Celda VIVA ", EstadoCelda.VIVA, patron.getCelda(c));
-				else assertEquals("Estado Celda MUERTA ", EstadoCelda.MUERTA,patron.getCelda(c));
+		Coordenada c;
+		for (int x=0; x<3; x++)
+			for (int y=0; y<3; y++) {
+				try {
+					c = new Coordenada2D(x,y);
+					if (x==y) assertEquals("Estado Celda VIVA ", EstadoCelda.VIVA, patron.getCelda(c));
+					else assertEquals("Estado Celda MUERTA ", EstadoCelda.MUERTA,patron.getCelda(c));
+				} catch (Exception ex) {
+					fail("No debía producirse ninguna excepción pero se capturo "+ex.getClass().getSimpleName());
+				}
 			}
 	}
 
@@ -76,11 +61,15 @@ public class PatronP2Test {
 	 */
 	@Test
 	public void testGetPosiciones() {
-		HashSet<Coordenada2D> sctab =new HashSet<Coordenada2D>();
+		HashSet<Coordenada> sctab =new HashSet<Coordenada>();
 		
-		for (int x=0; x<tablero.getDimensiones().getX(); x++)
-			for (int y=0; y<tablero.getDimensiones().getY(); y++) {
-				sctab.add(new Coordenada2D(x,y));
+		for (int x=0; x<3; x++)
+			for (int y=0; y<3; y++) {
+				try {
+					sctab.add(new Coordenada2D(x,y));
+				} catch (ExcepcionCoordenadaIncorrecta ex) {
+					fail("No debía producirse ninguna excepción pero se capturo "+ex.getClass().getSimpleName());
+				}
 			}
 		assertEquals("Estan todas posiciones en Patron", sctab, patron.getPosiciones());
 		}

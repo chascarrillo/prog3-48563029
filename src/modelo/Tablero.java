@@ -83,10 +83,15 @@ public abstract class Tablero
 		Coordenada dimensiones = null;
 		try
 		{
-			if (!isTablero1D())
-				dimensiones = new Coordenada2D(anchuraColeccion(getPosiciones()), alturaColeccion(getPosiciones()));
-			else
+			if (isTablero1D())
+			{
 				dimensiones = new Coordenada1D(anchuraColeccion(getPosiciones()));
+			}
+			else
+			{
+				dimensiones = new Coordenada2D(anchuraColeccion(getPosiciones()), alturaColeccion(getPosiciones()));
+			}
+			return dimensiones;
 		}
 		catch (ExcepcionCoordenadaIncorrecta e)
 		{
@@ -110,7 +115,20 @@ public abstract class Tablero
 				);
 		ts.addAll(celdas.keySet());
 		return (Collection<Coordenada2D>) ts;*/
-		Collection<Coordenada> devuelta = null;
+		if(isTablero1D())
+		{
+			Set<Coordenada> ts = new TreeSet<Coordenada>(ComparadorCoordenada.getComparator(ComparadorCoordenada.X_SORT));
+			ts.addAll(celdas.keySet());
+			return (Collection<Coordenada>) ts;
+		}
+		else
+		{
+			Set<Coordenada> ts = new TreeSet<Coordenada>(ComparadorCoordenada.getComparator(ComparadorCoordenada.Y_SORT, ComparadorCoordenada.X_SORT));
+			ts.addAll(celdas.keySet());
+			return (Collection<Coordenada>) ts;
+			
+		}
+	/*	Collection<Coordenada> devuelta = null;
 		if (!isTablero1D())
 		{
 			Set<Coordenada2D> ts = new TreeSet <Coordenada2D>(
@@ -149,7 +167,7 @@ public abstract class Tablero
 			}
 		}
 
-		return devuelta;
+		return devuelta;	*/
 	}
 
 	/**
@@ -334,14 +352,29 @@ public abstract class Tablero
 		Iterator<Coordenada> iterator = collection.iterator();
 		while(iterator.hasNext())
 		{
-			Coordenada2D caux = (Coordenada2D) iterator.next();
-			if (xmin > caux.getX())
+			if(isTablero1D())
 			{
-				xmin = caux.getX();
+				Coordenada1D caux = (Coordenada1D) iterator.next();
+				if (xmin > caux.getX())
+				{
+					xmin = caux.getX();
+				}
+				if (xmax < caux.getX())
+				{
+					xmax = caux.getX();
+				}
 			}
-			if (xmax < caux.getX())
+			else
 			{
-				xmax = caux.getX();
+				Coordenada2D caux = (Coordenada2D) iterator.next();
+				if (xmin > caux.getX())
+				{
+					xmin = caux.getX();
+				}
+				if (xmax < caux.getX())
+				{
+					xmax = caux.getX();
+				}
 			}
 		}
 

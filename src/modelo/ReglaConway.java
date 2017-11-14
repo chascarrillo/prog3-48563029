@@ -55,22 +55,19 @@ extends Regla
 			{
 				if(cuenta == 2  || cuenta == 3)
 				{
-					estado = EstadoCelda.VIVA;
+					return EstadoCelda.VIVA;
 				}
-				else estado = EstadoCelda.MUERTA;
+				else return EstadoCelda.MUERTA;
 			}
-			else if (cuenta == 2)
-				estado = EstadoCelda.VIVA;
-			else estado = EstadoCelda.MUERTA;
+			else if (cuenta == 3)
+				return EstadoCelda.VIVA;
+			else return EstadoCelda.MUERTA;
 		}
 		catch (ExcepcionPosicionFueraTablero e)
 		{
 			e.getMessage();
 			e.printStackTrace();
 		}
-		finally
-		{
-			return estado;
-		}
+		return estado;
 	}
 }

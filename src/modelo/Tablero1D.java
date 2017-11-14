@@ -45,6 +45,31 @@ extends Tablero
 	}
 
 	/**
+	 * Instantiates a new tablero 1 D.
+	 *
+	 * @param dimension the dimensiones
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
+	 */
+	public Tablero1D(int dimension)
+	throws ExcepcionCoordenadaIncorrecta
+	{
+		super(new Coordenada1D(dimension));
+
+		for(int x = 0; x < dimension; x++)
+		{
+			try
+			{
+				Coordenada1D aux = new Coordenada1D(x);
+				celdas.put(aux, EstadoCelda.MUERTA);
+			}
+			catch (ExcepcionCoordenadaIncorrecta e) 
+			{
+				throw new ExcepcionEjecucion(e);
+			}
+		}
+	}
+
+	/**
 	 * Devuelve las celdas contiguas a la posicion especificada
 	 *
 	 * @param posicion la celda a estudiar
