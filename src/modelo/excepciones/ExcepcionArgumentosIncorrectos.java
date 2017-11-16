@@ -21,4 +21,9 @@ extends ExcepcionEjecucion
 	{
 		super("Parametro incorrecto, no deberia ser null");
 	}
+
+	public String getMessage()
+	{
+		return "Parametro incorrecto, no deberia ser null";
+	}
 }

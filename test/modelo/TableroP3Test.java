@@ -224,7 +224,7 @@ public class TableroP3Test {
 		
 		try {
 				c = new Coordenada1D(9);
-				tab.cargaPatron(patronduo, new Coordenada1D(8));
+				tab.cargaPatron(patronduo, c);
 				fail ("No se produjo ExcepcionPosicionFueraTablero");
 		} catch (ExcepcionPosicionFueraTablero e) {
 				assertEquals("e.getDimensiones",dim,e.getDimensiones());
@@ -236,7 +236,7 @@ public class TableroP3Test {
 			
 		try {
 				c = new Coordenada1D(9);
-				tab.cargaPatron(patronsos, new Coordenada1D(1));
+				tab.cargaPatron(patronsos, c);
 				fail ("No se produjo ExcepcionPosicionFueraTablero");
 		} catch (ExcepcionPosicionFueraTablero e) {
 				assertEquals("e.getDimensiones",dim,e.getDimensiones());

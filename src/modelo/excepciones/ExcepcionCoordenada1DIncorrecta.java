@@ -1,12 +1,12 @@
 package modelo.excepciones;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ExcepcionCoordenada1DIncorrecta.
  */
 public class ExcepcionCoordenada1DIncorrecta
 extends ExcepcionCoordenadaIncorrecta
 {
+	private static final long serialVersionUID = 1L;
 	/** The x. */
 	private float x;
 	
@@ -28,5 +28,10 @@ extends ExcepcionCoordenadaIncorrecta
 	public float getX()
 	{
 		return x;
+	}
+
+	public String getMessage()
+	{
+		return "Coordenada negativa";
 	}
 }

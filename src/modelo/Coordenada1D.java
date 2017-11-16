@@ -4,7 +4,6 @@ import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 import modelo.excepciones.ExcepcionCoordenada1DIncorrecta;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Coordenada1D.
  */
@@ -78,25 +77,9 @@ extends Coordenada
 	    if (getClass() != otro.getClass())
 	        return false;
 	    Coordenada1D caux = (Coordenada1D)otro;
-	    if (Integer.valueOf(x) != Integer.valueOf(caux.x))
+	    if (Integer.valueOf(this.getX()) != Integer.valueOf(caux.getX()))
 	        return false;
 	    return true;
-	}
-
-	/**
-	 * Suma.
-	 *
-	 * @param otra the otra
-	 * @return the coordenada
-	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
-	 * @throws ExcepcionArgumentosIncorrectos the excepcion argumentos incorrectos
-	 */
-	public Coordenada1D suma(Coordenada1D otra)
-	throws ExcepcionCoordenadaIncorrecta
-	{
-		if(otra == null) throw new ExcepcionArgumentosIncorrectos();
-		Coordenada1D nueva = new Coordenada1D(x+otra.x);
-		return nueva;
 	}
 
 	/**
@@ -110,16 +93,19 @@ extends Coordenada
 		return new Integer(31+x);
 	}
 
-	/* (non-Javadoc)
-	 * @see modelo.Coordenada#suma(modelo.Coordenada)
+	/**
+	 * Suma.
+	 *
+	 * @param c the otra coordenada
+	 * @return the new coordenada
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
 	 */
 	@Override
 	public Coordenada1D suma(Coordenada c)
 	throws ExcepcionCoordenadaIncorrecta
 	{
 		if(c == null) throw new ExcepcionArgumentosIncorrectos();
-		Coordenada1D aux = new Coordenada1D ((Coordenada1D) c);
-		return new Coordenada1D(x + aux.x);
+		return new Coordenada1D(x + ((Coordenada1D) c).x);
 	}
 
 	/**

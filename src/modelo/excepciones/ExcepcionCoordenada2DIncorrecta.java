@@ -51,4 +51,9 @@ extends ExcepcionCoordenadaIncorrecta
 	{
 		return y;
 	}
+
+	public String getMessage()
+	{
+		return "Coordenada negativa";
+	}
 }

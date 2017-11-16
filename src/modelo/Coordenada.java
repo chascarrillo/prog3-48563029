@@ -2,7 +2,6 @@ package modelo;
 
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Coordenada.
  */

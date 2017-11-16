@@ -2,7 +2,6 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
@@ -10,40 +9,12 @@ import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionEjecucion;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Tablero1D.
  */
 public class Tablero1D
 extends Tablero
 {
-	
-	/**
-	 * Instantiates a new tablero 1 D.
-	 *
-	 * @param dimensiones the dimensiones
-	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
-	 */
-	public Tablero1D(Coordenada1D dimensiones)
-	throws ExcepcionCoordenadaIncorrecta
-	{
-		super(new Coordenada1D(dimensiones.getX()));
-		if(dimensiones == null) throw new ExcepcionArgumentosIncorrectos();
-
-		for(int x = 0; x < dimensiones.getX(); x++)
-		{
-			try
-			{
-				Coordenada1D aux = new Coordenada1D(x);
-				celdas.put(aux, EstadoCelda.MUERTA);
-			}
-			catch (ExcepcionCoordenadaIncorrecta e) 
-			{
-				throw new ExcepcionEjecucion(e);
-			}
-		}
-	}
-
 	/**
 	 * Instantiates a new tablero 1 D.
 	 *
@@ -128,8 +99,6 @@ extends Tablero
 		try
 		{
 			salida = "|";
-			int anchura = anchuraColeccion(getPosiciones());
-	
 			Collection<Coordenada> cds = getPosiciones();
 			Iterator<Coordenada> iterator = cds.iterator();
 			Coordenada1D caux = null;
@@ -144,15 +113,13 @@ extends Tablero
 			}
 	
 			salida += "|\n";
+			return salida;
 		}
 		catch (Exception e)
 		{
 			e.getMessage();
 			e.printStackTrace();
 		}
-		finally
-		{
-			return salida;
-		}
+		return salida;
 	}
 }

@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
-import modelo.excepciones.ExcepcionCoordenada2DIncorrecta;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionEjecucion;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
@@ -194,15 +193,13 @@ extends Tablero2D
 				salida += "-";
 			}
 			salida += "+\n";
+			return salida;
 		}
 		catch (Exception e)
 		{
 			e.getMessage();
 			e.printStackTrace();
 		}
-		finally
-		{
-			return salida;
-		}
+		return salida;
 	}
 }

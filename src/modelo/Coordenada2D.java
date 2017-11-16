@@ -10,7 +10,6 @@ import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 import modelo.excepciones.ExcepcionCoordenada2DIncorrecta;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Coordenada2D.
  */
@@ -100,27 +99,11 @@ extends Coordenada
 	    if (getClass() != otro.getClass())
 	        return false;
 	    Coordenada2D caux = (Coordenada2D)otro;
-	    if (Integer.valueOf(x) != Integer.valueOf(caux.x))
+	    if (Integer.valueOf(this.getX()) != Integer.valueOf(caux.getX()))
 	        return false;
-	    if (Integer.valueOf(y) != Integer.valueOf(caux.y))
+	    if (Integer.valueOf(this.getY()) != Integer.valueOf(caux.getY()))
 	        return false;
 	    return true;
-	}
-
-	/**
-	 * Suma.
-	 *
-	 * @param otra the otra
-	 * @return the coordenada
-	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
-	 * @throws ExcepcionArgumentosIncorrectos the excepcion argumentos incorrectos
-	 */
-	public Coordenada2D suma(Coordenada2D otra)
-	throws ExcepcionCoordenadaIncorrecta
-	{
-		if(otra == null) throw new ExcepcionArgumentosIncorrectos();
-		Coordenada2D nueva = new Coordenada2D(x+otra.x, y+otra.y);
-		return nueva;
 	}
 
 	/**
@@ -134,16 +117,20 @@ extends Coordenada
 		return new Integer(31*(31+x)+y);
 	}
 
-	/* (non-Javadoc)
-	 * @see modelo.Coordenada#suma(modelo.Coordenada)
+	/**
+	 * Suma.
+	 *
+	 * @param otra the otra
+	 * @return the coordenada
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
+	 * @throws ExcepcionArgumentosIncorrectos the excepcion argumentos incorrectos
 	 */
 	@Override
 	public Coordenada2D suma(Coordenada c)
 	throws ExcepcionCoordenadaIncorrecta
 	{
 		if(c == null) throw new ExcepcionArgumentosIncorrectos();
-		Coordenada2D aux = new Coordenada2D ((Coordenada2D) c);
-		return new Coordenada2D(x + aux.x, y + aux.y);
+		return new Coordenada2D(x + ((Coordenada2D) c).x, y + ((Coordenada2D) c).y);
 	}
 
 	/**

@@ -1,12 +1,8 @@
 package modelo;
 
-import java.util.HashMap;
-
-import modelo.excepciones.ExcepcionCoordenada2DIncorrecta;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionEjecucion;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Tablero2D.
  */

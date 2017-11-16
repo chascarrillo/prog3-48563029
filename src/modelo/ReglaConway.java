@@ -12,7 +12,6 @@ import java.util.Iterator;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ReglaConway.
  */
@@ -32,42 +31,38 @@ extends Regla
 	 * @param tablero las celdas
 	 * @param posicion la celda a estudiar
 	 * @return EstadoCelda.VIVA si toca, de lo contrario EstadoCelda.MUERTA
+	 * @throws ExcepcionPosicionFueraTablero 
 	 */
 	@Override
 	public EstadoCelda calculaSiguienteEstadoCelda(Tablero tablero, Coordenada posicion)
+	throws ExcepcionPosicionFueraTablero
 	{
 		if(tablero == null  ||  posicion == null) throw new ExcepcionArgumentosIncorrectos();
 		int cuenta = 0;
 		EstadoCelda estado = null;
-		try
+
+		ArrayList<Coordenada> aux = tablero.getPosicionesVecinasCCW(posicion);
+		Iterator<Coordenada> iterator = aux.iterator();
+		while(iterator.hasNext())
 		{
-			ArrayList<Coordenada> aux = tablero.getPosicionesVecinasCCW(posicion);
-			Iterator<Coordenada> iterator = aux.iterator();
-			while(iterator.hasNext())
+			Coordenada2D caux = (Coordenada2D) iterator.next();
+			if (tablero.getCelda(caux) == EstadoCelda.VIVA)
 			{
-				Coordenada2D caux = (Coordenada2D) iterator.next();
-				if (tablero.getCelda(caux) == EstadoCelda.VIVA)
-				{
-					cuenta++;
-				}
+				cuenta++;
 			}
-			if(tablero.getCelda(posicion) == EstadoCelda.VIVA)
-			{
-				if(cuenta == 2  || cuenta == 3)
-				{
-					return EstadoCelda.VIVA;
-				}
-				else return EstadoCelda.MUERTA;
-			}
-			else if (cuenta == 3)
-				return EstadoCelda.VIVA;
-			else return EstadoCelda.MUERTA;
 		}
-		catch (ExcepcionPosicionFueraTablero e)
+		if(tablero.getCelda(posicion) == EstadoCelda.VIVA)
 		{
-			e.getMessage();
-			e.printStackTrace();
+			if(cuenta == 2  || cuenta == 3)
+			{
+				estado = EstadoCelda.VIVA;
+			}
+			else estado = EstadoCelda.MUERTA;
 		}
+		else if (cuenta == 3)
+			estado = EstadoCelda.VIVA;
+		else estado = EstadoCelda.MUERTA;
+
 		return estado;
 	}
 }
