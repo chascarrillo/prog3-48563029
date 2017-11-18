@@ -17,7 +17,6 @@ import modelo.EstadoCelda;
 import modelo.Patron;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
-import modelo.excepciones.ExcepcionEjecucion;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
 /**
@@ -149,14 +148,14 @@ public abstract class Tablero
 	throws ExcepcionPosicionFueraTablero
 	{
 		if (patron == null || coordenadaInicial == null)
-			throw new ExcepcionEjecucion(new ExcepcionArgumentosIncorrectos());
+			throw new ExcepcionArgumentosIncorrectos();
 		Iterator<Coordenada> iterator = null;
 		Coordenada caux = null;
 		boolean control = false;
-		Collection<Coordenada> posPatron = patron.getPosiciones();
-		Collection<Coordenada> posTablero = recortarColeccion(getPosiciones(), coordenadaInicial);
+		Collection<Coordenada>	posPatron = patron.getPosiciones(),
+								posTablero = recortarColeccion(getPosiciones(), coordenadaInicial);
 
-		if (posTablero.isEmpty())
+		if (posTablero.isEmpty()  ||  anchuraColeccion(posPatron) > anchuraColeccion(posTablero))
 		{
 			iterator = posPatron.iterator();
 			while (iterator.hasNext())
@@ -175,7 +174,7 @@ public abstract class Tablero
 			}
 			throw new ExcepcionPosicionFueraTablero(caux, getDimensiones());
 		}
-		else if (anchuraColeccion(posPatron) <= anchuraColeccion(posTablero))
+		else // anchuraColeccion(posPatron) <= anchuraColeccion(posTablero)
 		{
 			if (this instanceof Tablero1D)
 			{
@@ -185,7 +184,7 @@ public abstract class Tablero
 					caux = (Coordenada1D) iterator.next();
 					try
 					{
-						setCelda(caux.suma(coordenadaInicial), patron.getCelda(caux));
+						setCelda(coordenadaInicial.suma(caux), patron.getCelda(caux));
 					}
 					catch (ExcepcionCoordenadaIncorrecta | ExcepcionPosicionFueraTablero e)
 					{
@@ -202,7 +201,7 @@ public abstract class Tablero
 					caux = (Coordenada2D) iterator.next();
 					try
 					{
-						setCelda(caux.suma(coordenadaInicial), patron.getCelda(caux));
+						setCelda(coordenadaInicial.suma(caux), patron.getCelda(caux));
 					}
 					catch (ExcepcionCoordenadaIncorrecta | ExcepcionPosicionFueraTablero e)
 					{
@@ -210,27 +209,7 @@ public abstract class Tablero
 					}
 				}
 				control = true;
-
 			}
-		}
-		else
-		{
-			iterator = posPatron.iterator();
-			while (iterator.hasNext())
-			{
-				try
-				{
-					caux = coordenadaInicial.suma(iterator.next());
-				}
-				catch (ExcepcionCoordenadaIncorrecta e)
-				{
-					e.printStackTrace();
-				}
-
-				if (!contiene(caux))
-					break;
-			}
-			throw new ExcepcionPosicionFueraTablero(caux, getDimensiones());
 		}
 
 		return control;
@@ -340,7 +319,7 @@ public abstract class Tablero
 				else
 					iterator.remove();
 			}
-			if (!(this instanceof Tablero1D))
+			if (this instanceof TableroCeldasCuadradas)
 			{
 				Coordenada2D caux2 = null;
 				while (iterator.hasNext())

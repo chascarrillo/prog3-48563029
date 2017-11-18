@@ -94,7 +94,7 @@ public class Juego1DP3Test {
 				juego.cargaPatron(patronsimple, new Coordenada1D(-1));
 				fail("Se debió producir ExcepcionCoordenada1DIncorrecta");
 			} catch (ExcepcionCoordenada1DIncorrecta e) {
-				assertEquals("e.getX",-1,e.getX());
+				assertEquals("e.getX",-1,e.getX(),0);
 			} catch (Exception e) {
 					fail("Se esperaba ExcepcionCoordenadaIncorrecta, pero se capturo "+e.getClass().getSimpleName());				
 			}

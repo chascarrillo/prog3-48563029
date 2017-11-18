@@ -238,8 +238,8 @@ public class Tablero2DTest {
 		} catch (ExcepcionCoordenadaIncorrecta e) {
 			// TODO Auto-generated catch block
 			ExcepcionCoordenada2DIncorrecta ex = (ExcepcionCoordenada2DIncorrecta) e;
-			assertEquals ("ex.getX",-1, ex.getX());
-			assertEquals ("ex.getY",0,ex.getY());
+			assertEquals ("ex.getX",-1, ex.getX(),0);
+			assertEquals ("ex.getY",0,ex.getY(),0);
 		} catch (Exception e) {
 			fail("Se esperaba ExcepcionCoordenadaIncorrecta, pero se capturo "+e.getClass().getSimpleName());
 		    

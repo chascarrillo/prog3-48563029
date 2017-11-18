@@ -34,8 +34,13 @@ Coordenada1D c;
 	@Test
 	public final void testInicializacion() {
 	
-		Coordenada1D c2 = new Coordenada1D(c);
-		assertEquals("c2.x", 5,c2.getX());
+		Coordenada1D c2;
+		try {
+			c2 = new Coordenada1D(c);
+			assertEquals("c2.x", 5,c2.getX());
+		} catch (ExcepcionCoordenadaIncorrecta e) {
+			e.printStackTrace();
+		}
 		
 		
 	}
