@@ -4,9 +4,11 @@
  * @author Alfonso Aracil Andres. 48563029
  */
 
-package modelo;
+package afterlife;
 
 import java.util.Comparator;
+
+import modelo.Coordenada2D;
 
 /**
  * The Enum ComparadorCoordenada.

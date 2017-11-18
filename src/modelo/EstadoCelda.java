@@ -1,7 +1,7 @@
 /**
  * Este tipo enumerado especifica los valores de una celda...
  * 
- * @author Alfonso Aracil Andres. 48563029
+ * @author Alfonso Aracil Andres. 48563029R
  */
 
 package modelo;
@@ -11,9 +11,8 @@ package modelo;
  */
 public enum EstadoCelda
 {
-	
 	/** The muerta. */
-	MUERTA, 
- /** The viva. */
- VIVA
+	MUERTA,
+	/** The viva. */
+	VIVA
 }

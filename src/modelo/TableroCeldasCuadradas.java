@@ -1,3 +1,9 @@
+/**
+ * Esta clase especifica un tipo de tablero bidimensional y de celdas cuadradas...
+ * 
+ * @author Alfonso Aracil Andres. 48563029R
+ */
+
 package modelo;
 
 import java.util.ArrayList;
@@ -15,12 +21,13 @@ import modelo.excepciones.ExcepcionPosicionFueraTablero;
 public class TableroCeldasCuadradas
 extends Tablero2D
 {
-
 	/**
 	 * Instantiates a new tablero celdas cuadradas.
 	 *
-	 * @param dimensiones the dimensiones
-	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
+	 * @param dimensiones
+	 *            the dimensiones
+	 * @throws ExcepcionCoordenadaIncorrecta
+	 *             the excepcion coordenada incorrecta
 	 */
 	public TableroCeldasCuadradas(Coordenada2D dimensiones)
 	throws ExcepcionCoordenadaIncorrecta
@@ -31,9 +38,12 @@ extends Tablero2D
 	/**
 	 * Instantiates a new tablero celdas cuadradas.
 	 *
-	 * @param x the x
-	 * @param y the y
-	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @throws ExcepcionCoordenadaIncorrecta
+	 *             the excepcion coordenada incorrecta
 	 */
 	public TableroCeldasCuadradas(int x, int y)
 	throws ExcepcionCoordenadaIncorrecta
@@ -42,18 +52,21 @@ extends Tablero2D
 	}
 
 	/**
-	 * Devuelve las celdas contiguas a la posicion especificada
+	 * Devuelve las celdas contiguas a la posicion especificada.
 	 *
-	 * @param posicion la celda a estudiar
+	 * @param posicion            la celda a estudiar
 	 * @return ArrayList<Coordenada> con las celdas vecinas
+	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
 	 */
 	@Override
 	public ArrayList<Coordenada> getPosicionesVecinasCCW(Coordenada posicion)
 	throws ExcepcionPosicionFueraTablero
 	{
-		if(posicion == null) throw new ExcepcionArgumentosIncorrectos();
+		if (posicion == null)
+			throw new ExcepcionArgumentosIncorrectos();
 		ArrayList<Coordenada> cds = null;
-		if(!contiene(posicion)) throw new ExcepcionPosicionFueraTablero(posicion, getDimensiones());
+		if (!contiene(posicion))
+			throw new ExcepcionPosicionFueraTablero(posicion, getDimensiones());
 		else
 		{
 			try
@@ -63,69 +76,53 @@ extends Tablero2D
 				int anchura = anchuraColeccion(getPosiciones()), altura = alturaColeccion(getPosiciones());
 				cds = new ArrayList<Coordenada>();
 
-				if(x > 0  &&  y > 0)
+				if (x > 0 && y > 0)
 				{
-					aux = new Coordenada2D(x-1, y-1);
-					if(contiene(aux))
-					{
+					aux = new Coordenada2D(x - 1, y - 1);
+					if (contiene(aux))
 						cds.add(aux);
-					}
 				}
-				if(x > 0)
+				if (x > 0)
 				{
-					aux = new Coordenada2D(x-1, y);
-					if(contiene(aux))
-					{
+					aux = new Coordenada2D(x - 1, y);
+					if (contiene(aux))
 						cds.add(aux);
-					}
 				}
-				if(x > 0  &&  y < altura-1)
+				if (x > 0 && y < altura - 1)
 				{
-					aux = new Coordenada2D(x-1, y+1);
-					if(contiene(aux))
-					{
+					aux = new Coordenada2D(x - 1, y + 1);
+					if (contiene(aux))
 						cds.add(aux);
-					}
 				}
-				if(y < altura-1)
+				if (y < altura - 1)
 				{
-					aux = new Coordenada2D(x, y+1);
-					if(contiene(aux))
-					{
+					aux = new Coordenada2D(x, y + 1);
+					if (contiene(aux))
 						cds.add(aux);
-					}
 				}
-				if(x < anchura-1  &&  y < altura-1)
+				if (x < anchura - 1 && y < altura - 1)
 				{
-					aux = new Coordenada2D(x+1, y+1);
-					if(contiene(aux))
-					{
+					aux = new Coordenada2D(x + 1, y + 1);
+					if (contiene(aux))
 						cds.add(aux);
-					}
 				}
-				if(x < anchura-1)
+				if (x < anchura - 1)
 				{
-					aux = new Coordenada2D(x+1, y);
-					if(contiene(aux))
-					{
+					aux = new Coordenada2D(x + 1, y);
+					if (contiene(aux))
 						cds.add(aux);
-					}
 				}
-				if(x < anchura-1  &&  y > 0)
+				if (x < anchura - 1 && y > 0)
 				{
-					aux = new Coordenada2D(x+1, y-1);
-					if(contiene(aux))
-					{
+					aux = new Coordenada2D(x + 1, y - 1);
+					if (contiene(aux))
 						cds.add(aux);
-					}
 				}
-				if(y > 0)
+				if (y > 0)
 				{
-					aux = new Coordenada2D(x, y-1);
-					if(contiene(aux))
-					{
+					aux = new Coordenada2D(x, y - 1);
+					if (contiene(aux))
 						cds.add(aux);
-					}
 				}
 			}
 			catch (ExcepcionCoordenadaIncorrecta e)
@@ -149,49 +146,46 @@ extends Tablero2D
 		{
 			salida = "+";
 			int anchura = anchuraColeccion(getPosiciones());
-	
+
 			for (int abc = 0; abc < anchura; abc++)
-			{
 				salida += "-";
-			}
 			salida += "+\n|";
-	
+
 			Collection<Coordenada> cds = getPosiciones();
 			Iterator<Coordenada> iterator = cds.iterator();
 			Coordenada2D cauxa = (Coordenada2D) iterator.next(), cauxn = null;
-			if(getCelda(cauxa) == EstadoCelda.MUERTA)
-			{
+			if (getCelda(cauxa) == EstadoCelda.MUERTA)
 				salida += " ";
-			}
-			else salida += "*";
-	
-			while(iterator.hasNext())
+			else
+				salida += "*";
+
+			while (iterator.hasNext())
 			{
 				cauxn = (Coordenada2D) iterator.next();
-	
-				if(cauxa.getY() == cauxn.getY())
+
+				if (cauxa.getY() == cauxn.getY())
 				{
-					if(getCelda(cauxn) == EstadoCelda.MUERTA)
+					if (getCelda(cauxn) == EstadoCelda.MUERTA)
 						salida += " ";
-					else salida += "*";
+					else
+						salida += "*";
 					cauxa = cauxn;
 					cauxn = null;
 				}
 				else if (iterator.hasNext())
 				{
-					if(getCelda(cauxn) == EstadoCelda.MUERTA)
+					if (getCelda(cauxn) == EstadoCelda.MUERTA)
 						salida += "|\n| ";
-					else salida += "|\n|*";
+					else
+						salida += "|\n|*";
 					cauxa = cauxn;
 					cauxn = null;
 				}
 			}
-	
+
 			salida += "|\n+";
 			for (int abc = 0; abc < anchura; abc++)
-			{
 				salida += "-";
-			}
 			salida += "+\n";
 			return salida;
 		}

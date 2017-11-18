@@ -1,7 +1,7 @@
 /**
  * Esta clase especifica una partida...
  * 
- * @author Alfonso Aracil Andres. 48563029
+ * @author Alfonso Aracil Andres. 48563029R
  */
 
 package modelo;
@@ -16,13 +16,11 @@ import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 import modelo.excepciones.ExcepcionEjecucion;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Juego.
  */
-public class Juego
-{
-	
+public class Juego {
+
 	/** The tablero. */
 	private Tablero tablero;
 
@@ -38,9 +36,10 @@ public class Juego
 	 * @param tablero the tablero
 	 * @param regla the regla
 	 */
-	public Juego (Tablero tablero, Regla regla)
+	public Juego(Tablero tablero, Regla regla)
 	{
-		if(tablero == null  ||  regla == null) throw new ExcepcionArgumentosIncorrectos();
+		if (tablero == null || regla == null)
+			throw new ExcepcionArgumentosIncorrectos();
 		this.tablero = tablero;
 		this.regla = regla;
 	}
@@ -55,14 +54,10 @@ public class Juego
 	public void cargaPatron(Patron p, Coordenada posicionInicial)
 	throws ExcepcionPosicionFueraTablero
 	{
-		if(tablero.cargaPatron(p, posicionInicial))
-		{
+		if (tablero.cargaPatron(p, posicionInicial))
 			patronesUsados.add(p);
-		}
 		else
-		{
 			System.err.println("Error cargando plantilla " + p.getNombre() + " en " + posicionInicial);
-		}
 	}
 
 	/**
@@ -73,18 +68,32 @@ public class Juego
 		Collection<Coordenada> cds = tablero.getPosiciones();
 		Iterator<Coordenada> iterator = cds.iterator();
 
-		while(iterator.hasNext())
-		{
-			Coordenada2D caux = (Coordenada2D) iterator.next();
-			try
+		if(tablero instanceof Tablero1D)
+			while (iterator.hasNext())
 			{
-				tablero.setCelda(caux, regla.calculaSiguienteEstadoCelda(tablero, caux));
+				Coordenada1D caux = (Coordenada1D) iterator.next();
+				try
+				{
+					tablero.setCelda(caux, regla.calculaSiguienteEstadoCelda(tablero, caux));
+				}
+				catch (ExcepcionPosicionFueraTablero e)
+				{
+					throw new ExcepcionEjecucion(e);
+				}
 			}
-			catch (ExcepcionPosicionFueraTablero e)
+		else
+			while (iterator.hasNext())
 			{
-				throw new ExcepcionEjecucion(e);
+				Coordenada2D caux = (Coordenada2D) iterator.next();
+				try
+				{
+					tablero.setCelda(caux, regla.calculaSiguienteEstadoCelda(tablero, caux));
+				}
+				catch (ExcepcionPosicionFueraTablero e)
+				{
+					throw new ExcepcionEjecucion(e);
+				}
 			}
-		}
 	}
 
 	/**

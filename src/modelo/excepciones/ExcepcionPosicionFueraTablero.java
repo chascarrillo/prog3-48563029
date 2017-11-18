@@ -1,42 +1,42 @@
 /**
  * Esta clase especifica el caso de buscar una coordenada en un tablero que no la contiene...
  * 
- * @author Alfonso Aracil Andres. 48563029
+ * @author Alfonso Aracil Andres. 48563029R
  */
 
 package modelo.excepciones;
 
 import modelo.Coordenada;
-import modelo.Coordenada2D;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ExcepcionPosicionFueraTablero.
  */
 public class ExcepcionPosicionFueraTablero
 extends Exception
 {
-	
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/** The dimensiones. */
 	private Coordenada dimensiones;
-	
+
 	/** The coordenada. */
 	private Coordenada coordenada;
 
 	/**
 	 * Instantiates a new excepcion posicion fuera tablero.
 	 *
-	 * @param posicion the coordenada
-	 * @param coordenada2 the dimensiones
+	 * @param posicion
+	 *            the coordenada
+	 * @param coordenada2
+	 *            the dimensiones
 	 */
-	public ExcepcionPosicionFueraTablero(Coordenada posicion, Coordenada coordenada2)
+	public ExcepcionPosicionFueraTablero(Coordenada posicion, Coordenada dimensiones)
 	{
-		if(posicion == null  ||  coordenada2 == null) throw new ExcepcionArgumentosIncorrectos();
-			this.dimensiones = coordenada2;
-			this.coordenada = posicion;
+		if (posicion == null || dimensiones == null)
+			throw new ExcepcionArgumentosIncorrectos();
+		this.dimensiones = dimensiones;
+		this.coordenada = posicion;
 	}
 
 	/**

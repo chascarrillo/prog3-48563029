@@ -1,14 +1,12 @@
 /**
  * Este tipo enumerado es para ayudarme a ordenar las celdas segun sus coordenadas...
  * 
- * @author Alfonso Aracil Andres. 48563029
+ * @author Alfonso Aracil Andres. 48563029R
  */
 
 package modelo;
 
 import java.util.Comparator;
-
-import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 
 /**
  * The Enum ComparadorCoordenada.
@@ -16,25 +14,18 @@ import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 public enum ComparadorCoordenada
 implements Comparator<Coordenada>
 {
-	
 	/** The x sort. */
 	X_SORT
 	{
 		public int compare(Coordenada c1, Coordenada c2)
 		{
-			Coordenada caux = null;
-			try {
-				caux = new Coordenada1D(1);
-			} catch (ExcepcionCoordenadaIncorrecta e) {
-				e.printStackTrace();
-			}
-			if(caux.getClass() == c1.getClass())
+			if (c1 instanceof Coordenada1D)
 				return Integer.valueOf(((Coordenada1D) c1).getX()).compareTo(((Coordenada1D) c2).getX());
 			else
 				return Integer.valueOf(((Coordenada2D) c1).getX()).compareTo(((Coordenada2D) c2).getX());
 		}
 	},
-	
+
 	/** The y sort. */
 	Y_SORT
 	{
@@ -60,9 +51,7 @@ implements Comparator<Coordenada>
 				{
 					int result = option.compare(o1, o2);
 					if (result != 0)
-					{
 						return result;
-					}
 				}
 				return 0;
 			}

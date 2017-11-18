@@ -1,7 +1,7 @@
 /**
- * Esta clase especifica un tablero de juego...
+ * Esta clase abstracta especifica un tablero de juego...
  * 
- * @author Alfonso Aracil Andres. 48563029
+ * @author Alfonso Aracil Andres. 48563029R
  */
 
 package modelo;
@@ -25,9 +25,8 @@ import modelo.excepciones.ExcepcionPosicionFueraTablero;
  */
 public abstract class Tablero
 {
-	
 	/** The celdas. */
-	protected HashMap<Coordenada,EstadoCelda> celdas;
+	protected HashMap<Coordenada, EstadoCelda> celdas;
 
 	/** The dimensiones. */
 	protected Coordenada dimensiones;
@@ -39,9 +38,10 @@ public abstract class Tablero
 	 */
 	protected Tablero(Coordenada dimensiones)
 	{
-		if(dimensiones == null) throw new ExcepcionArgumentosIncorrectos();
+		if (dimensiones == null)
+			throw new ExcepcionArgumentosIncorrectos();
 		this.dimensiones = dimensiones;
-		celdas = new HashMap<Coordenada,EstadoCelda>();
+		celdas = new HashMap<Coordenada, EstadoCelda>();
 	}
 
 	/**
@@ -55,13 +55,9 @@ public abstract class Tablero
 		try
 		{
 			if (this instanceof Tablero1D)
-			{
 				dimensiones = new Coordenada1D(anchuraColeccion(getPosiciones()));
-			}
 			else
-			{
 				dimensiones = new Coordenada2D(anchuraColeccion(getPosiciones()), alturaColeccion(getPosiciones()));
-			}
 			return dimensiones;
 		}
 		catch (ExcepcionCoordenadaIncorrecta e)
@@ -77,65 +73,21 @@ public abstract class Tablero
 	 * @return coleccion de coordenadas
 	 */
 	public Collection<Coordenada> getPosiciones()
-	{/*
-		Set<Coordenada2D> ts = new TreeSet <Coordenada2D>(
-				ComparadorCoordenada.getComparator(ComparadorCoordenada.Y_SORT, ComparadorCoordenada.X_SORT)
-				);
-		ts.addAll(celdas.keySet());
-		return (Collection<Coordenada2D>) ts;*/
-		if(this instanceof Tablero1D)
+	{
+		if (this instanceof Tablero1D)
 		{
-			Set<Coordenada> ts = new TreeSet<Coordenada>(ComparadorCoordenada.getComparator(ComparadorCoordenada.X_SORT));
+			Set<Coordenada> ts = new TreeSet<Coordenada>(
+					ComparadorCoordenada.getComparator(ComparadorCoordenada.X_SORT));
 			ts.addAll(celdas.keySet());
 			return (Collection<Coordenada>) ts;
 		}
 		else
 		{
-			Set<Coordenada> ts = new TreeSet<Coordenada>(ComparadorCoordenada.getComparator(ComparadorCoordenada.Y_SORT, ComparadorCoordenada.X_SORT));
+			Set<Coordenada> ts = new TreeSet<Coordenada>(
+					ComparadorCoordenada.getComparator(ComparadorCoordenada.Y_SORT, ComparadorCoordenada.X_SORT));
 			ts.addAll(celdas.keySet());
 			return (Collection<Coordenada>) ts;
-			
 		}
-	/*	Collection<Coordenada> devuelta = null;
-		if (!(this instanceof Tablero1D))
-		{
-			Set<Coordenada2D> ts = new TreeSet <Coordenada2D>(
-					ComparadorCoordenada2D.getComparator(ComparadorCoordenada2D.Y_SORT, ComparadorCoordenada2D.X_SORT)
-					);
-
-			Iterator<Coordenada> it = celdas.keySet().iterator();
-			while(it.hasNext())
-			{
-				ts.add((Coordenada2D) it.next());
-			}
-			Iterator<Coordenada2D> it2 = ts.iterator();
-			devuelta = new ArrayList<Coordenada>();
-			while(it2.hasNext())
-			{
-				Coordenada caux = it2.next();
-				devuelta.add(caux);
-			}
-		}
-		else
-		{
-			Set<Coordenada1D> ts = new TreeSet <Coordenada1D>(
-					ComparadorCoordenada1D.getComparator(ComparadorCoordenada1D.X_SORT)
-					);
-
-			Iterator<Coordenada> it = celdas.keySet().iterator();
-			while(it.hasNext())
-			{
-				ts.add((Coordenada1D) it.next());
-			}
-			Iterator<Coordenada1D> it2 = ts.iterator();
-			devuelta = new TreeSet<Coordenada>();
-			while(it2.hasNext())
-			{
-				devuelta.add((Coordenada) it2.next());
-			}
-		}
-
-		return devuelta;	*/
 	}
 
 	/**
@@ -148,13 +100,13 @@ public abstract class Tablero
 	public EstadoCelda getCelda(Coordenada posicion)
 	throws ExcepcionPosicionFueraTablero
 	{
-		if(posicion == null) throw new ExcepcionArgumentosIncorrectos();
-		
-		if(contiene(posicion))
-		{
+		if (posicion == null)
+			throw new ExcepcionArgumentosIncorrectos();
+
+		if (contiene(posicion))
 			return celdas.get(posicion);
-		}
-		else throw new ExcepcionPosicionFueraTablero(posicion, getDimensiones());
+		else
+			throw new ExcepcionPosicionFueraTablero(posicion, getDimensiones());
 	}
 
 	/**
@@ -167,12 +119,12 @@ public abstract class Tablero
 	public void setCelda(Coordenada posicion, EstadoCelda e)
 	throws ExcepcionPosicionFueraTablero
 	{
-		if(posicion == null) throw new ExcepcionArgumentosIncorrectos();
-		if(!contiene(posicion)) throw new ExcepcionPosicionFueraTablero(posicion, getDimensiones());
-		else
-		{
+		if (posicion == null)
+			throw new ExcepcionArgumentosIncorrectos();
+		if (contiene(posicion))
 			celdas.put(posicion, e);
-		}
+		else
+			throw new ExcepcionPosicionFueraTablero(posicion, getDimensiones());
 	}
 
 	/**
@@ -196,17 +148,18 @@ public abstract class Tablero
 	public boolean cargaPatron(Patron patron, Coordenada coordenadaInicial)
 	throws ExcepcionPosicionFueraTablero
 	{
-		if(patron == null  ||  coordenadaInicial == null) throw new ExcepcionArgumentosIncorrectos();
+		if (patron == null || coordenadaInicial == null)
+			throw new ExcepcionEjecucion(new ExcepcionArgumentosIncorrectos());
 		Iterator<Coordenada> iterator = null;
 		Coordenada caux = null;
 		boolean control = false;
 		Collection<Coordenada> posPatron = patron.getPosiciones();
 		Collection<Coordenada> posTablero = recortarColeccion(getPosiciones(), coordenadaInicial);
 
-		if(posTablero.isEmpty())
+		if (posTablero.isEmpty())
 		{
 			iterator = posPatron.iterator();
-			while(iterator.hasNext())
+			while (iterator.hasNext())
 			{
 				try
 				{
@@ -216,64 +169,54 @@ public abstract class Tablero
 				{
 					e.printStackTrace();
 				}
-				
-				if(!contiene(caux))
-				{
+
+				if (!contiene(caux))
 					break;
-				}
 			}
 			throw new ExcepcionPosicionFueraTablero(caux, getDimensiones());
 		}
-		else if(anchuraColeccion(posPatron) <= anchuraColeccion(posTablero))
+		else if (anchuraColeccion(posPatron) <= anchuraColeccion(posTablero))
 		{
-			if(this instanceof Tablero1D)
+			if (this instanceof Tablero1D)
 			{
 				iterator = posPatron.iterator();
-				while(iterator.hasNext())
+				while (iterator.hasNext())
 				{
 					caux = (Coordenada1D) iterator.next();
 					try
 					{
 						setCelda(caux.suma(coordenadaInicial), patron.getCelda(caux));
 					}
-					catch (ExcepcionArgumentosIncorrectos | ExcepcionPosicionFueraTablero e)
+					catch (ExcepcionCoordenadaIncorrecta | ExcepcionPosicionFueraTablero e)
 					{
 						e.printStackTrace();
-					}
-					catch (ExcepcionCoordenadaIncorrecta e)
-					{
-						throw new ExcepcionEjecucion(e);
 					}
 				}
 				control = true;
 			}
-			else if(alturaColeccion(posPatron) <= alturaColeccion(posTablero))
+			else if (alturaColeccion(posPatron) <= alturaColeccion(posTablero))
 			{
 				iterator = posPatron.iterator();
-				while(iterator.hasNext())
+				while (iterator.hasNext())
 				{
 					caux = (Coordenada2D) iterator.next();
 					try
 					{
 						setCelda(caux.suma(coordenadaInicial), patron.getCelda(caux));
 					}
-					catch (ExcepcionArgumentosIncorrectos | ExcepcionPosicionFueraTablero e)
+					catch (ExcepcionCoordenadaIncorrecta | ExcepcionPosicionFueraTablero e)
 					{
 						e.printStackTrace();
 					}
-					catch (ExcepcionCoordenadaIncorrecta e)
-					{
-						throw new ExcepcionEjecucion(e);
-					}
 				}
 				control = true;
-				
+
 			}
 		}
 		else
 		{
 			iterator = posPatron.iterator();
-			while(iterator.hasNext())
+			while (iterator.hasNext())
 			{
 				try
 				{
@@ -283,11 +226,9 @@ public abstract class Tablero
 				{
 					e.printStackTrace();
 				}
-				
-				if(!contiene(caux))
-				{
+
+				if (!contiene(caux))
 					break;
-				}
 			}
 			throw new ExcepcionPosicionFueraTablero(caux, getDimensiones());
 		}
@@ -303,12 +244,12 @@ public abstract class Tablero
 	 */
 	public boolean contiene(Coordenada posicion)
 	{
-		if(posicion == null) throw new ExcepcionArgumentosIncorrectos();
+		if (posicion == null)
+			throw new ExcepcionArgumentosIncorrectos();
 		if (getPosiciones().contains(posicion))
-		{
 			return true;
-		}
-		else return false;
+		else
+			return false;
 	}
 
 	/**
@@ -321,19 +262,18 @@ public abstract class Tablero
 	{
 		if (collection.isEmpty())
 			return 0;
+		if(this instanceof Tablero1D)
+			return 1;
 		int ymin = Integer.MAX_VALUE, ymax = Integer.MIN_VALUE;
+
 		Iterator<Coordenada> iterator = collection.iterator();
-		while(iterator.hasNext())
+		while (iterator.hasNext())
 		{
 			Coordenada2D caux = (Coordenada2D) iterator.next();
 			if (ymin > caux.getY())
-			{
 				ymin = caux.getY();
-			}
 			if (ymax < caux.getY())
-			{
 				ymax = caux.getY();
-			}
 		}
 
 		return ymax - ymin + 1;
@@ -350,32 +290,25 @@ public abstract class Tablero
 		if (collection.isEmpty())
 			return 0;
 		int xmin = Integer.MAX_VALUE, xmax = Integer.MIN_VALUE;
+
 		Iterator<Coordenada> iterator = collection.iterator();
-		while(iterator.hasNext())
+		while (iterator.hasNext())
 		{
-			if(this instanceof Tablero1D)
+			if (this instanceof Tablero1D)
 			{
 				Coordenada1D caux = (Coordenada1D) iterator.next();
 				if (xmin > caux.getX())
-				{
 					xmin = caux.getX();
-				}
 				if (xmax < caux.getX())
-				{
 					xmax = caux.getX();
-				}
 			}
 			else
 			{
 				Coordenada2D caux = (Coordenada2D) iterator.next();
 				if (xmin > caux.getX())
-				{
 					xmin = caux.getX();
-				}
 				if (xmax < caux.getX())
-				{
 					xmax = caux.getX();
-				}
 			}
 		}
 
@@ -383,7 +316,8 @@ public abstract class Tablero
 	}
 
 	/**
-	 * Recortar coleccion hasta que la coordenada sea la nueva esquina superior izquierda.
+	 * Recortar coleccion hasta que la coordenada sea la nueva esquina superior
+	 * izquierda.
 	 *
 	 * @param col la coleccion
 	 * @param c la coordenada
@@ -392,31 +326,28 @@ public abstract class Tablero
 	private Collection<Coordenada> recortarColeccion(Collection<Coordenada> col, Coordenada c)
 	{
 		ArrayList<Coordenada> devuelto = new ArrayList<Coordenada>();
-		if(col.contains(c))
+		if (col.contains(c))
 		{
 			Coordenada caux = null;
 
 			devuelto.addAll(col);
 			Iterator<Coordenada> iterator = devuelto.iterator();
-			while(iterator.hasNext())
+			while (iterator.hasNext())
 			{
 				caux = iterator.next();
 				if (caux.equals(c))
-				{
 					break;
-				}
-				else iterator.remove();
+				else
+					iterator.remove();
 			}
-			if(!(this instanceof Tablero1D))
+			if (!(this instanceof Tablero1D))
 			{
 				Coordenada2D caux2 = null;
 				while (iterator.hasNext())
 				{
 					caux2 = (Coordenada2D) iterator.next();
 					if (caux2.getX() < ((Coordenada2D) caux).getX())
-					{
 						iterator.remove();
-					}
 				}
 			}
 		}

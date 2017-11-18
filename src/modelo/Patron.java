@@ -1,7 +1,7 @@
 /**
- * Esta clase especifica una disposicion concreta en un tablero a medida...
+ * Esta clase especifica una disposicion concreta de estados de celdas en un tablero a medida...
  * 
- * @author Alfonso Aracil Andres. 48563029
+ * @author Alfonso Aracil Andres. 48563029R
  */
 
 package modelo;
@@ -11,16 +11,14 @@ import java.util.Collection;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Patron.
  */
 public class Patron
 {
-	
 	/** The nombre. */
 	private String nombre;
-	
+
 	/** The tablero. */
 	private Tablero tablero;
 
@@ -32,7 +30,8 @@ public class Patron
 	 */
 	public Patron(String nombre, Tablero tablero)
 	{
-		if(nombre == null  ||  tablero == null) throw new ExcepcionArgumentosIncorrectos();
+		if (nombre == null || tablero == null)
+			throw new ExcepcionArgumentosIncorrectos();
 		this.nombre = nombre;
 		this.tablero = tablero;
 	}
@@ -50,18 +49,20 @@ public class Patron
 	/**
 	 * Gets the celda.
 	 *
-	 * @param caux the c
+	 * @param posicion the c
 	 * @return the celda
 	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
 	 */
-	public EstadoCelda getCelda(Coordenada caux)
+	public EstadoCelda getCelda(Coordenada posicion)
 	throws ExcepcionPosicionFueraTablero
 	{
-		EstadoCelda estado = null;
-		if(caux == null) throw new ExcepcionArgumentosIncorrectos();
-		estado = tablero.getCelda(caux);
+		if (posicion == null)
+			throw new ExcepcionArgumentosIncorrectos();
 
-		return estado;
+		if (tablero.contiene(posicion))
+			return tablero.celdas.get(posicion);
+		else
+			throw new ExcepcionPosicionFueraTablero(posicion, tablero.getDimensiones());
 	}
 
 	/**
@@ -82,6 +83,6 @@ public class Patron
 	@Override
 	public String toString()
 	{
-		return (nombre+"\n"+tablero);
+		return (nombre + "\n" + tablero);
 	}
 }

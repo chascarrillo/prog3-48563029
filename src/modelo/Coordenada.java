@@ -1,3 +1,9 @@
+/**
+ * Esta clase abstracta especifica una coordenada...
+ * 
+ * @author Alfonso Aracil Andres. 48563029R
+ */
+
 package modelo;
 
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
@@ -7,14 +13,14 @@ import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
  */
 public abstract class Coordenada
 {
-	
 	/**
 	 * Instantiates a new coordenada.
 	 *
 	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
 	 */
-	public Coordenada() throws ExcepcionCoordenadaIncorrecta
-	{};
+	public Coordenada()
+	throws ExcepcionCoordenadaIncorrecta
+	{ }
 
 	/**
 	 * Suma.
@@ -23,5 +29,6 @@ public abstract class Coordenada
 	 * @return the coordenada
 	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
 	 */
-	abstract public Coordenada suma(Coordenada c) throws ExcepcionCoordenadaIncorrecta;
+	abstract public Coordenada suma(Coordenada c)
+	throws ExcepcionCoordenadaIncorrecta;
 }
