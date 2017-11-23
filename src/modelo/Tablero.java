@@ -147,15 +147,16 @@ public abstract class Tablero
 	public boolean cargaPatron(Patron patron, Coordenada coordenadaInicial)
 	throws ExcepcionPosicionFueraTablero
 	{
-		if (patron == null || coordenadaInicial == null)
-			throw new ExcepcionArgumentosIncorrectos();
+		if (patron == null || coordenadaInicial == null) throw new ExcepcionArgumentosIncorrectos();
+
 		Iterator<Coordenada> iterator = null;
 		Coordenada caux = null;
 		boolean control = false;
 		Collection<Coordenada>	posPatron = patron.getPosiciones(),
 								posTablero = recortarColeccion(getPosiciones(), coordenadaInicial);
 
-		if (posTablero.isEmpty()  ||  anchuraColeccion(posPatron) > anchuraColeccion(posTablero))
+		if (posTablero.isEmpty()  ||  anchuraColeccion(posPatron) > anchuraColeccion(posTablero)
+				||  alturaColeccion(posPatron) > alturaColeccion(posTablero))
 		{
 			iterator = posPatron.iterator();
 			while (iterator.hasNext())

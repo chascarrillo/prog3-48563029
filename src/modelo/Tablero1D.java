@@ -59,8 +59,8 @@ extends Tablero
 	public ArrayList<Coordenada> getPosicionesVecinasCCW(Coordenada posicion)
 	throws ExcepcionPosicionFueraTablero
 	{
-		if (posicion == null)
-			throw new ExcepcionArgumentosIncorrectos();
+		if (posicion == null) throw new ExcepcionArgumentosIncorrectos();
+
 		ArrayList<Coordenada> cds = null;
 		if (!contiene(posicion))
 			throw new ExcepcionPosicionFueraTablero(posicion, getDimensiones());

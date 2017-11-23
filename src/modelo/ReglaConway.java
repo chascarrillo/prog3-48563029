@@ -36,8 +36,8 @@ extends Regla
 	public EstadoCelda calculaSiguienteEstadoCelda(Tablero tablero, Coordenada posicion)
 	throws ExcepcionPosicionFueraTablero
 	{
-		if (tablero == null || posicion == null)
-			throw new ExcepcionArgumentosIncorrectos();
+		if (tablero == null || posicion == null) throw new ExcepcionArgumentosIncorrectos();
+
 		int cuenta = 0;
 		EstadoCelda estado = null;
 
