@@ -35,34 +35,32 @@ implements IParserTablero
 		if(cadena == null) throw new ExcepcionArgumentosIncorrectos();
 		if(cadena.isEmpty()) throw new ExcepcionLectura("Se paso como argumento una cadena vacia");
 
-		int x = -1, y = -1, bucle;
-		for(bucle = 0; bucle < cadena.length(); bucle++)
-		{
-			if(cadena.charAt(bucle) == '\n')
-			{
-				break;
-			}
-			x = bucle;
-		}
-		for(bucle = x; bucle < cadena.length(); bucle++)
-		{
-			
-		}
+		int anchura, altura;
+
+		String[] lineas = cadena.split("\n");
+		altura = lineas.length;
+		anchura = lineas[0].length();
+
+		for(int aux = 0; aux < altura; aux++)
+			if(lineas[aux].length() != anchura)
+				throw new ExcepcionLectura("La cadena argumento contiene lineas de distintas anchuras");
 
 		Tablero tablero = null;
 		try
 		{
-			tablero = new TableroCeldasCuadradas(cadena.length());
+			tablero = new TableroCeldasCuadradas(anchura, altura);
 
-			for(int i = 0; i < cadena.length(); i++)
+			for(int j = 0; j < altura; j++)
 			{
-				if(cadena.charAt(i) != ' '  ||  cadena.charAt(i) != '*')
-					throw new ExcepcionLectura("La cadena argumento contiene caracteres invalidos");
-
-				if(cadena.charAt(i) == ' ')
-					tablero.setCelda(new Coordenada2D(i), EstadoCelda.MUERTA);
-				else
-					tablero.setCelda(new Coordenada2D(i), EstadoCelda.VIVA);
+				for(int i = 0; i < anchura; i++)
+				{
+					if(lineas[j].charAt(i) != ' '  &&  lineas[j].charAt(i) != '*')
+						throw new ExcepcionLectura("La cadena argumento contiene caracteres invalidos");
+					if(lineas[j].charAt(i) == ' ')
+						tablero.setCelda(new Coordenada2D(i, j), EstadoCelda.MUERTA);
+					if(lineas[j].charAt(i) == '*')
+						tablero.setCelda(new Coordenada2D(i, j), EstadoCelda.VIVA);
+				}
 			}
 		}
 		catch (ExcepcionCoordenadaIncorrecta e)

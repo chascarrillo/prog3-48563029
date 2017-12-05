@@ -1,0 +1,59 @@
+/**
+ * Esta clase i...
+ * 
+ * @author Alfonso Aracil Andres. 48563029R
+ */
+
+package entradasalida.textoplano;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.FileOutputStream;
+
+import java.nio.charset.StandardCharsets;
+
+import entradasalida.IGeneradorFichero;
+import entradasalida.excepciones.ExcepcionGeneracion;
+import modelo.Juego;
+import modelo.Tablero1D;
+import modelo.TableroCeldasCuadradas;
+import modelo.excepciones.ExcepcionArgumentosIncorrectos;
+
+public class GeneradorFicheroPlano
+implements IGeneradorFichero
+{
+	/** {@inheritDoc}*/
+	public void generaFichero(File file, Juego juego, int iteraciones)
+	throws ExcepcionGeneracion
+	{
+		if(file == null  ||  juego == null) throw new ExcepcionArgumentosIncorrectos();
+		if(iteraciones <= 0) throw new ExcepcionGeneracion("el parametro iteraciones debe ser mayor que 0");
+
+		OutputStreamWriter osw;
+		try
+		{
+			osw = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
+			PrintWriter pw = new PrintWriter(osw, true);
+			pw.flush();
+			boolean es1D = false;
+
+			if(juego.getTablero() instanceof Tablero1D)
+				es1D = true;
+
+			for(int i = 0; i < iteraciones; i++)
+			{
+				juego.actualiza();
+				if(es1D)
+					pw.println(((Tablero1D) juego.getTablero()).generaCadena());
+				else
+					pw.println(((TableroCeldasCuadradas) juego.getTablero()).generaCadena());
+			}
+		}
+		catch (FileNotFoundException e)
+		{
+			throw new ExcepcionGeneracion("El fichero no fue encontrado");
+		}
+	}
+}

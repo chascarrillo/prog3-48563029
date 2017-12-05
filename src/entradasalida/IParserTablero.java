@@ -18,9 +18,9 @@ public interface IParserTablero
 	/**
 	 * Lee tablero.
 	 *
-	 * @param tablero the tablero
+	 * @param cadena the cadena
 	 * @return the tablero
-	 * @throws ExcepcionLectura 
+	 * @throws ExcepcionLectura the excepcion lectura
 	 */
 	public Tablero leeTablero(String cadena)
 	throws ExcepcionLectura;
