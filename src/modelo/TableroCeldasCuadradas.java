@@ -20,30 +20,14 @@ import modelo.excepciones.ExcepcionPosicionFueraTablero;
  */
 public class TableroCeldasCuadradas
 extends Tablero2D
+implements Imprimible
 {
 	/**
 	 * Instantiates a new tablero celdas cuadradas.
 	 *
-	 * @param dimensiones
-	 *            the dimensiones
-	 * @throws ExcepcionCoordenadaIncorrecta
-	 *             the excepcion coordenada incorrecta
-	 */
-	public TableroCeldasCuadradas(Coordenada2D dimensiones)
-	throws ExcepcionCoordenadaIncorrecta
-	{
-		super(dimensiones.getX(), dimensiones.getY());
-	}
-
-	/**
-	 * Instantiates a new tablero celdas cuadradas.
-	 *
-	 * @param x
-	 *            the x
-	 * @param y
-	 *            the y
-	 * @throws ExcepcionCoordenadaIncorrecta
-	 *             the excepcion coordenada incorrecta
+	 * @param x the x
+	 * @param y the y
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
 	 */
 	public TableroCeldasCuadradas(int x, int y)
 	throws ExcepcionCoordenadaIncorrecta
@@ -195,5 +179,11 @@ extends Tablero2D
 			e.printStackTrace();
 		}
 		return salida;
+	}
+
+	/** {@inheritDoc}*/
+	public String generaCadena()
+	{
+		return toString();
 	}
 }

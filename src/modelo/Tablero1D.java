@@ -20,14 +20,13 @@ import modelo.excepciones.ExcepcionPosicionFueraTablero;
  */
 public class Tablero1D
 extends Tablero
+implements Imprimible
 {
 	/**
 	 * Instantiates a new tablero 1 D.
 	 *
-	 * @param dimension
-	 *            the dimensiones
-	 * @throws ExcepcionCoordenadaIncorrecta
-	 *             the excepcion coordenada incorrecta
+	 * @param dimension the dimensiones
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
 	 */
 	public Tablero1D(int dimension)
 	throws ExcepcionCoordenadaIncorrecta
@@ -127,5 +126,11 @@ extends Tablero
 			e.printStackTrace();
 		}
 		return salida;
+	}
+
+	/** {@inheritDoc}*/
+	public String generaCadena()
+	{
+		return toString();
 	}
 }

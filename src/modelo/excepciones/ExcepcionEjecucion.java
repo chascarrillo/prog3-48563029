@@ -18,8 +18,7 @@ extends RuntimeException
 	/**
 	 * Instantiates a new excepcion ejecucion.
 	 *
-	 * @param mensaje
-	 *            the mensaje
+	 * @param mensaje the mensaje
 	 */
 	public ExcepcionEjecucion(String mensaje)
 	{
@@ -29,8 +28,7 @@ extends RuntimeException
 	/**
 	 * Instantiates a new excepcion ejecucion.
 	 *
-	 * @param causa
-	 *            the causa
+	 * @param causa the causa
 	 */
 	public ExcepcionEjecucion(Throwable causa)
 	{
