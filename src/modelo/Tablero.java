@@ -99,8 +99,7 @@ public abstract class Tablero
 	public EstadoCelda getCelda(Coordenada posicion)
 	throws ExcepcionPosicionFueraTablero
 	{
-		if (posicion == null)
-			throw new ExcepcionArgumentosIncorrectos();
+		if (posicion == null) throw new ExcepcionArgumentosIncorrectos();
 
 		if (contiene(posicion))
 			return celdas.get(posicion);
@@ -118,8 +117,7 @@ public abstract class Tablero
 	public void setCelda(Coordenada posicion, EstadoCelda e)
 	throws ExcepcionPosicionFueraTablero
 	{
-		if (posicion == null)
-			throw new ExcepcionArgumentosIncorrectos();
+		if (posicion == null) throw new ExcepcionArgumentosIncorrectos();
 		if (contiene(posicion))
 			celdas.put(posicion, e);
 		else
