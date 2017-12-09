@@ -14,6 +14,7 @@ import modelo.Tablero;
 import modelo.TableroCeldasCuadradas;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
+import modelo.excepciones.ExcepcionEjecucion;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
 /**
@@ -63,13 +64,9 @@ implements IParserTablero
 				}
 			}
 		}
-		catch (ExcepcionCoordenadaIncorrecta e)
+		catch (ExcepcionPosicionFueraTablero | ExcepcionCoordenadaIncorrecta e)
 		{
-			e.printStackTrace();
-		}
-		catch (ExcepcionPosicionFueraTablero e)
-		{
-			e.printStackTrace();
+			throw new ExcepcionEjecucion(e);
 		}
 
 		return tablero;

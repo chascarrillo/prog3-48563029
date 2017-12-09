@@ -31,7 +31,7 @@ implements IGeneradorFichero
 		if(file == null  ||  juego == null) throw new ExcepcionArgumentosIncorrectos();
 		if(iteraciones <= 0) throw new ExcepcionGeneracion("el parametro iteraciones debe ser mayor que 0");
 
-		OutputStreamWriter osw;
+		OutputStreamWriter osw = null;
 		try
 		{
 			osw = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);

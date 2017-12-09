@@ -14,6 +14,7 @@ import modelo.Tablero;
 import modelo.Tablero1D;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
+import modelo.excepciones.ExcepcionEjecucion;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
 /**
@@ -46,18 +47,14 @@ implements IParserTablero
 					throw new ExcepcionLectura("La cadena argumento contiene caracteres invalidos");
 
 				if(cadena.charAt(i) == ' ')
-					tablero.setCelda(new Coordenada1D(i), EstadoCelda.MUERTA);
+						tablero.setCelda(new Coordenada1D(i), EstadoCelda.MUERTA);
 				else
 					tablero.setCelda(new Coordenada1D(i), EstadoCelda.VIVA);
 			}
 		}
-		catch (ExcepcionCoordenadaIncorrecta e)
+		catch (ExcepcionPosicionFueraTablero | ExcepcionCoordenadaIncorrecta e)
 		{
-			e.printStackTrace();
-		}
-		catch (ExcepcionPosicionFueraTablero e)
-		{
-			e.printStackTrace();
+			throw new ExcepcionEjecucion(e);
 		}
 
 		return tablero;
