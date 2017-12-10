@@ -1,5 +1,5 @@
 /**
- * Esta clase i...
+ * Esta clase representa en un fichero de texto la evolucion de un tablero de juego...
  * 
  * @author Alfonso Aracil Andres. 48563029R
  */
@@ -21,9 +21,19 @@ import modelo.Tablero1D;
 import modelo.TableroCeldasCuadradas;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 
+/**
+ * The Class GeneradorFicheroPlano.
+ */
 public class GeneradorFicheroPlano
 implements IGeneradorFichero
 {
+	
+	/**
+	 * Instantiates a new generador fichero plano.
+	 */
+	public GeneradorFicheroPlano()
+	{}
+
 	/** {@inheritDoc}*/
 	public void generaFichero(File file, Juego juego, int iteraciones)
 	throws ExcepcionGeneracion
