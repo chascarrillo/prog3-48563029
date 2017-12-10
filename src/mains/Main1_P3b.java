@@ -17,7 +17,6 @@ public class Main1_P3b {
 	 */
 	public static void main(String[] args)  {
 		try {
-			Coordenada2D c0; // no se instancia porque no se ha hecho new
 			Coordenada2D c1 = new Coordenada2D(0,0);
 			Coordenada2D c2 = new Coordenada2D(10,10);
 			Coordenada2D c3 = new Coordenada2D(4,3);

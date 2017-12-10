@@ -1,3 +1,9 @@
+/**
+ * Esta clase coordina la instanciacion de tableros a partir de un String...
+ * 
+ * @author Alfonso Aracil Andres. 48563029R
+ */
+
 package entradasalida;
 
 import entradasalida.excepciones.ExcepcionLectura;
@@ -6,8 +12,16 @@ import entradasalida.textoplano.ParserTablero2D;
 import modelo.Tablero;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ParserTableros.
+ */
 public class ParserTableros
 {
+	
+	/**
+	 * Instantiates a new parser tableros.
+	 */
 	public ParserTableros()
 	{}
 
@@ -18,7 +32,7 @@ public class ParserTableros
 	 * @return the tablero
 	 * @throws ExcepcionLectura the excepcion lectura
 	 */
-	public Tablero leeTablero(String cadena)
+	static public Tablero leeTablero(String cadena)
 	throws ExcepcionLectura
 	{
 		if(cadena == null) throw new ExcepcionArgumentosIncorrectos();

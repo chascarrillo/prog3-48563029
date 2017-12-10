@@ -21,6 +21,7 @@ import modelo.Tablero1D;
 import modelo.TableroCeldasCuadradas;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class GeneradorFicheroPlano.
  */
@@ -60,6 +61,7 @@ implements IGeneradorFichero
 				else
 					pw.println(((TableroCeldasCuadradas) juego.getTablero()).generaCadena());
 			}
+			pw.close();
 		}
 		catch (FileNotFoundException e)
 		{

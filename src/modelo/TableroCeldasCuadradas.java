@@ -36,6 +36,18 @@ implements Imprimible
 	}
 
 	/**
+	 * Instantiates a new tablero celdas cuadradas.
+	 *
+	 * @param dimensiones las dimensiones
+	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
+	 */
+	public TableroCeldasCuadradas(Coordenada2D dimensiones)
+	throws ExcepcionCoordenadaIncorrecta
+	{
+		super(dimensiones.getX(), dimensiones.getY());
+	}
+
+	/**
 	 * Devuelve las celdas contiguas a la posicion especificada.
 	 *
 	 * @param posicion            la celda a estudiar

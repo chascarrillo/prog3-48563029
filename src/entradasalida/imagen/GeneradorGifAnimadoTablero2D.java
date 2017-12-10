@@ -8,6 +8,7 @@ package entradasalida.imagen;
 
 import java.io.File;
 
+import entradasalida.IGeneradorFichero;
 import entradasalida.excepciones.ExcepcionGeneracion;
 import gifs.ImagenGIF;
 import gifs.ImagenGIFAnimado;
@@ -20,10 +21,12 @@ import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionEjecucion;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class GeneradorGifAnimadoTablero2D.
  */
 public class GeneradorGifAnimadoTablero2D
+implements IGeneradorFichero
 {
 	
 	/**

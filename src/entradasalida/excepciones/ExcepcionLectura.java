@@ -6,6 +6,7 @@
 
 package entradasalida.excepciones;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ExcepcionGeneracion.
  */

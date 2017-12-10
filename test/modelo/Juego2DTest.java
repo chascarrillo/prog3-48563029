@@ -123,8 +123,8 @@ public class Juego2DTest {
 				juego.cargaPatron(patronparpadeador, new Coordenada2D(0,-1));
 				fail("Se debió producir ExcepcionCoordenada2DIncorrecta");
 			} catch (ExcepcionCoordenada2DIncorrecta e) {
-				assertEquals("e.getX",0,e.getX());
-				assertEquals("e.getY",-1,e.getY());
+				assertEquals("e.getX",0,e.getX(),0);
+				assertEquals("e.getY",-1,e.getY(),0);
 			} catch (Exception e) {
 					fail("Se esperaba ExcepcionCoordenadaIncorrecta, pero se capturo "+e.getClass().getSimpleName());
 					

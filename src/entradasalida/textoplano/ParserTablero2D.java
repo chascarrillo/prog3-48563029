@@ -17,6 +17,7 @@ import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionEjecucion;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ParserTablero2D.
  */

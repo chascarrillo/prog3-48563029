@@ -9,6 +9,7 @@ package entradasalida;
 import entradasalida.excepciones.ExcepcionLectura;
 import modelo.Tablero;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Interface IParserTablero.
  */
