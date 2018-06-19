@@ -41,7 +41,7 @@ implements IGeneradorFichero
 	{
 		if(file == null  ||  juego == null) throw new ExcepcionArgumentosIncorrectos();
 		if(iteraciones <= 0) throw new ExcepcionGeneracion("Se paso como argumentos un numero incorrecto de iteraciones");
-		if((juego.getTablero() instanceof TableroCeldasCuadradas) == false) throw new ExcepcionGeneracion("El tablero de juego no es bidimensional");
+		if(  !(juego.getTablero() instanceof TableroCeldasCuadradas)  ) throw new ExcepcionGeneracion("El tablero de juego no es cuadrado");
 
 		int ancho = ((Coordenada2D) juego.getTablero().getDimensiones()).getX();
 		int alto = ((Coordenada2D) juego.getTablero().getDimensiones()).getY();

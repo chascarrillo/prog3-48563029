@@ -17,7 +17,6 @@ import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionEjecucion;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ParserTablero2D.
  */
@@ -58,9 +57,9 @@ implements IParserTablero
 				{
 					if(lineas[j].charAt(i) != ' '  &&  lineas[j].charAt(i) != '*')
 						throw new ExcepcionLectura("La cadena argumento contiene caracteres invalidos");
-					if(lineas[j].charAt(i) == ' ')
+					else if(lineas[j].charAt(i) == ' ')
 						tablero.setCelda(new Coordenada2D(i, j), EstadoCelda.MUERTA);
-					if(lineas[j].charAt(i) == '*')
+					else if(lineas[j].charAt(i) == '*')
 						tablero.setCelda(new Coordenada2D(i, j), EstadoCelda.VIVA);
 				}
 			}

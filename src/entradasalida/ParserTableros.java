@@ -12,7 +12,6 @@ import entradasalida.textoplano.ParserTablero2D;
 import modelo.Tablero;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ParserTableros.
  */
@@ -32,7 +31,8 @@ public class ParserTableros
 	 * @return the tablero
 	 * @throws ExcepcionLectura the excepcion lectura
 	 */
-	static public Tablero leeTablero(String cadena)
+
+	public static Tablero leeTablero(String cadena)
 	throws ExcepcionLectura
 	{
 		if(cadena == null) throw new ExcepcionArgumentosIncorrectos();

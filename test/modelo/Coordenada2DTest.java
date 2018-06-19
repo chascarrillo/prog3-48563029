@@ -34,15 +34,15 @@ Coordenada2D c;
 	@Test
 	public final void testInicializacion() {
 	
-		Coordenada2D c2 = null;
+		Coordenada2D c2;
 		try {
 			c2 = new Coordenada2D(c);
+			assertEquals("c2.x", c2.getX(), c.getX());
+			assertEquals("c2.y", c2.getY(), c.getY());
 		} catch (ExcepcionCoordenadaIncorrecta e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		assertEquals("c2.x", c2.getX(), c.getX());
-		assertEquals("c2.y", c2.getY(), c.getY());
 		
 	}
 	

@@ -109,8 +109,8 @@ public class ExcepcionesSuiteTest {
 				ExcepcionCoordenada2DIncorrecta ex2d = (ExcepcionCoordenada2DIncorrecta)ex;
 				assertNull(c);	
 				assertTrue("Emisión de mensaje",ex2d.getMessage().length()>0);
-				assertEquals("getX",-1,ex2d.getX());
-				assertEquals("getY",0,ex2d.getY());
+				assertEquals("getX",-1,ex2d.getX(), 0.0);
+				assertEquals("getY",0,ex2d.getY(), 0.0);
 			}
 			else fail("Se esperaba ExcepcionCoordenada2DIncorrecta, pero se capturo "+ex.getClass().getSimpleName());
 		} catch (Exception ex) {
@@ -125,8 +125,8 @@ public class ExcepcionesSuiteTest {
 					ExcepcionCoordenada2DIncorrecta ex2d = (ExcepcionCoordenada2DIncorrecta)ex1;
 					assertNull(c);
 					assertTrue("Emisión de mensaje",ex2d.getMessage().length()>0);
-					assertEquals("getX",0,ex2d.getX());
-					assertEquals("getY",-1,ex2d.getY());
+					assertEquals("getX",0,ex2d.getX(), 0.0);
+					assertEquals("getY",-1,ex2d.getY(), 0.0);
 				}
 				else fail("Se esperaba ExcepcionCoordenada2DIncorrecta, pero se capturo "+ex1.getClass().getSimpleName());
 			} catch (Exception ex1) {
@@ -146,7 +146,7 @@ public class ExcepcionesSuiteTest {
 			ExcepcionCoordenada1DIncorrecta ex1d = (ExcepcionCoordenada1DIncorrecta)ex;
 			assertNull(c);
 			assertTrue("Emisión de mensaje",ex1d.getMessage().length()>0);
-			assertEquals("getX",-1,ex1d.getX());
+			assertEquals("getX",-1,ex1d.getX(), 0.0);
 		}
 		else fail("Se esperaba ExcepcionCoordenada1DIncorrecta, pero se capturo "+ex.getClass().getSimpleName());
 	} catch (Exception ex1) {
@@ -170,7 +170,7 @@ public class ExcepcionesSuiteTest {
 				   ExcepcionCoordenada1DIncorrecta ex1d = (ExcepcionCoordenada1DIncorrecta) e;
 				   assertNull(t1);
 				   assertTrue("Emisión de mensaje",ex1d.getMessage().length()>0);
-				   assertEquals("getX",-1,ex1d.getX());	   
+				   assertEquals("getX",-1,ex1d.getX(), 0.0);	   
 			   }
 			   else fail("Se esperaba ExcepcionCoordenada1DIncorrecta, pero se capturo "+e.getClass().getSimpleName());
 		} catch (Exception e) {
@@ -185,8 +185,8 @@ public class ExcepcionesSuiteTest {
 					   ExcepcionCoordenada2DIncorrecta ex2d = (ExcepcionCoordenada2DIncorrecta) e;
 					   assertNull(t2);
 					   assertTrue("Emisión de mensaje",ex2d.getMessage().length()>0);
-					   assertEquals("getX",-1,ex2d.getX());
-					   assertEquals("getY",2,ex2d.getY());
+					   assertEquals("getX",-1,ex2d.getX(), 0.0);
+					   assertEquals("getY",2,ex2d.getY(), 0.0);
 				   }
 				   else fail("Se esperaba ExcepcionCoordenada2DIncorrecta, pero se capturo "+e.getClass().getSimpleName());
 		} catch (Exception e) {

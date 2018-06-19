@@ -20,7 +20,6 @@ import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionEjecucion;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class GeneradorGIFTablero1D.
  */
@@ -40,7 +39,7 @@ implements IGeneradorFichero
 	{
 		if(file == null  ||  juego == null) throw new ExcepcionArgumentosIncorrectos();
 		if(iteraciones <= 0) throw new ExcepcionGeneracion("Se paso como argumentos un numero incorrecto de iteraciones");
-		if((juego.getTablero() instanceof Tablero1D) == false)  throw new ExcepcionGeneracion("El tablero de juego no es unidimensional");
+		if(  !(juego.getTablero() instanceof Tablero1D)  )  throw new ExcepcionGeneracion("El tablero de juego no es unidimensional");
 
 		int ancho = ((Coordenada1D) juego.getTablero().getDimensiones()).getX();
 

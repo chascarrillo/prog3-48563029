@@ -21,7 +21,6 @@ import modelo.Tablero1D;
 import modelo.TableroCeldasCuadradas;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class GeneradorFicheroPlano.
  */

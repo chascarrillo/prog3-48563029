@@ -24,7 +24,6 @@ import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionEjecucion;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Factory.
  */
@@ -50,8 +49,8 @@ public class Factory
 	{
 		if(tablero == null) throw new ExcepcionArgumentosIncorrectos();
 		if(extension.isEmpty()  ||  (!extension.contentEquals("txt")  &&  !extension.contentEquals("gif")))
-			throw new ExcepcionGeneracion("El argumento extension no contenia un valor dentro del rango de valores validos (txt/gif)");
-		if(!(tablero instanceof Tablero1D)  &&  !(tablero instanceof Tablero2D)) throw new ExcepcionEjecucion("Tablero de tipo incorrecto");
+			throw new ExcepcionGeneracion("El argumento extension era incorrecto. Rango de valores validos = [ txt , gif ]");
+		if(!(tablero instanceof Tablero1D)  &&  !(tablero instanceof TableroCeldasCuadradas)) throw new ExcepcionEjecucion("Tablero de tipo incorrecto");
 
 		IGeneradorFichero generador = null;
 
@@ -86,7 +85,7 @@ public class Factory
 
 		if(tablero instanceof Tablero1D)
 			return new Regla30();
-		else if(tablero instanceof Tablero2D)
+		else if(tablero instanceof TableroCeldasCuadradas)
 			return new ReglaConway();
 		else
 			throw new ExcepcionEjecucion("Tablero de tipo incorrecto");
