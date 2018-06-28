@@ -11,6 +11,7 @@ import java.io.File;
 import entradasalida.excepciones.ExcepcionGeneracion;
 import modelo.Juego;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Interface IGeneradorFichero.
  */

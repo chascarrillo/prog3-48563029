@@ -11,7 +11,9 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import modelo.Tablero;
-
+import modelo.d1.Coordenada1D;
+import modelo.d1.Tablero1D;
+import modelo.d2.Coordenada2D;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 import modelo.excepciones.ExcepcionEjecucion;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
@@ -19,16 +21,17 @@ import modelo.excepciones.ExcepcionPosicionFueraTablero;
 /**
  * The Class Juego.
  */
-public class Juego {
+public class Juego<TipoCoordenada extends Coordenada>
+{
 
 	/** The tablero. */
-	private Tablero tablero;
+	private Tablero<TipoCoordenada> tablero;
 
 	/** The regla conway. */
-	private Regla regla;
+	private Regla<TipoCoordenada> regla;
 
 	/** The patrones usados. */
-	private ArrayList<Patron> patronesUsados = new ArrayList<Patron>();
+	private ArrayList<Patron<TipoCoordenada>> patronesUsados = new ArrayList<Patron<TipoCoordenada>>();
 
 	/**
 	 * Instantiates a new juego.
@@ -36,7 +39,7 @@ public class Juego {
 	 * @param tablero the tablero
 	 * @param regla the regla
 	 */
-	public Juego(Tablero tablero, Regla regla)
+	public Juego(Tablero<TipoCoordenada> tablero, Regla<TipoCoordenada> regla)
 	{
 		if (tablero == null || regla == null)
 			throw new ExcepcionArgumentosIncorrectos();
@@ -51,7 +54,7 @@ public class Juego {
 	 * @param posicionInicial the posicion inicial
 	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
 	 */
-	public void cargaPatron(Patron p, Coordenada posicionInicial)
+	public void cargaPatron(Patron<TipoCoordenada> p, TipoCoordenada posicionInicial)
 	throws ExcepcionPosicionFueraTablero
 	{
 		if (tablero.cargaPatron(p, posicionInicial))
@@ -65,35 +68,21 @@ public class Juego {
 	 */
 	public void actualiza()
 	{
-		Collection<Coordenada> cds = tablero.getPosiciones();
-		Iterator<Coordenada> iterator = cds.iterator();
+		Collection<TipoCoordenada> cds = tablero.getPosiciones();
+		Iterator<TipoCoordenada> iterator = cds.iterator();
 
-		if(tablero instanceof Tablero1D)
-			while (iterator.hasNext())
+		while (iterator.hasNext())
+		{
+			TipoCoordenada caux = iterator.next();
+			try
 			{
-				Coordenada1D caux = (Coordenada1D) iterator.next();
-				try
-				{
-					tablero.setCelda(caux, regla.calculaSiguienteEstadoCelda(tablero, caux));
-				}
-				catch (ExcepcionPosicionFueraTablero e)
-				{
-					throw new ExcepcionEjecucion(e);
-				}
+				tablero.setCelda(caux, regla.calculaSiguienteEstadoCelda(tablero, caux));
 			}
-		else
-			while (iterator.hasNext())
+			catch (ExcepcionPosicionFueraTablero e)
 			{
-				Coordenada2D caux = (Coordenada2D) iterator.next();
-				try
-				{
-					tablero.setCelda(caux, regla.calculaSiguienteEstadoCelda(tablero, caux));
-				}
-				catch (ExcepcionPosicionFueraTablero e)
-				{
-					throw new ExcepcionEjecucion(e);
-				}
+				throw new ExcepcionEjecucion(e);
 			}
+		}
 	}
 
 	/**
@@ -101,7 +90,7 @@ public class Juego {
 	 *
 	 * @return the tablero
 	 */
-	public Tablero getTablero()
+	public Tablero<TipoCoordenada> getTablero()
 	{
 		return tablero;
 	}
@@ -111,7 +100,7 @@ public class Juego {
 	 *
 	 * @return the patrones
 	 */
-	public ArrayList<Patron> getPatrones()
+	public ArrayList<Patron<TipoCoordenada>> getPatrones()
 	{
 		return patronesUsados;
 	}

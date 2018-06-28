@@ -4,7 +4,7 @@
  * @author Alfonso Aracil Andres. 48563029R
  */
 
-package entradasalida.imagen;
+package entradasalida.gif;
 
 import java.io.File;
 
@@ -12,27 +12,26 @@ import entradasalida.IGeneradorFichero;
 import entradasalida.excepciones.ExcepcionGeneracion;
 import gifs.ImagenGIF;
 import gifs.ImagenGIFAnimado;
-import modelo.Coordenada2D;
 import modelo.EstadoCelda;
 import modelo.Juego;
-import modelo.TableroCeldasCuadradas;
+import modelo.d2.Coordenada2D;
+import modelo.d2.TableroCeldasCuadradas;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionEjecucion;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class GeneradorGifAnimadoTablero2D.
+ * The Class GeneradorTableroCoordenada2D.
  */
-public class GeneradorGifAnimadoTablero2D
+public class GeneradorTableroCoordenada2D
 implements IGeneradorFichero
 {
 	
 	/**
 	 * Instantiates a new generador gif animado tablero 2 D.
 	 */
-	public GeneradorGifAnimadoTablero2D()
+	public GeneradorTableroCoordenada2D()
 	{}
 
 	/** {@inheritDoc}*/
@@ -41,7 +40,7 @@ implements IGeneradorFichero
 	{
 		if(file == null  ||  juego == null) throw new ExcepcionArgumentosIncorrectos();
 		if(iteraciones <= 0) throw new ExcepcionGeneracion("Se paso como argumentos un numero incorrecto de iteraciones");
-		if(  !(juego.getTablero() instanceof TableroCeldasCuadradas)  ) throw new ExcepcionGeneracion("El tablero de juego no es cuadrado");
+		if((juego.getTablero() instanceof TableroCeldasCuadradas) == false) throw new ExcepcionGeneracion("El tablero de juego no es bidimensional");
 
 		int ancho = ((Coordenada2D) juego.getTablero().getDimensiones()).getX();
 		int alto = ((Coordenada2D) juego.getTablero().getDimensiones()).getY();

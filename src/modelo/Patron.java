@@ -14,13 +14,13 @@ import modelo.excepciones.ExcepcionPosicionFueraTablero;
 /**
  * The Class Patron.
  */
-public class Patron
+public class Patron<TipoCoordenada extends Coordenada>
 {
 	/** The nombre. */
 	private String nombre;
 
 	/** The tablero. */
-	private Tablero tablero;
+	private Tablero<TipoCoordenada> tablero;
 
 	/**
 	 * Instantiates a new patron.
@@ -53,7 +53,7 @@ public class Patron
 	 * @return the celda
 	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
 	 */
-	public EstadoCelda getCelda(Coordenada posicion)
+	public EstadoCelda getCelda(TipoCoordenada posicion)
 	throws ExcepcionPosicionFueraTablero
 	{
 		if (posicion == null)
@@ -70,7 +70,7 @@ public class Patron
 	 *
 	 * @return the posiciones
 	 */
-	public Collection<Coordenada> getPosiciones()
+	public Collection<TipoCoordenada> getPosiciones()
 	{
 		return tablero.getPosiciones();
 	}

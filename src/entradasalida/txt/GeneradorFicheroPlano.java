@@ -4,7 +4,7 @@
  * @author Alfonso Aracil Andres. 48563029R
  */
 
-package entradasalida.textoplano;
+package entradasalida.txt;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,8 +17,8 @@ import java.nio.charset.StandardCharsets;
 import entradasalida.IGeneradorFichero;
 import entradasalida.excepciones.ExcepcionGeneracion;
 import modelo.Juego;
-import modelo.Tablero1D;
-import modelo.TableroCeldasCuadradas;
+import modelo.d1.Tablero1D;
+import modelo.d2.TableroCeldasCuadradas;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 
 /**

@@ -12,9 +12,13 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Iterator;
-import modelo.Coordenada2D;
+
 import modelo.EstadoCelda;
 import modelo.Patron;
+import modelo.d1.Coordenada1D;
+import modelo.d1.Tablero1D;
+import modelo.d2.Coordenada2D;
+import modelo.d2.TableroCeldasCuadradas;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
@@ -22,25 +26,25 @@ import modelo.excepciones.ExcepcionPosicionFueraTablero;
 /**
  * The Class Tablero.
  */
-public abstract class Tablero
+public abstract class Tablero<TipoCoordenada extends Coordenada>
 {
 	/** The celdas. */
-	protected HashMap<Coordenada, EstadoCelda> celdas;
+	protected HashMap<TipoCoordenada, EstadoCelda> celdas;
 
 	/** The dimensiones. */
-	protected Coordenada dimensiones;
+	protected TipoCoordenada dimensiones;
 
 	/**
 	 * Instantiates a new tablero.
 	 *
 	 * @param dimensiones the dimensiones
 	 */
-	protected Tablero(Coordenada dimensiones)
+	protected Tablero(TipoCoordenada dimensiones)
 	{
 		if (dimensiones == null)
 			throw new ExcepcionArgumentosIncorrectos();
 		this.dimensiones = dimensiones;
-		celdas = new HashMap<Coordenada, EstadoCelda>();
+		celdas = new HashMap<TipoCoordenada, EstadoCelda>();
 	}
 
 	/**
@@ -48,15 +52,15 @@ public abstract class Tablero
 	 *
 	 * @return the dimensiones
 	 */
-	public Coordenada getDimensiones()
+	public TipoCoordenada getDimensiones()
 	{
-		Coordenada dimensiones = null;
+		TipoCoordenada dimensiones = null;
 		try
 		{
 			if (this instanceof Tablero1D)
-				dimensiones = new Coordenada1D(anchuraColeccion(getPosiciones()));
+				dimensiones = (TipoCoordenada) new Coordenada1D(anchuraColeccion(getPosiciones()));
 			else
-				dimensiones = new Coordenada2D(anchuraColeccion(getPosiciones()), alturaColeccion(getPosiciones()));
+				dimensiones = (TipoCoordenada) new Coordenada2D(anchuraColeccion(getPosiciones()), alturaColeccion(getPosiciones()));
 			return dimensiones;
 		}
 		catch (ExcepcionCoordenadaIncorrecta e)
@@ -71,21 +75,21 @@ public abstract class Tablero
 	 *
 	 * @return coleccion de coordenadas
 	 */
-	public Collection<Coordenada> getPosiciones()
+	public Collection<TipoCoordenada> getPosiciones()
 	{
 		if (this instanceof Tablero1D)
 		{
-			Set<Coordenada> ts = new TreeSet<Coordenada>(
+			Set<TipoCoordenada> ts = new TreeSet<TipoCoordenada>(
 					ComparadorCoordenada.getComparator(ComparadorCoordenada.X_SORT));
 			ts.addAll(celdas.keySet());
-			return (Collection<Coordenada>) ts;
+			return (Collection<TipoCoordenada>) ts;
 		}
 		else
 		{
-			Set<Coordenada> ts = new TreeSet<Coordenada>(
+			Set<TipoCoordenada> ts = new TreeSet<TipoCoordenada>(
 					ComparadorCoordenada.getComparator(ComparadorCoordenada.Y_SORT, ComparadorCoordenada.X_SORT));
 			ts.addAll(celdas.keySet());
-			return (Collection<Coordenada>) ts;
+			return (Collection<TipoCoordenada>) ts;
 		}
 	}
 
@@ -96,7 +100,7 @@ public abstract class Tablero
 	 * @return celda viva/muerta
 	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
 	 */
-	public EstadoCelda getCelda(Coordenada posicion)
+	public EstadoCelda getCelda(TipoCoordenada posicion)
 	throws ExcepcionPosicionFueraTablero
 	{
 		if (posicion == null) throw new ExcepcionArgumentosIncorrectos();
@@ -114,7 +118,7 @@ public abstract class Tablero
 	 * @param e el estado
 	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
 	 */
-	public void setCelda(Coordenada posicion, EstadoCelda e)
+	public void setCelda(TipoCoordenada posicion, EstadoCelda e)
 	throws ExcepcionPosicionFueraTablero
 	{
 		if (posicion == null) throw new ExcepcionArgumentosIncorrectos();
@@ -131,26 +135,26 @@ public abstract class Tablero
 	 * @return las coordenadas circundantes
 	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
 	 */
-	public abstract ArrayList<Coordenada> getPosicionesVecinasCCW(Coordenada posicion)
+	public abstract ArrayList<TipoCoordenada> getPosicionesVecinasCCW(TipoCoordenada posicion)
 	throws ExcepcionPosicionFueraTablero;
 
 	/**
 	 * Carga patron.
 	 *
 	 * @param patron the patron
-	 * @param coordenadaInicial the coordenada inicial
+	 * @param coordenadaInicial the TipoCoordenada inicial
 	 * @return true, if successful
 	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
 	 */
-	public boolean cargaPatron(Patron patron, Coordenada coordenadaInicial)
+	public boolean cargaPatron(Patron<TipoCoordenada> patron, TipoCoordenada coordenadaInicial)
 	throws ExcepcionPosicionFueraTablero
 	{
 		if (patron == null || coordenadaInicial == null) throw new ExcepcionArgumentosIncorrectos();
 
-		Iterator<Coordenada> iterator = null;
-		Coordenada caux = null;
+		Iterator<TipoCoordenada> iterator = null;
+		TipoCoordenada caux = null;
 		boolean control = false;
-		Collection<Coordenada>	posPatron = patron.getPosiciones(),
+		Collection<TipoCoordenada>	posPatron = patron.getPosiciones(),
 								posTablero = recortarColeccion(getPosiciones(), coordenadaInicial);
 
 		if (posTablero.isEmpty()  ||  anchuraColeccion(posPatron) > anchuraColeccion(posTablero)
@@ -161,7 +165,7 @@ public abstract class Tablero
 			{
 				try
 				{
-					caux = coordenadaInicial.suma(iterator.next());
+					caux = (TipoCoordenada) coordenadaInicial.suma(iterator.next());
 				}
 				catch (ExcepcionCoordenadaIncorrecta e)
 				{
@@ -180,10 +184,10 @@ public abstract class Tablero
 				iterator = posPatron.iterator();
 				while (iterator.hasNext())
 				{
-					caux = (Coordenada1D) iterator.next();
+					caux = (TipoCoordenada) iterator.next();
 					try
 					{
-						setCelda(coordenadaInicial.suma(caux), patron.getCelda(caux));
+						setCelda((TipoCoordenada) coordenadaInicial.suma(caux), patron.getCelda(caux));
 					}
 					catch (ExcepcionCoordenadaIncorrecta | ExcepcionPosicionFueraTablero e)
 					{
@@ -197,10 +201,10 @@ public abstract class Tablero
 				iterator = posPatron.iterator();
 				while (iterator.hasNext())
 				{
-					caux = (Coordenada2D) iterator.next();
+					caux = (TipoCoordenada) iterator.next();
 					try
 					{
-						setCelda(coordenadaInicial.suma(caux), patron.getCelda(caux));
+						setCelda((TipoCoordenada) coordenadaInicial.suma(caux), patron.getCelda(caux));
 					}
 					catch (ExcepcionCoordenadaIncorrecta | ExcepcionPosicionFueraTablero e)
 					{
@@ -220,7 +224,7 @@ public abstract class Tablero
 	 * @param posicion la posicion
 	 * @return true, if successful
 	 */
-	public boolean contiene(Coordenada posicion)
+	public boolean contiene(TipoCoordenada posicion)
 	{
 		if (posicion == null)
 			throw new ExcepcionArgumentosIncorrectos();
@@ -236,7 +240,7 @@ public abstract class Tablero
 	 * @param collection la coleccion
 	 * @return la altura de la coleccion
 	 */
-	protected int alturaColeccion(Collection<Coordenada> collection)
+	protected int alturaColeccion(Collection<TipoCoordenada> collection)
 	{
 		if (collection.isEmpty())
 			return 0;
@@ -244,7 +248,7 @@ public abstract class Tablero
 			return 1;
 		int ymin = Integer.MAX_VALUE, ymax = Integer.MIN_VALUE;
 
-		Iterator<Coordenada> iterator = collection.iterator();
+		Iterator<TipoCoordenada> iterator = collection.iterator();
 		while (iterator.hasNext())
 		{
 			Coordenada2D caux = (Coordenada2D) iterator.next();
@@ -263,13 +267,13 @@ public abstract class Tablero
 	 * @param collection la coleccion
 	 * @return la anchura de la coleccion
 	 */
-	protected int anchuraColeccion(Collection<Coordenada> collection)
+	protected int anchuraColeccion(Collection<TipoCoordenada> collection)
 	{
 		if (collection.isEmpty())
 			return 0;
 		int xmin = Integer.MAX_VALUE, xmax = Integer.MIN_VALUE;
 
-		Iterator<Coordenada> iterator = collection.iterator();
+		Iterator<TipoCoordenada> iterator = collection.iterator();
 		while (iterator.hasNext())
 		{
 			if (this instanceof Tablero1D)
@@ -294,22 +298,22 @@ public abstract class Tablero
 	}
 
 	/**
-	 * Recortar coleccion hasta que la coordenada sea la nueva esquina superior
+	 * Recortar coleccion hasta que la TipoCoordenada sea la nueva esquina superior
 	 * izquierda.
 	 *
 	 * @param col la coleccion
-	 * @param c la coordenada
+	 * @param c la TipoCoordenada
 	 * @return la coleccion recortada
 	 */
-	private Collection<Coordenada> recortarColeccion(Collection<Coordenada> col, Coordenada c)
+	private Collection<TipoCoordenada> recortarColeccion(Collection<TipoCoordenada> col, TipoCoordenada c)
 	{
-		ArrayList<Coordenada> devuelto = new ArrayList<Coordenada>();
+		ArrayList<TipoCoordenada> devuelto = new ArrayList<TipoCoordenada>();
 		if (col.contains(c))
 		{
-			Coordenada caux = null;
+			TipoCoordenada caux = null;
 
 			devuelto.addAll(col);
-			Iterator<Coordenada> iterator = devuelto.iterator();
+			Iterator<TipoCoordenada> iterator = devuelto.iterator();
 			while (iterator.hasNext())
 			{
 				caux = iterator.next();

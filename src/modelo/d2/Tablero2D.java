@@ -4,8 +4,10 @@
  * @author Alfonso Aracil Andres. 48563029R
  */
 
-package modelo;
+package modelo.d2;
 
+import modelo.EstadoCelda;
+import modelo.Tablero;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionEjecucion;
 
@@ -13,7 +15,7 @@ import modelo.excepciones.ExcepcionEjecucion;
  * The Class Tablero2D.
  */
 public abstract class Tablero2D
-extends Tablero
+extends Tablero<Coordenada2D>
 {
 	/**
 	 * Instantiates a new tablero 2 D.

@@ -7,8 +7,6 @@ import com.gif4j.light.GifEncoder;
 import com.gif4j.light.GifFrame;
 import com.gif4j.light.GifImage;
 
-
-
 import entradasalida.excepciones.ExcepcionGeneracion;
 
 /**
@@ -26,7 +24,7 @@ public class ImagenGIFAnimado {
 	 */
 	public ImagenGIFAnimado(int duracionFotograma) {
 		gifImage = new GifImage();
-		gifImage.setDefaultDelay(100);
+		gifImage.setDefaultDelay(duracionFotograma);
 	}
 	/**
 	 * Añade un nuevo fotograma
@@ -51,7 +49,6 @@ public class ImagenGIFAnimado {
 		} catch (IOException e) {
 			throw new ExcepcionGeneracion(e);
 		}
-		
 	}
 
 }

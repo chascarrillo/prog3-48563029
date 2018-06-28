@@ -4,10 +4,13 @@
  * @author Alfonso Aracil Andres. 48563029R
  */
 
-package modelo;
+package modelo.d1;
 
 import java.util.ArrayList;
 
+import modelo.EstadoCelda;
+import modelo.Regla;
+import modelo.Tablero;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
@@ -15,7 +18,7 @@ import modelo.excepciones.ExcepcionPosicionFueraTablero;
  * The Class Regla30.
  */
 public class Regla30
-extends Regla
+extends Regla<Coordenada1D>
 {
 	/**
 	 * Decide si una celda debe vivir... o morir...
@@ -26,14 +29,14 @@ extends Regla
 	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
 	 */
 	@Override
-	public EstadoCelda calculaSiguienteEstadoCelda(Tablero tablero, Coordenada posicion)
+	public EstadoCelda calculaSiguienteEstadoCelda(Tablero<Coordenada1D> tablero, Coordenada1D posicion)
 	throws ExcepcionPosicionFueraTablero
 	{
 		if (tablero == null || posicion == null)
 			throw new ExcepcionArgumentosIncorrectos();
 		EstadoCelda estado = null;
 
-		ArrayList<Coordenada> aux = tablero.getPosicionesVecinasCCW(posicion);
+		ArrayList<Coordenada1D> aux = tablero.getPosicionesVecinasCCW(posicion);
 		if (aux.size() == 1)
 			estado = EstadoCelda.MUERTA;
 		else if (tablero.getCelda(aux.get(0)) == EstadoCelda.VIVA && tablero.getCelda(aux.get(1)) == EstadoCelda.VIVA)

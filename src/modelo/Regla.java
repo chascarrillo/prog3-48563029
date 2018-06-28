@@ -11,7 +11,7 @@ import modelo.excepciones.ExcepcionPosicionFueraTablero;
 /**
  * The Class Regla.
  */
-public abstract class Regla
+public abstract class Regla<TipoCoordenada extends Coordenada>
 {
 	/**
 	 * Instantiates a new regla.
@@ -27,6 +27,6 @@ public abstract class Regla
 	 * @return the estado celda
 	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
 	 */
-	public abstract EstadoCelda calculaSiguienteEstadoCelda(Tablero tab, Coordenada c)
+	public abstract EstadoCelda calculaSiguienteEstadoCelda(Tablero<TipoCoordenada> tab, TipoCoordenada c)
 	throws ExcepcionPosicionFueraTablero;
 }

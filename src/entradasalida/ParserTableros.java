@@ -7,11 +7,12 @@
 package entradasalida;
 
 import entradasalida.excepciones.ExcepcionLectura;
-import entradasalida.textoplano.ParserTablero1D;
-import entradasalida.textoplano.ParserTablero2D;
+import entradasalida.txt.ParserTablero1D;
+import entradasalida.txt.ParserTablero2D;
 import modelo.Tablero;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ParserTableros.
  */
@@ -31,8 +32,7 @@ public class ParserTableros
 	 * @return the tablero
 	 * @throws ExcepcionLectura the excepcion lectura
 	 */
-
-	public static Tablero leeTablero(String cadena)
+	static public Tablero leeTablero(String cadena)
 	throws ExcepcionLectura
 	{
 		if(cadena == null) throw new ExcepcionArgumentosIncorrectos();

@@ -4,12 +4,14 @@
  * @author Alfonso Aracil Andres. 48563029R
  */
 
-package modelo;
+package modelo.d2;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+import modelo.EstadoCelda;
+import modelo.Imprimible;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionEjecucion;
@@ -51,26 +53,26 @@ implements Imprimible
 	 * Devuelve las celdas contiguas a la posicion especificada.
 	 *
 	 * @param posicion            la celda a estudiar
-	 * @return ArrayList<Coordenada> con las celdas vecinas
+	 * @return ArrayList<Coordenada2D> con las celdas vecinas
 	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
 	 */
 	@Override
-	public ArrayList<Coordenada> getPosicionesVecinasCCW(Coordenada posicion)
+	public ArrayList<Coordenada2D> getPosicionesVecinasCCW(Coordenada2D posicion)
 	throws ExcepcionPosicionFueraTablero
 	{
 		if (posicion == null)
 			throw new ExcepcionArgumentosIncorrectos();
-		ArrayList<Coordenada> cds = null;
+		ArrayList<Coordenada2D> cds = null;
 		if (!contiene(posicion))
 			throw new ExcepcionPosicionFueraTablero(posicion, getDimensiones());
 		else
 		{
 			try
 			{
-				int x = ((Coordenada2D) posicion).getX(), y = ((Coordenada2D) posicion).getY();
+				int x = posicion.getX(), y = posicion.getY();
 				Coordenada2D aux = null;
 				int anchura = anchuraColeccion(getPosiciones()), altura = alturaColeccion(getPosiciones());
-				cds = new ArrayList<Coordenada>();
+				cds = new ArrayList<Coordenada2D>();
 
 				if (x > 0 && y > 0)
 				{
@@ -147,9 +149,9 @@ implements Imprimible
 				salida += "-";
 			salida += "+\n|";
 
-			Collection<Coordenada> cds = getPosiciones();
-			Iterator<Coordenada> iterator = cds.iterator();
-			Coordenada2D cauxa = (Coordenada2D) iterator.next(), cauxn = null;
+			Collection<Coordenada2D> cds = getPosiciones();
+			Iterator<Coordenada2D> iterator = cds.iterator();
+			Coordenada2D cauxa = iterator.next(), cauxn = null;
 			if (getCelda(cauxa) == EstadoCelda.MUERTA)
 				salida += " ";
 			else
@@ -157,7 +159,7 @@ implements Imprimible
 
 			while (iterator.hasNext())
 			{
-				cauxn = (Coordenada2D) iterator.next();
+				cauxn = iterator.next();
 
 				if (cauxa.getY() == cauxn.getY())
 				{

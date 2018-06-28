@@ -4,10 +4,10 @@
  * @author Alfonso Aracil Andres. 48563029R
  */
 
-package modelo;
+package modelo.d1;
 
+import modelo.Coordenada;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
-import modelo.excepciones.ExcepcionCoordenada1DIncorrecta;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 
 /**

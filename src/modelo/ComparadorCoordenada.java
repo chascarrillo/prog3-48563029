@@ -8,6 +8,9 @@ package modelo;
 
 import java.util.Comparator;
 
+import modelo.d1.Coordenada1D;
+import modelo.d2.Coordenada2D;
+
 /**
  * The Enum ComparadorCoordenada.
  */

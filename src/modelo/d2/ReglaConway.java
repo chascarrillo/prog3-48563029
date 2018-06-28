@@ -1,14 +1,17 @@
 /**
- * Esta clase define un algoritmo para un juego de la vida de tablero bidimensional de celdas cuadradas...
+ * Esta clase define un algoritmo para un juego de la vida de tablero de celdas cuadradas...
  * 
  * @author Alfonso Aracil Andres. 48563029R
  */
 
-package modelo;
+package modelo.d2;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import modelo.EstadoCelda;
+import modelo.Regla;
+import modelo.Tablero;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
@@ -16,7 +19,7 @@ import modelo.excepciones.ExcepcionPosicionFueraTablero;
  * The Class ReglaConway.
  */
 public class ReglaConway
-extends Regla
+extends Regla<Coordenada2D>
 {
 	/**
 	 * Instantiates a new regla conway.
@@ -33,7 +36,7 @@ extends Regla
 	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
 	 */
 	@Override
-	public EstadoCelda calculaSiguienteEstadoCelda(Tablero tablero, Coordenada posicion)
+	public EstadoCelda calculaSiguienteEstadoCelda(Tablero<Coordenada2D> tablero, Coordenada2D posicion)
 	throws ExcepcionPosicionFueraTablero
 	{
 		if (tablero == null || posicion == null) throw new ExcepcionArgumentosIncorrectos();
@@ -41,8 +44,8 @@ extends Regla
 		int cuenta = 0;
 		EstadoCelda estado = null;
 
-		ArrayList<Coordenada> aux = tablero.getPosicionesVecinasCCW(posicion);
-		Iterator<Coordenada> iterator = aux.iterator();
+		ArrayList<Coordenada2D> aux = tablero.getPosicionesVecinasCCW(posicion);
+		Iterator<Coordenada2D> iterator = aux.iterator();
 		while (iterator.hasNext())
 		{
 			Coordenada2D caux = (Coordenada2D) iterator.next();

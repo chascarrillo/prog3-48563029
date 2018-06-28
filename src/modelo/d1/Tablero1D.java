@@ -4,12 +4,15 @@
  * @author Alfonso Aracil Andres. 48563029R
  */
 
-package modelo;
+package modelo.d1;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+import modelo.EstadoCelda;
+import modelo.Imprimible;
+import modelo.Tablero;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionEjecucion;
@@ -19,7 +22,7 @@ import modelo.excepciones.ExcepcionPosicionFueraTablero;
  * The Class Tablero1D.
  */
 public class Tablero1D
-extends Tablero
+extends Tablero<Coordenada1D>
 implements Imprimible
 {
 	/**
@@ -51,26 +54,26 @@ implements Imprimible
 	 * Devuelve las celdas contiguas a la posicion especificada.
 	 *
 	 * @param posicion            la celda a estudiar
-	 * @return ArrayList<Coordenada> con las celdas vecinas
+	 * @return ArrayList<Coordenada1D> con las celdas vecinas
 	 * @throws ExcepcionPosicionFueraTablero the excepcion posicion fuera tablero
 	 */
 	@Override
-	public ArrayList<Coordenada> getPosicionesVecinasCCW(Coordenada posicion)
+	public ArrayList<Coordenada1D> getPosicionesVecinasCCW(Coordenada1D posicion)
 	throws ExcepcionPosicionFueraTablero
 	{
 		if (posicion == null) throw new ExcepcionArgumentosIncorrectos();
 
-		ArrayList<Coordenada> cds = null;
+		ArrayList<Coordenada1D> cds = null;
 		if (!contiene(posicion))
 			throw new ExcepcionPosicionFueraTablero(posicion, getDimensiones());
 		else
 		{
 			try
 			{
-				int x = ((Coordenada1D) posicion).getX();
+				int x = posicion.getX();
 				Coordenada1D aux = null;
 				int anchura = anchuraColeccion(getPosiciones());
-				cds = new ArrayList<Coordenada>();
+				cds = new ArrayList<Coordenada1D>();
 
 				if (x > 0)
 				{
@@ -105,12 +108,12 @@ implements Imprimible
 		try
 		{
 			salida = "|";
-			Collection<Coordenada> cds = getPosiciones();
-			Iterator<Coordenada> iterator = cds.iterator();
+			Collection<Coordenada1D> cds = getPosiciones();
+			Iterator<Coordenada1D> iterator = cds.iterator();
 			Coordenada1D caux = null;
 			while (iterator.hasNext())
 			{
-				caux = (Coordenada1D) iterator.next();
+				caux = iterator.next();
 				if (getCelda(caux) == EstadoCelda.MUERTA)
 					salida += " ";
 				else

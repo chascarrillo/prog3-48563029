@@ -4,19 +4,20 @@
  * @author Alfonso Aracil Andres. 48563029R
  */
 
-package entradasalida.textoplano;
+package entradasalida.txt;
 
 import entradasalida.IParserTablero;
 import entradasalida.excepciones.ExcepcionLectura;
-import modelo.Coordenada2D;
 import modelo.EstadoCelda;
 import modelo.Tablero;
-import modelo.TableroCeldasCuadradas;
+import modelo.d2.Coordenada2D;
+import modelo.d2.TableroCeldasCuadradas;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionEjecucion;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ParserTablero2D.
  */
@@ -57,9 +58,9 @@ implements IParserTablero
 				{
 					if(lineas[j].charAt(i) != ' '  &&  lineas[j].charAt(i) != '*')
 						throw new ExcepcionLectura("La cadena argumento contiene caracteres invalidos");
-					else if(lineas[j].charAt(i) == ' ')
+					if(lineas[j].charAt(i) == ' ')
 						tablero.setCelda(new Coordenada2D(i, j), EstadoCelda.MUERTA);
-					else if(lineas[j].charAt(i) == '*')
+					if(lineas[j].charAt(i) == '*')
 						tablero.setCelda(new Coordenada2D(i, j), EstadoCelda.VIVA);
 				}
 			}

@@ -4,7 +4,9 @@
  * @author Alfonso Aracil Andres. 48563029R
  */
 
-package modelo.excepciones;
+package modelo.d2;
+
+import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 
 /**
  * The Class ExcepcionCoordenada2DIncorrecta.

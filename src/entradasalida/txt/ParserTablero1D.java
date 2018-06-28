@@ -4,14 +4,14 @@
  * @author Alfonso Aracil Andres. 48563029R
  */
 
-package entradasalida.textoplano;
+package entradasalida.txt;
 
 import entradasalida.IParserTablero;
 import entradasalida.excepciones.ExcepcionLectura;
-import modelo.Coordenada1D;
 import modelo.EstadoCelda;
 import modelo.Tablero;
-import modelo.Tablero1D;
+import modelo.d1.Coordenada1D;
+import modelo.d1.Tablero1D;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionEjecucion;
@@ -43,12 +43,12 @@ implements IParserTablero
 
 			for(int i = 0; i < cadena.length(); i++)
 			{
-				if(cadena.charAt(i) != ' '  &&  cadena.charAt(i) != '*')
+				if(cadena.charAt(i) != ' '  ||  cadena.charAt(i) != '*')
 					throw new ExcepcionLectura("La cadena argumento contiene caracteres invalidos");
 
-				else if(cadena.charAt(i) == ' ')
+				if(cadena.charAt(i) == ' ')
 						tablero.setCelda(new Coordenada1D(i), EstadoCelda.MUERTA);
-				else // cadena.charAt(i) == '*'
+				else
 					tablero.setCelda(new Coordenada1D(i), EstadoCelda.VIVA);
 			}
 		}

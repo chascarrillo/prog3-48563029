@@ -4,33 +4,33 @@
  * @author Alfonso Aracil Andres. 48563029R
  */
 
-package entradasalida.imagen;
+package entradasalida.gif;
 
 import java.io.File;
 
 import entradasalida.IGeneradorFichero;
 import entradasalida.excepciones.ExcepcionGeneracion;
 import gifs.ImagenGIF;
-import modelo.Coordenada1D;
 import modelo.EstadoCelda;
 import modelo.Juego;
-import modelo.Tablero1D;
+import modelo.d1.Coordenada1D;
+import modelo.d1.Tablero1D;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionEjecucion;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
 /**
- * The Class GeneradorGIFTablero1D.
+ * The Class GeneradorTableroCoordenada1D.
  */
-public class GeneradorGIFTablero1D
+public class GeneradorTableroCoordenada1D
 implements IGeneradorFichero
 {
 	
 	/**
 	 * Instantiates a new generador GIF tablero 1 D.
 	 */
-	public GeneradorGIFTablero1D()
+	public GeneradorTableroCoordenada1D()
 	{}
 
 	/** {@inheritDoc}*/
@@ -39,7 +39,7 @@ implements IGeneradorFichero
 	{
 		if(file == null  ||  juego == null) throw new ExcepcionArgumentosIncorrectos();
 		if(iteraciones <= 0) throw new ExcepcionGeneracion("Se paso como argumentos un numero incorrecto de iteraciones");
-		if(  !(juego.getTablero() instanceof Tablero1D)  )  throw new ExcepcionGeneracion("El tablero de juego no es unidimensional");
+		if((juego.getTablero() instanceof Tablero1D) == false)  throw new ExcepcionGeneracion("El tablero de juego no es unidimensional");
 
 		int ancho = ((Coordenada1D) juego.getTablero().getDimensiones()).getX();
 
