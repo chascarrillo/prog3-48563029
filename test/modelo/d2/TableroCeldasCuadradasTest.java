@@ -1,7 +1,7 @@
 /**
  * 
  */
-package modelo;
+package modelo.d2;
 
 import static org.junit.Assert.*;
 
@@ -9,6 +9,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+
+import modelo.EstadoCelda;
+import modelo.Patron;
+import modelo.Tablero;
+import modelo.d2.Coordenada2D;
+import modelo.d2.TableroCeldasCuadradas;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -22,10 +29,10 @@ import java.util.Scanner;
 public class TableroCeldasCuadradasTest {
 
 
-	Tablero tab;
+	Tablero<Coordenada2D> tab;
 	Coordenada2D dim;
-	static Patron patronbloque, patronbarco, patronsapo;
-    static Tablero tabpat;
+	static Patron<Coordenada2D> patronbloque, patronbarco, patronsapo;
+    static Tablero<Coordenada2D> tabpat;
     static String tablero;	
     //static final String FICHERRORES = "test/ficheros/salidaerrores.txt";
     static final String FICHTABLERO = "test/ficheros/tablero2dtest.ent";
@@ -47,7 +54,7 @@ public class TableroCeldasCuadradasTest {
 
 		tabpat.setCelda(new Coordenada2D(0,1), EstadoCelda.VIVA);
 		tabpat.setCelda(new Coordenada2D(1,1), EstadoCelda.VIVA);
-		patronbloque = new Patron("Bloque", tabpat);
+		patronbloque = new Patron<Coordenada2D>("Bloque", tabpat);
 		
 		c = new Coordenada2D(3,3);
 		tabpat = new TableroCeldasCuadradas(c.getX(), c.getY());
@@ -62,7 +69,7 @@ public class TableroCeldasCuadradasTest {
 		tabpat.setCelda(new Coordenada2D(0,2), EstadoCelda.MUERTA);
 		tabpat.setCelda(new Coordenada2D(1,2), EstadoCelda.VIVA);
 		tabpat.setCelda(new Coordenada2D(2,2), EstadoCelda.MUERTA);
-		patronbarco = new Patron("Barco", tabpat);
+		patronbarco = new Patron<Coordenada2D>("Barco", tabpat);
 		
 		c = new Coordenada2D(4,2);
 		tabpat = new TableroCeldasCuadradas(c.getX(),c.getY());
@@ -75,7 +82,7 @@ public class TableroCeldasCuadradasTest {
 		tabpat.setCelda(new Coordenada2D(1,1), EstadoCelda.VIVA);
 		tabpat.setCelda(new Coordenada2D(2,1), EstadoCelda.VIVA);
 		tabpat.setCelda(new Coordenada2D(3,1), EstadoCelda.MUERTA);
-		patronsapo = new Patron("Sapo", tabpat);
+		patronsapo = new Patron<Coordenada2D>("Sapo", tabpat);
 		
 	}
 
@@ -96,7 +103,7 @@ public class TableroCeldasCuadradasTest {
 	//Vecinas de las coordenadas de las esquinas
 	@Test
 	public void testGetPosicionesVecinasCCW00() {
-		ArrayList<Coordenada> vecinas = new ArrayList<Coordenada>();
+		ArrayList<Coordenada2D> vecinas = new ArrayList<Coordenada2D>();
 		try {
 			vecinas = tab.getPosicionesVecinasCCW(new Coordenada2D(0,0));
 		
@@ -111,7 +118,7 @@ public class TableroCeldasCuadradasTest {
 	}
 	@Test
 	public void testGetPosicionesVecinasCCW70() {
-		ArrayList<Coordenada> vecinas = new ArrayList<Coordenada>();
+		ArrayList<Coordenada2D> vecinas = new ArrayList<Coordenada2D>();
 		try {
 			vecinas = tab.getPosicionesVecinasCCW(new Coordenada2D(7,0));
 			assertEquals("Numero vecinas",3,vecinas.size());
@@ -126,7 +133,7 @@ public class TableroCeldasCuadradasTest {
 	
 	@Test
 	public void testGetPosicionesVecinasCCW04() {
-		ArrayList<Coordenada> vecinas = new ArrayList<Coordenada>();
+		ArrayList<Coordenada2D> vecinas = new ArrayList<Coordenada2D>();
 		try {
 			vecinas = tab.getPosicionesVecinasCCW(new Coordenada2D(0,4));
 			assertEquals("Numero vecinas",3,vecinas.size());
@@ -141,7 +148,7 @@ public class TableroCeldasCuadradasTest {
 	
 	@Test
 	public void testGetPosicionesVecinasCCW74() {
-		ArrayList<Coordenada> vecinas = new ArrayList<Coordenada>();
+		ArrayList<Coordenada2D> vecinas = new ArrayList<Coordenada2D>();
 		try {
 			vecinas = tab.getPosicionesVecinasCCW(new Coordenada2D(7,4));
 			assertEquals("Numero vecinas",3,vecinas.size());
@@ -157,7 +164,7 @@ public class TableroCeldasCuadradasTest {
 	//Vecinas de coordenadas laterales
 	@Test
 	public void testGetPosicionesVecinasCCW40() {
-		ArrayList<Coordenada> vecinas = new ArrayList<Coordenada>();
+		ArrayList<Coordenada2D> vecinas = new ArrayList<Coordenada2D>();
 		try {
 			vecinas = tab.getPosicionesVecinasCCW(new Coordenada2D(4,0));
 			assertEquals("Numero vecinas",5,vecinas.size());
@@ -174,7 +181,7 @@ public class TableroCeldasCuadradasTest {
 	
 	@Test
 	public void testGetPosicionesVecinasCCW44() {
-		ArrayList<Coordenada> vecinas = new ArrayList<Coordenada>();
+		ArrayList<Coordenada2D> vecinas = new ArrayList<Coordenada2D>();
 		try {
 		vecinas = tab.getPosicionesVecinasCCW(new Coordenada2D(4,4));
 			assertEquals("Numero vecinas",5,vecinas.size());
@@ -191,7 +198,7 @@ public class TableroCeldasCuadradasTest {
 	
 	@Test
 	public void testGetPosicionesVecinasCCW02() {
-		ArrayList<Coordenada> vecinas = new ArrayList<Coordenada>();
+		ArrayList<Coordenada2D> vecinas = new ArrayList<Coordenada2D>();
 		try {
 			vecinas = tab.getPosicionesVecinasCCW(new Coordenada2D(4,4));
 			assertEquals("Numero vecinas",5,vecinas.size());
@@ -208,7 +215,7 @@ public class TableroCeldasCuadradasTest {
 	
 	@Test
 	public void testGetPosicionesVecinasCCW72() {
-		ArrayList<Coordenada> vecinas = new ArrayList<Coordenada>();
+		ArrayList<Coordenada2D> vecinas = new ArrayList<Coordenada2D>();
 		try {
 			vecinas = tab.getPosicionesVecinasCCW(new Coordenada2D(4,4));
 			assertEquals("Numero vecinas",5,vecinas.size());
@@ -226,7 +233,7 @@ public class TableroCeldasCuadradasTest {
 	//Vecinas de una coordenada central
 	@Test
 	public void testGetPosicionesVecinasCCW32() {
-		ArrayList<Coordenada> vecinas = new ArrayList<Coordenada>();
+		ArrayList<Coordenada2D> vecinas = new ArrayList<Coordenada2D>();
 		try {
 			vecinas = tab.getPosicionesVecinasCCW(new Coordenada2D(3,2));
 			assertEquals("Numero vecinas",8,vecinas.size());

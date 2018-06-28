@@ -1,4 +1,4 @@
-package modelo;
+package modelo.d2;
 
 import static org.junit.Assert.*;
 
@@ -8,7 +8,14 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import modelo.excepciones.ExcepcionCoordenada2DIncorrecta;
+import modelo.EstadoCelda;
+import modelo.Juego;
+import modelo.Patron;
+import modelo.Tablero;
+import modelo.d2.Coordenada2D;
+import modelo.d2.ExcepcionCoordenada2DIncorrecta;
+import modelo.d2.ReglaConway;
+import modelo.d2.TableroCeldasCuadradas;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
 import org.junit.Before;
@@ -18,13 +25,13 @@ import org.junit.Test;
 public class Juego2DTest {
 
     ReglaConway regla;
-    ArrayList<Patron> patrones;
-    Tablero tablero;
-    Juego juego;
-    Coordenada dimension;
-    static Patron patronglider, patronbloque, patronparpadeador, patronbarco, patronsapo;
+    ArrayList<Patron<Coordenada2D>> patrones;
+    Tablero<Coordenada2D> tablero;
+    Juego<Coordenada2D> juego;
+    Coordenada2D dimension;
+    static Patron<Coordenada2D> patronglider, patronbloque, patronparpadeador, patronbarco, patronsapo;
     static String tablero1, tablero2, tablero3, tablero4;
-    static Tablero tablerodelmain, tableroparpadeadores, tableroconmaspatrones;
+    static Tablero<Coordenada2D> tablerodelmain, tableroparpadeadores, tableroconmaspatrones;
  
 	/**
 	 * @throws java.lang.Exception
@@ -47,13 +54,13 @@ public class Juego2DTest {
 		dimension = new Coordenada2D(10,15);
 		tablero = new TableroCeldasCuadradas(10,15);
 		regla = new ReglaConway();
-		juego = new Juego(tablero,regla);
+		juego = new Juego<Coordenada2D>(tablero,regla);
 		patrones = juego.getPatrones();	
 	}
 
 	
 	/**
-	 * Test method for {@link modelo.Juego#Juego(modelo.Tablero, modelo.ReglaConway)}.
+	 * Test method for {@link modelo.Juego#Juego(modelo.Tablero, modelo.d2.ReglaConway)}.
 	 */
 	@Test
 	public void testJuego() {
@@ -147,9 +154,9 @@ public class Juego2DTest {
 	@Test
 	public void testActualizaTableroDelMain() {
 		
-		Juego juego1=null;
+		Juego<Coordenada2D> juego1=null;
 		try {
-			juego1 = new Juego(new TableroCeldasCuadradas(10,5),regla);
+			juego1 = new Juego<Coordenada2D>(new TableroCeldasCuadradas(10,5),regla);
 			juego1.cargaPatron(patronglider, new Coordenada2D(0,0));
 			juego1.cargaPatron(patronbloque, new Coordenada2D(8,3)); 
 			juego1.cargaPatron(patronparpadeador, new Coordenada2D(7,0));
@@ -169,7 +176,7 @@ public class Juego2DTest {
 		s.close();
 		
 		//Comprobación del tablero final del alumno.
-		Coordenada c;
+		Coordenada2D c;
 		for (int i=0; i<10; i++)
 			for (int j=0; j<5; j++) {
 				try {
@@ -184,9 +191,9 @@ public class Juego2DTest {
 	@Test
 	public void testActualizaParpadeadoresSolapados() {
 		
-		Juego juego1=null;
+		Juego<Coordenada2D> juego1=null;
 		try {
-			juego1 = new Juego(new TableroCeldasCuadradas(10,1),regla);
+			juego1 = new Juego<Coordenada2D>(new TableroCeldasCuadradas(10,1),regla);
 			juego1.cargaPatron(patronparpadeador, new Coordenada2D(1,0));
 			juego1.cargaPatron(patronparpadeador, new Coordenada2D(3,0)); 
 			juego1.cargaPatron(patronparpadeador, new Coordenada2D(4,0));
@@ -205,7 +212,7 @@ public class Juego2DTest {
 		s.close();
 		
 		//Comprobamos el contenido del tablero del alumno
-		Coordenada c;
+		Coordenada2D c;
 		for (int i=0; i<10; i++)
 			for (int j=0; j<1; j++) {
 				try {
@@ -242,7 +249,7 @@ public class Juego2DTest {
 		s.close();
 		
 		//Comprobación del contenido del tablero del alumno
-		Coordenada c;
+		Coordenada2D c;
 		for (int i=0; i<10; i++)
 			for (int j=0; j<15; j++) {
 				c = new Coordenada2D(i,j);
@@ -256,9 +263,9 @@ public class Juego2DTest {
 	@Test
 	public void testActualizaTodoVivo() {
 	
-		Juego juego1;
+		Juego<Coordenada2D> juego1;
 		try {
-			juego1 = new Juego(new TableroCeldasCuadradas(4,4),regla);
+			juego1 = new Juego<Coordenada2D>(new TableroCeldasCuadradas(4,4),regla);
 			juego1.cargaPatron(patronbloque, new Coordenada2D(0,0));
 			juego1.cargaPatron(patronbloque, new Coordenada2D(2,0)); 
 			juego1.cargaPatron(patronbloque, new Coordenada2D(0,2));
@@ -275,7 +282,7 @@ public class Juego2DTest {
 			s.close();
 		
 		//Comprobación del contenido del tablero del alumno
-			Coordenada c;
+			Coordenada2D c;
 			for (int i=0; i<4; i++)
 				for (int j=0; j<4; j++) {
 					c = new Coordenada2D(i,j);
@@ -308,7 +315,7 @@ public class Juego2DTest {
 	/* FUNCIONES AUXILIARES */
 	
 	private static void CreaPatrones() {
-		Tablero tableroPatron;
+		Tablero<Coordenada2D> tableroPatron;
 		try {
 			tableroPatron = new TableroCeldasCuadradas(3,3);
 		
@@ -323,7 +330,7 @@ public class Juego2DTest {
 		tableroPatron.setCelda(new Coordenada2D(0,2), EstadoCelda.VIVA);
 		tableroPatron.setCelda(new Coordenada2D(1,2), EstadoCelda.VIVA);
 		tableroPatron.setCelda(new Coordenada2D(2,2), EstadoCelda.VIVA);
-		patronglider = new Patron("Glider", tableroPatron);	
+		patronglider = new Patron<Coordenada2D>("Glider", tableroPatron);	
 
 		// creamos otro patrón
 		tableroPatron = new TableroCeldasCuadradas(2,2);
@@ -333,7 +340,7 @@ public class Juego2DTest {
 		tableroPatron.setCelda(new Coordenada2D(0,1), EstadoCelda.VIVA);
 		tableroPatron.setCelda(new Coordenada2D(1,1), EstadoCelda.VIVA);
 
-		patronbloque = new Patron("Bloque", tableroPatron);		
+		patronbloque = new Patron<Coordenada2D>("Bloque", tableroPatron);		
 		
 		// otro más
 		tableroPatron = new TableroCeldasCuadradas(3,1);
@@ -341,7 +348,7 @@ public class Juego2DTest {
 		tableroPatron.setCelda(new Coordenada2D(1,0), EstadoCelda.VIVA);
 		tableroPatron.setCelda(new Coordenada2D(2,0), EstadoCelda.VIVA);
 
-		patronparpadeador = new Patron("Parpadeador", tableroPatron);	
+		patronparpadeador = new Patron<Coordenada2D>("Parpadeador", tableroPatron);	
 		
 		tableroPatron = new TableroCeldasCuadradas(3,3);
 		tableroPatron.setCelda(new Coordenada2D(0,0), EstadoCelda.VIVA);
@@ -355,7 +362,7 @@ public class Juego2DTest {
 		tableroPatron.setCelda(new Coordenada2D(0,2), EstadoCelda.MUERTA);
 		tableroPatron.setCelda(new Coordenada2D(1,2), EstadoCelda.VIVA);
 		tableroPatron.setCelda(new Coordenada2D(2,2), EstadoCelda.MUERTA);
-		patronbarco = new Patron("Barco", tableroPatron);
+		patronbarco = new Patron<Coordenada2D>("Barco", tableroPatron);
 		
 		tableroPatron = new TableroCeldasCuadradas(4,2);
 		tableroPatron.setCelda(new Coordenada2D(0,0), EstadoCelda.MUERTA);
@@ -367,7 +374,7 @@ public class Juego2DTest {
 		tableroPatron.setCelda(new Coordenada2D(1,1), EstadoCelda.VIVA);
 		tableroPatron.setCelda(new Coordenada2D(2,1), EstadoCelda.VIVA);
 		tableroPatron.setCelda(new Coordenada2D(3,1), EstadoCelda.MUERTA);
-		patronsapo = new Patron("Sapo", tableroPatron);
+		patronsapo = new Patron<Coordenada2D>("Sapo", tableroPatron);
 		} catch (Exception e) {
 			fail("No se esperaba excepcion, pero se capturo "+e.getClass().getSimpleName());
 		}
@@ -387,9 +394,9 @@ public class Juego2DTest {
 	}
 	
   //Inicia un tablero con dimensiones dim a partir del contenido de un fichero
-  private static Tablero IniciaTablerosResultado(Coordenada dim,String fichero) {
+  private static Tablero<Coordenada2D> IniciaTablerosResultado(Coordenada2D dim,String fichero) {
 	   Scanner s;
-	   Tablero tablero=null;
+	   Tablero<Coordenada2D> tablero=null;
 	   Coordenada2D dim2d= (Coordenada2D) dim;
 	try {
 		s = new Scanner(new File(fichero));

@@ -1,10 +1,15 @@
-package modelo;
+package modelo.d1;
 
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
+
+import modelo.EstadoCelda;
+import modelo.d1.Coordenada1D;
+import modelo.d1.Regla30;
+import modelo.d1.Tablero1D;
 
 import org.junit.Before;
 import org.junit.BeforeClass;

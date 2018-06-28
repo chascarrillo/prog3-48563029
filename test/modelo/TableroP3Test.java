@@ -14,7 +14,9 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.Set;
 
-import modelo.excepciones.ExcepcionCoordenada1DIncorrecta;
+import modelo.d1.Coordenada1D;
+import modelo.d1.ExcepcionCoordenada1DIncorrecta;
+import modelo.d1.Tablero1D;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
 import org.junit.Before;
@@ -22,10 +24,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class TableroP3Test {
-	Tablero tab;
+	Tablero<Coordenada1D> tab;
 	Coordenada1D dim;
-	static Patron patronsimple, patronduo, patronsos;
-    static Tablero tabpat;
+	static Patron<Coordenada1D> patronsimple, patronduo, patronsos;
+    static Tablero<Coordenada1D> tabpat;
     static String tablero;	
    
     static final String FICHTABLERO = "test/ficheros/tablero1dtest.ent";
@@ -44,13 +46,13 @@ public class TableroP3Test {
 		tabpat = new Tablero1D(c.getX());
 		tabpat.setCelda(new Coordenada1D(0), EstadoCelda.VIVA);
 		
-		patronsimple = new Patron("Simple", tabpat);
+		patronsimple = new Patron<Coordenada1D>("Simple", tabpat);
 		
 		c = new Coordenada1D(2);
 		tabpat = new Tablero1D(c.getX());
 		tabpat.setCelda(new Coordenada1D(0), EstadoCelda.VIVA);
 		tabpat.setCelda(new Coordenada1D(1), EstadoCelda.VIVA);
-		patronduo = new Patron("Duo", tabpat);
+		patronduo = new Patron<Coordenada1D>("Duo", tabpat);
 		
 		c = new Coordenada1D(9);
 		tabpat = new Tablero1D(c.getX());
@@ -63,7 +65,7 @@ public class TableroP3Test {
 		tabpat.setCelda(new Coordenada1D(6), EstadoCelda.VIVA);
 		tabpat.setCelda(new Coordenada1D(7), EstadoCelda.VIVA);
 		tabpat.setCelda(new Coordenada1D(8), EstadoCelda.VIVA);
-		patronsos = new Patron("SOS", tabpat);
+		patronsos = new Patron<Coordenada1D>("SOS", tabpat);
 		
 	}
 
@@ -117,7 +119,7 @@ public class TableroP3Test {
 	 */
 	@Test
 	public void testGetPosiciones() {
-		Set<Coordenada> sc = (Set<Coordenada>)tab.getPosiciones();
+		Set<Coordenada1D> sc = (Set<Coordenada1D>)tab.getPosiciones();
 		assertEquals("Total posiciones",9,sc.size());
 		for (int i=0; i<dim.getX();i++)
 				try {
@@ -133,7 +135,7 @@ public class TableroP3Test {
 	 */
 	@Test
 	public void testGetCeldasNoExisten() {
-		Coordenada c = null;
+		Coordenada1D c = null;
 	    try {
 	    	c = new Coordenada1D(9);
 			assertNull("No existe celda (9)",tab.getCelda(c));
@@ -169,30 +171,27 @@ public class TableroP3Test {
 	@Test
 	public void testSetCelda() {
 	
-		Coordenada c=null, cerr=null;
+		Coordenada1D c=null;
 		
 		try {
 			c = new Coordenada1D(9);
-			tab.setCelda(c,EstadoCelda.VIVA);
+			tab.setCelda( c,EstadoCelda.VIVA);
 			fail("Error. Debió producirse ExcepcionFueraTablero");
 		} catch (ExcepcionPosicionFueraTablero ex) {
-			/*assertEquals (tab.getDimensiones(),ex.getDimensiones());
-			assertEquals (c,ex.getCoordenada());*/
+
 		} catch (Exception e){
 			fail("Se esperaba ExcepcionPosicionFueraTablero, pero se capturo "+e.getClass().getSimpleName());
 		}
 		
 		try {		
-			cerr = new Coordenada1D(9);
+
 			for (int i=0; i<10; i++) {
 					c = new Coordenada1D(i);
 					tab.setCelda(c, EstadoCelda.VIVA);
 			}
 			fail("Error. Debió producirse ExcepcionFueraTablero");
 		} catch (ExcepcionPosicionFueraTablero e1) {
-				ExcepcionPosicionFueraTablero ex1 =  (ExcepcionPosicionFueraTablero) e1;
-				/*assertEquals (dim,ex1.getDimensiones());
-				assertEquals (cerr,ex1.getCoordenada());*/
+				
 		} catch (Exception e) {
 				fail("Se esperaba ExcepcionPosicionFueraTablero, pero se capturo "+e.getClass().getSimpleName());
 		}	

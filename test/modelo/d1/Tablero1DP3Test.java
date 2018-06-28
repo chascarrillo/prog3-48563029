@@ -1,4 +1,4 @@
-package modelo;
+package modelo.d1;
 
 import static org.junit.Assert.*;
 
@@ -7,6 +7,13 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import modelo.EstadoCelda;
+import modelo.Patron;
+import modelo.Tablero;
+import modelo.d1.Coordenada1D;
+import modelo.d1.Tablero1D;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,8 +22,8 @@ public class Tablero1DP3Test {
 
 	Tablero1D tab;
 	Coordenada1D dim;
-	static Patron patronsimple, patronduo, patronsos;
-    static Tablero tabpat;
+	static Patron<Coordenada1D> patronsimple, patronduo, patronsos;
+    static Tablero<Coordenada1D> tabpat;
     static String tablero;	
    
     static final String FICHTABLERO = "test/ficheros/tablero1dtest.ent";
@@ -35,13 +42,13 @@ public class Tablero1DP3Test {
 		tabpat = new Tablero1D(c.getX());
 		tabpat.setCelda(new Coordenada1D(0), EstadoCelda.VIVA);
 		
-		patronsimple = new Patron("Simple", tabpat);
+		patronsimple = new Patron<Coordenada1D>("Simple", tabpat);
 		
 		c = new Coordenada1D(2);
 		tabpat = new Tablero1D(c.getX());
 		tabpat.setCelda(new Coordenada1D(0), EstadoCelda.VIVA);
 		tabpat.setCelda(new Coordenada1D(1), EstadoCelda.VIVA);
-		patronduo = new Patron("Duo", tabpat);
+		patronduo = new Patron<Coordenada1D>("Duo", tabpat);
 		
 		c = new Coordenada1D(9);
 		tabpat = new Tablero1D(c.getX());
@@ -54,7 +61,7 @@ public class Tablero1DP3Test {
 		tabpat.setCelda(new Coordenada1D(6), EstadoCelda.VIVA);
 		tabpat.setCelda(new Coordenada1D(7), EstadoCelda.VIVA);
 		tabpat.setCelda(new Coordenada1D(8), EstadoCelda.VIVA);
-		patronsos = new Patron("SOS", tabpat);
+		patronsos = new Patron<Coordenada1D>("SOS", tabpat);
 		
 	}
 
@@ -74,7 +81,7 @@ public class Tablero1DP3Test {
 	//Vecinas de las coordenadas de los extremos
 	@Test
 	public void testGetPosicionesVecinasCCW0() {
-		ArrayList<Coordenada> vecinas = new ArrayList<Coordenada>();
+		ArrayList<Coordenada1D> vecinas = new ArrayList<Coordenada1D>();
 		try {
 			
 		vecinas = tab.getPosicionesVecinasCCW(new Coordenada1D(0));
@@ -89,7 +96,7 @@ public class Tablero1DP3Test {
 	
 	@Test
 	public void testGetPosicionesVecinasCCW8() {
-		ArrayList<Coordenada> vecinas = new ArrayList<Coordenada>();
+		ArrayList<Coordenada1D> vecinas = new ArrayList<Coordenada1D>();
 		try {
 			vecinas = tab.getPosicionesVecinasCCW(new Coordenada1D(8));
 			assertEquals("Numero vecinas",1,vecinas.size());
@@ -103,7 +110,7 @@ public class Tablero1DP3Test {
 	// Coordenadas interiores
 	@Test
 	public void testGetPosicionesVecinasCCWInteriores() {
-		ArrayList<Coordenada> vecinas = new ArrayList<Coordenada>();
+		ArrayList<Coordenada1D> vecinas = new ArrayList<Coordenada1D>();
 		try {
 		  for (int i=1; i<8; i++) {
 			vecinas = tab.getPosicionesVecinasCCW(new Coordenada1D(i));

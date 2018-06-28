@@ -1,7 +1,7 @@
 /**
  * 
  */
-package modelo;
+package modelo.d2;
 
 import static org.junit.Assert.*;
 
@@ -10,7 +10,12 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.Set;
 
-import modelo.excepciones.ExcepcionCoordenada2DIncorrecta;
+import modelo.EstadoCelda;
+import modelo.Patron;
+import modelo.d2.Coordenada2D;
+import modelo.d2.ExcepcionCoordenada2DIncorrecta;
+import modelo.d2.Tablero2D;
+import modelo.d2.TableroCeldasCuadradas;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
@@ -26,7 +31,7 @@ public class Tablero2DTest {
 
 	Tablero2D tab;
 	Coordenada2D dim;
-	static Patron patronbloque, patronbarco, patronsapo;
+	static Patron<Coordenada2D> patronbloque, patronbarco, patronsapo;
     static Tablero2D tabpat;
     static String tablero;	
     //static final String FICHERRORES = "test/ficheros/salidaerrores.txt";
@@ -49,7 +54,7 @@ public class Tablero2DTest {
 
 		tabpat.setCelda(new Coordenada2D(0,1), EstadoCelda.VIVA);
 		tabpat.setCelda(new Coordenada2D(1,1), EstadoCelda.VIVA);
-		patronbloque = new Patron("Bloque", tabpat);
+		patronbloque = new Patron<Coordenada2D>("Bloque", tabpat);
 		
 		c = new Coordenada2D(3,3);
 		tabpat = new TableroCeldasCuadradas(c.getX(), c.getY());
@@ -64,7 +69,7 @@ public class Tablero2DTest {
 		tabpat.setCelda(new Coordenada2D(0,2), EstadoCelda.MUERTA);
 		tabpat.setCelda(new Coordenada2D(1,2), EstadoCelda.VIVA);
 		tabpat.setCelda(new Coordenada2D(2,2), EstadoCelda.MUERTA);
-		patronbarco = new Patron("Barco", tabpat);
+		patronbarco = new Patron<Coordenada2D>("Barco", tabpat);
 		
 		c = new Coordenada2D(4,2);
 		tabpat = new TableroCeldasCuadradas(c.getX(),c.getY());
@@ -77,7 +82,7 @@ public class Tablero2DTest {
 		tabpat.setCelda(new Coordenada2D(1,1), EstadoCelda.VIVA);
 		tabpat.setCelda(new Coordenada2D(2,1), EstadoCelda.VIVA);
 		tabpat.setCelda(new Coordenada2D(3,1), EstadoCelda.MUERTA);
-		patronsapo = new Patron("Sapo", tabpat);
+		patronsapo = new Patron<Coordenada2D>("Sapo", tabpat);
 		
 	}
 
@@ -126,7 +131,7 @@ public class Tablero2DTest {
 	
 	@Test
 	public void testGetPosiciones() {
-		Set<Coordenada> sc = (Set<Coordenada>)tab.getPosiciones();
+		Set<Coordenada2D> sc = (Set<Coordenada2D>)tab.getPosiciones();
 		assertEquals("Total posiciones",40,sc.size());
 		for (int i=0; i<dim.getX();i++)
 			for (int j=0; j<dim.getY(); j++) {
@@ -142,7 +147,7 @@ public class Tablero2DTest {
 	
 	@Test
 	public void testGetCeldasNoExisten() {
-		Coordenada c = null;
+		Coordenada2D c = null;
 	    try {
 	    	c = new Coordenada2D(8,5);
 			assertNull("No existe celda (8,5)",tab.getCelda(c));
@@ -187,7 +192,7 @@ public class Tablero2DTest {
 	@Test
 	public void testSetCelda() {
 	
-		Coordenada c=null, cerr=null;
+		Coordenada2D c=null;// cerr=null;
 		
 		try {
 			c = new Coordenada2D(7,5);		
@@ -201,7 +206,7 @@ public class Tablero2DTest {
 		}
 		
 		try {
-			cerr = new Coordenada2D(8,0);
+			//cerr = new Coordenada2D(8,0);
 			for (int i=0; i<10; i++) {
 		
 					c = new Coordenada2D(i,0);
@@ -237,7 +242,7 @@ public class Tablero2DTest {
 			fail ("No se produjo ExcepcionCoordenadaIncorrecta");
 		} catch (ExcepcionCoordenadaIncorrecta e) {
 			// TODO Auto-generated catch block
-			ExcepcionCoordenada2DIncorrecta ex = (ExcepcionCoordenada2DIncorrecta) e;
+			//ExcepcionCoordenada2DIncorrecta ex = (ExcepcionCoordenada2DIncorrecta) e;
 			/*assertEquals ("ex.getX",-1, ex.getX());
 			assertEquals ("ex.getY",0,ex.getY());*/
 		} catch (Exception e) {

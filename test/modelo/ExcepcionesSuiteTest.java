@@ -7,9 +7,15 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import modelo.d1.Coordenada1D;
+import modelo.d1.ExcepcionCoordenada1DIncorrecta;
+import modelo.d1.Regla30;
+import modelo.d1.Tablero1D;
+import modelo.d2.Coordenada2D;
+import modelo.d2.ExcepcionCoordenada2DIncorrecta;
+import modelo.d2.ReglaConway;
+import modelo.d2.TableroCeldasCuadradas;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
-import modelo.excepciones.ExcepcionCoordenada1DIncorrecta;
-import modelo.excepciones.ExcepcionCoordenada2DIncorrecta;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
@@ -19,15 +25,15 @@ import org.junit.Test;
  * @author gonzalo
  *
  */
-public class ExcepcionesSuiteTest {
+public class ExcepcionesSuiteTest<TipoCoordenada extends Coordenada> {
 
 
 	//Excepciones en Coordenada, Coordenada1D y Coordenada2D
 	@Test 
 	public void testExcepcionArgumentosIncorrectosCoordenada1D()  {
-		Coordenada c=null;
+		TipoCoordenada c=null;
 		try {
-			c = new Coordenada1D(null);
+			c = (TipoCoordenada) new Coordenada1D(null);
 			fail ("Error; no se produjo ninguna excepción.");
 		} catch (Exception ex) {
 			if (ex instanceof ExcepcionArgumentosIncorrectos) {
@@ -42,9 +48,9 @@ public class ExcepcionesSuiteTest {
 
 	@Test 
 	public void testExcepcionArgumentosIncorrectosCoordenada2D()  {
-		Coordenada c=null;
+		TipoCoordenada c=null;
 		try {
-			c = new Coordenada2D(null);
+			c = (TipoCoordenada) new Coordenada2D(null);
 			fail ("Error; no se produjo ninguna excepción.");
 		} catch (Exception ex) {
 			if (ex instanceof ExcepcionArgumentosIncorrectos) {
@@ -59,11 +65,11 @@ public class ExcepcionesSuiteTest {
 	
 	@Test 
 	public void testExcepcionArgumentosIncorrectosSuma1D()  {
-		Coordenada c=null;
-		Coordenada d=null;
+		TipoCoordenada c=null;
+		TipoCoordenada d=null;
 		try {
-			c = new Coordenada1D(10);
-			d = c.suma(null);
+			c = (TipoCoordenada) new Coordenada1D(10);
+			d = (TipoCoordenada) c.suma(null);
 			fail ("Error; no se produjo ninguna excepción.");
 		} catch (Exception ex) {
 			if (ex instanceof ExcepcionArgumentosIncorrectos){
@@ -77,11 +83,11 @@ public class ExcepcionesSuiteTest {
 	
 	@Test 
 	public void testExcepcionArgumentosIncorrectosSuma2D()  {
-		Coordenada c=null;
-		Coordenada d=null;
+		TipoCoordenada c=null;
+		TipoCoordenada d=null;
 		try {
-			c = new Coordenada2D(10,13);
-			d = c.suma(null);
+			c = (TipoCoordenada) new Coordenada2D(10,13);
+			d = (TipoCoordenada) c.suma(null);
 			fail ("Error; no se produjo ninguna excepción.");
 		} catch (Exception ex) {
 			if (ex instanceof ExcepcionArgumentosIncorrectos) {
@@ -95,22 +101,22 @@ public class ExcepcionesSuiteTest {
 	}
 	
 	/**
-	 * Test method for {@link modelo.excepciones.ExcepcionCoordenada2DIncorrecta#ExcepcionCoordenada2DIncorrecta(int, int)}.
+	 * Test method for {@link modelo.d2.ExcepcionCoordenada2DIncorrecta#ExcepcionCoordenada2DIncorrecta(int, int)}.
 	 */
 	@Test
 	public void testExcepcionCoordenada2DIncorrecta() {
-		Coordenada c = null;
+		TipoCoordenada c = null;
 		 
 		try {
-			c = new Coordenada2D(-1,0);
+			c = (TipoCoordenada) new Coordenada2D(-1,0);
 			fail ("Error; no se produjo ninguna excepción.");
 		} catch (ExcepcionCoordenadaIncorrecta ex) {
 			if (ex instanceof ExcepcionCoordenada2DIncorrecta) {
 				ExcepcionCoordenada2DIncorrecta ex2d = (ExcepcionCoordenada2DIncorrecta)ex;
 				assertNull(c);	
 				assertTrue("Emisión de mensaje",ex2d.getMessage().length()>0);
-				assertEquals("getX",-1,ex2d.getX(), 0.0);
-				assertEquals("getY",0,ex2d.getY(), 0.0);
+				assertEquals("getX",-1,ex2d.getX());
+				assertEquals("getY",0,ex2d.getY());
 			}
 			else fail("Se esperaba ExcepcionCoordenada2DIncorrecta, pero se capturo "+ex.getClass().getSimpleName());
 		} catch (Exception ex) {
@@ -118,15 +124,15 @@ public class ExcepcionesSuiteTest {
 		}
 		
 		try {
-				c = new Coordenada2D(0,-1);
+				c = (TipoCoordenada) new Coordenada2D(0,-1);
 				fail ("Error; no se produjo ninguna excepción.");
 			} catch (ExcepcionCoordenadaIncorrecta ex1) {
 				if (ex1 instanceof ExcepcionCoordenada2DIncorrecta) {
 					ExcepcionCoordenada2DIncorrecta ex2d = (ExcepcionCoordenada2DIncorrecta)ex1;
 					assertNull(c);
 					assertTrue("Emisión de mensaje",ex2d.getMessage().length()>0);
-					assertEquals("getX",0,ex2d.getX(), 0.0);
-					assertEquals("getY",-1,ex2d.getY(), 0.0);
+					assertEquals("getX",0,ex2d.getX());
+					assertEquals("getY",-1,ex2d.getY());
 				}
 				else fail("Se esperaba ExcepcionCoordenada2DIncorrecta, pero se capturo "+ex1.getClass().getSimpleName());
 			} catch (Exception ex1) {
@@ -137,16 +143,16 @@ public class ExcepcionesSuiteTest {
 	
 	@Test
 	public void testExcepcionCoordenada1DIncorrecta() {
-		Coordenada c = null;	 
+		TipoCoordenada c = null;	 
 	try {
-		c = new Coordenada1D(-1);
+		c = (TipoCoordenada) new Coordenada1D(-1);
 		fail ("Error; no se produjo ninguna excepción.");
 	} catch (ExcepcionCoordenadaIncorrecta ex) {
 		if (ex instanceof ExcepcionCoordenada1DIncorrecta) {
 			ExcepcionCoordenada1DIncorrecta ex1d = (ExcepcionCoordenada1DIncorrecta)ex;
 			assertNull(c);
 			assertTrue("Emisión de mensaje",ex1d.getMessage().length()>0);
-			assertEquals("getX",-1,ex1d.getX(), 0.0);
+			assertEquals("getX",-1,ex1d.getX());
 		}
 		else fail("Se esperaba ExcepcionCoordenada1DIncorrecta, pero se capturo "+ex.getClass().getSimpleName());
 	} catch (Exception ex1) {
@@ -159,18 +165,18 @@ public class ExcepcionesSuiteTest {
 	@Test
 	public void testExcepcionCoordenadaIncorrectaEnTablero() {
 		
-		Tablero t1 = null;
-		Tablero t2 = null;
+		Tablero<TipoCoordenada> t1 = null;
+		Tablero<TipoCoordenada> t2 = null;
 	
 		try {
-			t1 = new Tablero1D(-1);
+			t1 = (Tablero<TipoCoordenada>) new Tablero1D(-1);
 			fail ("Error; no se produjo ninguna excepción.");
 		} catch (ExcepcionCoordenadaIncorrecta e) {
 			  if (e instanceof ExcepcionCoordenada1DIncorrecta){
 				   ExcepcionCoordenada1DIncorrecta ex1d = (ExcepcionCoordenada1DIncorrecta) e;
 				   assertNull(t1);
 				   assertTrue("Emisión de mensaje",ex1d.getMessage().length()>0);
-				   assertEquals("getX",-1,ex1d.getX(), 0.0);	   
+				   assertEquals("getX",-1,ex1d.getX());	   
 			   }
 			   else fail("Se esperaba ExcepcionCoordenada1DIncorrecta, pero se capturo "+e.getClass().getSimpleName());
 		} catch (Exception e) {
@@ -178,15 +184,15 @@ public class ExcepcionesSuiteTest {
 		}
 			   
 		try {
- 		    t2 = new TableroCeldasCuadradas(-1,2);
+ 		    t2 = (Tablero<TipoCoordenada>) new TableroCeldasCuadradas(-1,2);
  		    fail ("Error; no se produjo ninguna excepción.");
 		} catch (ExcepcionCoordenadaIncorrecta e) {
 				   if (e instanceof ExcepcionCoordenada2DIncorrecta){
 					   ExcepcionCoordenada2DIncorrecta ex2d = (ExcepcionCoordenada2DIncorrecta) e;
 					   assertNull(t2);
 					   assertTrue("Emisión de mensaje",ex2d.getMessage().length()>0);
-					   assertEquals("getX",-1,ex2d.getX(), 0.0);
-					   assertEquals("getY",2,ex2d.getY(), 0.0);
+					   assertEquals("getX",-1,ex2d.getX());
+					   assertEquals("getY",2,ex2d.getY());
 				   }
 				   else fail("Se esperaba ExcepcionCoordenada2DIncorrecta, pero se capturo "+e.getClass().getSimpleName());
 		} catch (Exception e) {
@@ -197,7 +203,7 @@ public class ExcepcionesSuiteTest {
 	@Test
 	public void testExcepcionArgumentosIncorrectosEnTablero() {
 		
-		Tablero t = null;
+		Tablero<TipoCoordenada> t = null;
 	
 		try {
 			t = new TableroPrueba(null);
@@ -215,9 +221,9 @@ public class ExcepcionesSuiteTest {
 	@Test
 	public void testExcepcionArgumentosIncorrectosEnSetCeldaTablero() {
 		
-		Tablero t = null;
+		Tablero<TipoCoordenada> t = null;
 		try {
-			t = new Tablero1D(5);
+			t = (Tablero<TipoCoordenada>) new Tablero1D(5);
 			t.setCelda(null, EstadoCelda.MUERTA);
 			fail ("Error; no se produjo ninguna excepción.");
 		} catch (Exception ex1) {
@@ -231,10 +237,10 @@ public class ExcepcionesSuiteTest {
 	
 	@Test
 	public void testExcepcionArgumentosIncorrectosEnGetCeldaTablero() {
-	   Tablero t = null;
+	   Tablero<TipoCoordenada> t = null;
 	   
 	   try {
-			t = new Tablero1D(5);
+			t = (Tablero<TipoCoordenada>) new Tablero1D(5);
 		    t.getCelda(null);
 		    fail ("Error; no se produjo ninguna excepción.");
 	   }catch (Exception ex) {
@@ -248,10 +254,10 @@ public class ExcepcionesSuiteTest {
 	
 	@Test
 	public void testExcepcionArgumentosIncorrectosEnContieneTablero() {
-	   Tablero t = null;
+	   Tablero<TipoCoordenada> t = null;
 	   
 	   try {
-			t = new Tablero1D(5);
+			t = (Tablero<TipoCoordenada>) new Tablero1D(5);
 		    t.contiene(null);
 		    fail ("Error; no se produjo ninguna excepción.");
 	   }catch (Exception ex) {
@@ -266,10 +272,10 @@ public class ExcepcionesSuiteTest {
 	
 	@Test
 	public void testExcepcionArgumentosIncorrectosEnGetPosicionesVecinasTablero() {
-	   Tablero t = null;
+	   Tablero<TipoCoordenada> t = null;
 	   
 	   try {
-			t = new Tablero1D(10);
+			t = (Tablero<TipoCoordenada>) new Tablero1D(10);
 		    t.getPosicionesVecinasCCW(null);
 		    fail ("Error; no se produjo ninguna excepción.");
 	   }catch (Exception ex1) {
@@ -280,7 +286,7 @@ public class ExcepcionesSuiteTest {
 	   }
 	   
 	   try {
-			t = new TableroCeldasCuadradas(7,6);
+			t = (Tablero<TipoCoordenada>) new TableroCeldasCuadradas(7,6);
 			t.getPosicionesVecinasCCW(null);
 			fail ("Error; no se produjo ninguna excepción.");
 	   }catch (Exception ex2) {
@@ -295,11 +301,11 @@ public class ExcepcionesSuiteTest {
 	
 	@Test
 	public void testExcepcionArgumentosIncorrectosEnCargaPatronTablero() {
-	   Tablero t = null;
-	   Patron p = null;
+	   Tablero<TipoCoordenada> t = null;
+	   Patron<TipoCoordenada> p = null;
 	   try {
-			t = new Tablero1D(5);
-		    t.cargaPatron(null,new Coordenada1D(3));
+			t = (Tablero<TipoCoordenada>) new Tablero1D(5);
+		    t.cargaPatron(null,(TipoCoordenada)new Coordenada1D(3));
 		    fail ("Error; no se produjo ninguna excepción.");
 	   }catch (Exception ex1) {
 			if (ex1 instanceof ExcepcionArgumentosIncorrectos) {
@@ -322,11 +328,11 @@ public class ExcepcionesSuiteTest {
 	
 	@Test
 	public void testExcepcionPosicionFueraTableroGetCeldaTablero() {
-	   Tablero t = null;
-	   Coordenada c = null;
+	   Tablero<TipoCoordenada> t = null;
+	   TipoCoordenada c = null;
 	   try {
-		    c = new Coordenada1D(5);
-			t = new Tablero1D(5);
+		    c = (TipoCoordenada) new Coordenada1D(5);
+			t = (Tablero<TipoCoordenada>) new Tablero1D(5);
 		    t.getCelda(c);
 	   }catch (Exception ex1) {
 			   if (ex1 instanceof ExcepcionPosicionFueraTablero) {
@@ -343,11 +349,11 @@ public class ExcepcionesSuiteTest {
 	
 	@Test
 	public void testExcepcionPosicionFueraTableroSetCeldaTablero() {
-	   Tablero t = null;
-	   Coordenada c = null;
+	   Tablero<TipoCoordenada> t = null;
+	   TipoCoordenada c = null;
 	   try {
-		    c = new Coordenada1D(5);
-			t = new Tablero1D(5);
+		    c = (TipoCoordenada) new Coordenada1D(5);
+			t = (Tablero<TipoCoordenada>) new Tablero1D(5);
 			t.setCelda(c,EstadoCelda.VIVA);
 	   }catch (Exception ex1) {
 			   if (ex1 instanceof ExcepcionPosicionFueraTablero) {
@@ -366,15 +372,15 @@ public class ExcepcionesSuiteTest {
 	
 	@Test
 	public void testExcepcionPosicionFueraTableroEnCargaPatronTablero() {
-	   Tablero t = null;
-	   Patron p = null;
-	   Coordenada c=null;
-	   Coordenada s=null;
+	   Tablero<TipoCoordenada> t = null;
+	   Patron<TipoCoordenada> p = null;
+	   TipoCoordenada c=null;
+	   TipoCoordenada s=null;
 	   try {
-		    s = new Coordenada1D(5);
-			t = new Tablero1D(5);
-			p = new Patron("Prueba",new Tablero1D(3));
-			c = new Coordenada1D(3);
+		    s = (TipoCoordenada) new Coordenada1D(5);
+			t = (Tablero<TipoCoordenada>) new Tablero1D(5);
+			p = new Patron<TipoCoordenada>("Prueba",(Tablero<TipoCoordenada>)new Tablero1D(3));
+			c = (TipoCoordenada) new Coordenada1D(3);
 		    t.cargaPatron(p,c);
 	   }catch (Exception ex1) {
 			   if (ex1 instanceof ExcepcionPosicionFueraTablero) {
@@ -385,10 +391,10 @@ public class ExcepcionesSuiteTest {
 			   }
 			   else fail("Se esperaba ExcepcionPosicionFueraTablero, pero se capturo "+ex1.getClass().getSimpleName()); 
 			   try {
-				    s = new Coordenada2D(5,5);
-				    t = new TableroCeldasCuadradas(5,6);
-				    p = new Patron("Prueba",new TableroCeldasCuadradas(3,3));
-				    t.cargaPatron(p,new Coordenada2D(3,3));
+				    s = (TipoCoordenada) new Coordenada2D(5,5);
+				    t = (Tablero<TipoCoordenada>) new TableroCeldasCuadradas(5,6);
+				    p = new Patron<TipoCoordenada>("Prueba",(Tablero<TipoCoordenada>)new TableroCeldasCuadradas(3,3));
+				    t.cargaPatron(p,(TipoCoordenada)new Coordenada2D(3,3));
 			   }catch (Exception ex2) {
 					   if (ex2 instanceof ExcepcionPosicionFueraTablero) {
 						   ExcepcionPosicionFueraTablero ex2d = (ExcepcionPosicionFueraTablero)ex2;
@@ -410,7 +416,7 @@ public class ExcepcionesSuiteTest {
 	public void testExcepcionArgumentosIncorrectosEnPatron() {
 	
 	   try {		
-		   new Patron(null,new Tablero1D(3));
+		   new Patron<TipoCoordenada>(null,(Tablero<TipoCoordenada>)new Tablero1D(3));
    
 	   } catch (Exception ex1) {
 			   if (ex1 instanceof ExcepcionArgumentosIncorrectos) {
@@ -420,7 +426,7 @@ public class ExcepcionesSuiteTest {
 			   else fail("Se esperaba ExcepcionArgumentosIncorrectos, pero se capturo "+ex1.getClass().getSimpleName()); 
 			   try {
 				    
-				    new Patron("Prueba",null);
+				    new Patron<TipoCoordenada>("Prueba",null);
 			
 			   }catch (Exception ex2) {
 					   if (ex2 instanceof ExcepcionArgumentosIncorrectos) {
@@ -437,13 +443,13 @@ public class ExcepcionesSuiteTest {
 	
 	@Test
 	public void testExcepcionPosicionFueraTableroGetCeldaPatron() {
-	   Patron p = null;
-	   Tablero t= null;
-	   Coordenada c=null;
+	   Patron<TipoCoordenada> p = null;
+	   Tablero<TipoCoordenada> t= null;
+	   TipoCoordenada c=null;
 	   try {
-		    t = new Tablero1D(10);
-			p = new Patron("Prueba",t);
-			c = new Coordenada1D(10);
+		    t = (Tablero<TipoCoordenada>) new Tablero1D(10);
+			p = new Patron<TipoCoordenada>("Prueba",t);
+			c = (TipoCoordenada) new Coordenada1D(10);
 		    p.getCelda(c);
 	   }catch (Exception ex1) {
 			   if (ex1 instanceof ExcepcionPosicionFueraTablero) {
@@ -461,10 +467,10 @@ public class ExcepcionesSuiteTest {
 	//Excepciones en Regla, ReglaConway y Regla30
 	@Test
 	public void testExcepcionArgumentosIncorrectosEnReglaConway() {
-	   Regla regla = new ReglaConway();
+	   Regla<TipoCoordenada> regla = (Regla<TipoCoordenada>) new ReglaConway();
 	   try {
 			
-		    regla.calculaSiguienteEstadoCelda(null,new Coordenada2D(4,7));
+		    regla.calculaSiguienteEstadoCelda(null,(TipoCoordenada) new Coordenada2D(4,7));
 	   }catch (Exception ex1) {
 			   if (ex1 instanceof ExcepcionArgumentosIncorrectos) {
 				   ExcepcionArgumentosIncorrectos exai=(ExcepcionArgumentosIncorrectos)ex1;
@@ -472,8 +478,8 @@ public class ExcepcionesSuiteTest {
 			   }
 			   else fail("Se esperaba ExcepcionArgumentosIncorrectos, pero se capturo "+ex1.getClass().getSimpleName()); 
 			   try {
-				    regla = new Regla30();
-				    regla.calculaSiguienteEstadoCelda(new Tablero1D(30),null);
+				    regla = (Regla<TipoCoordenada>) new Regla30();
+				    regla.calculaSiguienteEstadoCelda((Tablero<TipoCoordenada>) new Tablero1D(30),null);
 			   }catch (Exception ex2) {
 					   if (ex2 instanceof ExcepcionArgumentosIncorrectos) {
 						   ExcepcionArgumentosIncorrectos exai=(ExcepcionArgumentosIncorrectos)ex2;
@@ -488,14 +494,14 @@ public class ExcepcionesSuiteTest {
 	
 	@Test
 	public void testExcepcionPosicionFueraTableroEnReglas() {
-	   Regla regla = new ReglaConway();
+	   Regla<TipoCoordenada> regla = (Regla<TipoCoordenada>) new ReglaConway();
 	   boolean bex1,bex2;
 	   bex1=bex2=false;
-	   Tablero t=null;
-	   Coordenada c=null;
+	   Tablero<TipoCoordenada> t=null;
+	   TipoCoordenada c=null;
 	   try {
-			t=new TableroCeldasCuadradas(4,7);
-			c=new Coordenada2D(4,6);
+			t=(Tablero<TipoCoordenada>) new TableroCeldasCuadradas(4,7);
+			c=(TipoCoordenada) new Coordenada2D(4,6);
 		    regla.calculaSiguienteEstadoCelda(t,c);
 	   }catch (Exception ex1) {
 			   if (ex1 instanceof ExcepcionPosicionFueraTablero) {
@@ -507,9 +513,9 @@ public class ExcepcionesSuiteTest {
 			   }
 			   else fail("Se esperaba ExcepcionPosicionFueraTablero, pero se capturo "+ex1.getClass().getSimpleName()); 
 			   try {
-				    regla = new Regla30();
-				    t=new Tablero1D(30);
-				    c=new Coordenada1D(30);
+				    regla = (Regla<TipoCoordenada>) new Regla30();
+				    t=(Tablero<TipoCoordenada>) new Tablero1D(30);
+				    c=(TipoCoordenada) new Coordenada1D(30);
 				    regla.calculaSiguienteEstadoCelda(t,c);
 			   }catch (Exception ex2) {
 					   if (ex2 instanceof ExcepcionPosicionFueraTablero) {
@@ -527,13 +533,13 @@ public class ExcepcionesSuiteTest {
 	   if (!bex2) fail("No se ha lanzado ninguna excepcion en el segundo try");
 	}
 	
-	//Excepciones en Juego
+	//Excepciones en Juego<TipoCoordenada>
 	@Test
 	public void testExcepcionArgumentosIncorrectosEnJuego() {
 	
 	  
 	   try {
-			new Juego(null,new ReglaConway());   
+			new Juego<TipoCoordenada>(null,(Regla<TipoCoordenada>)new ReglaConway());   
 	   }catch (Exception ex1) {
 			   if (ex1 instanceof ExcepcionArgumentosIncorrectos) {
 				   ExcepcionArgumentosIncorrectos exai=(ExcepcionArgumentosIncorrectos)ex1;
@@ -541,7 +547,7 @@ public class ExcepcionesSuiteTest {
 			   }
 			   else fail("Se esperaba ExcepcionArgumentosIncorrectos, pero se capturo "+ex1.getClass().getSimpleName()); 
 			   try {
-				   new Juego(new TableroCeldasCuadradas(5,4),null);
+				   new Juego<TipoCoordenada>((Tablero<TipoCoordenada>)new TableroCeldasCuadradas(5,4),null);
 			   }catch (Exception ex2) {
 					   if (ex2 instanceof ExcepcionArgumentosIncorrectos) {
 						   ExcepcionArgumentosIncorrectos exai=(ExcepcionArgumentosIncorrectos)ex2;
@@ -556,14 +562,14 @@ public class ExcepcionesSuiteTest {
 	
 	@Test
 	public void testExcepcionPosicionFueraTableroEnCargaPatronDeJuego() {
-	   Juego juego = null;
-	   Tablero t = null;
-	   Coordenada c = null;
+	   Juego<TipoCoordenada> juego = null;
+	   Tablero<TipoCoordenada> t = null;
+	   TipoCoordenada c = null;
 	   try {
-		   t = (Tablero)new TableroCeldasCuadradas(1,1);
-		   c = (Coordenada)new Coordenada2D(5,4);
-		   juego = new Juego(new TableroCeldasCuadradas(5,4),new ReglaConway());
-		   juego.cargaPatron(new Patron("PatronTest",t),c);
+		   t = (Tablero<TipoCoordenada>)new TableroCeldasCuadradas(1,1);
+		   c = (TipoCoordenada)new Coordenada2D(5,4);
+		   juego = new Juego<TipoCoordenada>((Tablero<TipoCoordenada>)new TableroCeldasCuadradas(5,4),(Regla<TipoCoordenada>)new ReglaConway());
+		   juego.cargaPatron(new Patron<TipoCoordenada>("PatronTest",t),c);
 	   }catch (Exception ex1) {
 			   if (ex1 instanceof ExcepcionPosicionFueraTablero) {
 				   ExcepcionPosicionFueraTablero ex2d=(ExcepcionPosicionFueraTablero)ex1;
@@ -573,10 +579,10 @@ public class ExcepcionesSuiteTest {
 			   }
 			   else fail("Se esperaba ExcepcionPosicionFueraTablero, pero se capturo "+ex1.getClass().getSimpleName()); 
 			   try {
-				   t = (Tablero)new Tablero1D(1);
-				   c = (Coordenada)new Coordenada1D(20);
-				   juego = new Juego(new Tablero1D(20),new Regla30());
-				   juego.cargaPatron(new Patron("PatronTest",t), c);
+				   t = (Tablero<TipoCoordenada>)new Tablero1D(1);
+				   c = (TipoCoordenada)new Coordenada1D(20);
+				   juego = new Juego<TipoCoordenada>((Tablero<TipoCoordenada>)new Tablero1D(20),(Regla<TipoCoordenada>)new Regla30());
+				   juego.cargaPatron(new Patron<TipoCoordenada>("PatronTest",t), c);
 			   }catch (Exception ex2) {
 					   if (ex2 instanceof ExcepcionPosicionFueraTablero) {
 						   ExcepcionPosicionFueraTablero ex1d=(ExcepcionPosicionFueraTablero)ex2;
@@ -597,15 +603,15 @@ public class ExcepcionesSuiteTest {
 
 //*** AUXILIARES ****/
 // Clase auxiliar para probar la clase Tablero.
-final class TableroPrueba extends Tablero {
+final class TableroPrueba<TipoCoordenada extends Coordenada> extends Tablero<TipoCoordenada> {
 
-	protected TableroPrueba(Coordenada dimensiones) throws ExcepcionCoordenadaIncorrecta {
+	protected TableroPrueba(TipoCoordenada dimensiones) throws ExcepcionCoordenadaIncorrecta {
 		super(dimensiones);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public ArrayList<Coordenada> getPosicionesVecinasCCW(Coordenada posicion) {
+	public ArrayList<TipoCoordenada> getPosicionesVecinasCCW(TipoCoordenada posicion) {
 		// TODO Auto-generated method stub
 		return null;
 	}

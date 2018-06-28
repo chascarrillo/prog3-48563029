@@ -1,8 +1,13 @@
-package modelo;
+package modelo.d2;
 
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import modelo.EstadoCelda;
+import modelo.d2.Coordenada2D;
+import modelo.d2.ReglaConway;
+import modelo.d2.TableroCeldasCuadradas;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -37,7 +42,7 @@ public class ReglaConwayP2Test {
 	}
 
 	/**
-	 * Test method for {@link modelo.ReglaConway#calculaSiguienteEstadoCelda(modelo.Tablero, modelo.Coordenada2D)}.
+	 * Test method for {@link modelo.d2.ReglaConway#calculaSiguienteEstadoCelda(modelo.Tablero, modelo.d2.Coordenada2D)}.
 	 */
 	@Test
 	public void testCalculaSiguienteEstadoCeldaTodasMuertas() {

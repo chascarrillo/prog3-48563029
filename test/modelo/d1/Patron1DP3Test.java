@@ -1,10 +1,15 @@
-package modelo;
+package modelo.d1;
 
 
 import static org.junit.Assert.*;
 
 import java.util.HashSet;
 
+import modelo.EstadoCelda;
+import modelo.Patron;
+import modelo.Tablero;
+import modelo.d1.Coordenada1D;
+import modelo.d1.Tablero1D;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 
 import org.junit.Before;
@@ -12,8 +17,8 @@ import org.junit.Test;
 
 public class Patron1DP3Test {
 
-	Tablero tablero;
-	Patron patron;
+	Tablero<Coordenada1D> tablero;
+	Patron<Coordenada1D> patron;
 	String snombre;
 	
 
@@ -27,7 +32,7 @@ public class Patron1DP3Test {
 		tablero.setCelda(new Coordenada1D(2),EstadoCelda.VIVA);
 		tablero.setCelda(new Coordenada1D(3),EstadoCelda.VIVA);
 		snombre = new String ("Trio");
-		patron = new Patron(snombre,tablero);
+		patron = new Patron<Coordenada1D>(snombre,tablero);
 	}
 
 	
@@ -41,7 +46,7 @@ public class Patron1DP3Test {
 	
 	@Test
 	public void testGetCelda() {
-		Coordenada c;
+		Coordenada1D c;
 		for (int x=0; x<5; x++)		
 				try {
 					c = new Coordenada1D(x);
@@ -57,7 +62,7 @@ public class Patron1DP3Test {
 	 */
 	@Test
 	public void testGetPosiciones() {
-		HashSet<Coordenada> sctab =new HashSet<Coordenada>();
+		HashSet<Coordenada1D> sctab =new HashSet<Coordenada1D>();
 		
 		for (int x=0; x<5; x++)
 				try {

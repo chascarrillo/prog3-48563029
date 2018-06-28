@@ -3,9 +3,10 @@ package entradasalida;
 import static org.junit.Assert.*;
 
 import modelo.Tablero;
-import modelo.Tablero1D;
-import modelo.TableroCeldasCuadradas;
+import modelo.d1.Tablero1D;
+import modelo.d2.TableroCeldasCuadradas;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
+import modelo.Coordenada;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -14,7 +15,7 @@ import org.junit.Test;
 import entradasalida.excepciones.ExcepcionLectura;
 import modelo.MetodosAuxiliares;
 
-public class ParserTablerosTest extends MetodosAuxiliares{
+public class ParserTablerosTest<TipoCoordenada extends Coordenada> extends MetodosAuxiliares<TipoCoordenada>{
     
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -71,7 +72,7 @@ public class ParserTablerosTest extends MetodosAuxiliares{
 	
 	@Test
 	public void testLeeTablero() {
-		Tablero tablero = null;
+		Tablero<TipoCoordenada> tablero = null;
 		
 		try {
 			tablero=ParserTableros.leeTablero("**  *******   ** ***  *****   ");

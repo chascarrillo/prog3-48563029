@@ -5,23 +5,25 @@ package entradasalida;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import entradasalida.excepciones.ExcepcionGeneracion;
-import entradasalida.imagen.*;
-import entradasalida.textoplano.GeneradorFicheroPlano;
+import entradasalida.gif.*;
+import entradasalida.txt.GeneradorFicheroPlano;
 
 import modelo.Coordenada;
-import modelo.Coordenada1D;
-import modelo.Coordenada2D;
+import modelo.Juego;
 import modelo.Regla;
-import modelo.Regla30;
-import modelo.ReglaConway;
 import modelo.Tablero;
-import modelo.Tablero1D;
-import modelo.Tablero2D;
-import modelo.TableroCeldasCuadradas;
 import modelo.TableroNoImprimible;
+import modelo.d1.Coordenada1D;
+import modelo.d1.Regla30;
+import modelo.d1.Tablero1D;
+import modelo.d2.Coordenada2D;
+import modelo.d2.ReglaConway;
+import modelo.d2.Tablero2D;
+import modelo.d2.TableroCeldasCuadradas;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionEjecucion;
@@ -60,6 +62,7 @@ public class FactoryTest {
 		    IGeneradorFichero gf = null;
 			try {
 				gf = Factory.creaGeneradorFichero(null, "txt");
+				fail("Debio producirse ExcepcionArgumentosIncorrectos");
 			} catch (ExcepcionArgumentosIncorrectos e) {
 				assertNull(gf);
 			} catch (Exception e) {
@@ -72,10 +75,11 @@ public class FactoryTest {
 	@Test
 	public void testCreaGeneradorFicheroExcepcion2() {
 		    IGeneradorFichero gf = null;
-		    Tablero t = null; 
+		    Tablero1D t = null; 
 			try {
 				t = new Tablero1D(10);
 				gf = Factory.creaGeneradorFichero(t, null);
+				fail ("Debio producirse ExcepcionArgumentosIncorrectos");
 			} catch (ExcepcionArgumentosIncorrectos e) {
 				assertNull(gf);
 			} catch (Exception e) {
@@ -88,10 +92,11 @@ public class FactoryTest {
 	@Test
 	public void testCreaGeneradorFicheroExcepcion3() {
 		    IGeneradorFichero gf = null;
-		    Tablero t = null; 
+		    Tablero<Coordenada1D> t = null; 
 			try {
 				t = new Tablero1D(10);
 				gf = Factory.creaGeneradorFichero(t, "tst");
+				fail ("Debio producirse ExcepcionGeneracion");
 			} catch (ExcepcionGeneracion e) {
 				assertNull(gf);
 			} catch (Exception e) {
@@ -100,35 +105,54 @@ public class FactoryTest {
 	
 	}
 	
-	//Excepción por tablero no imprimible en creaGeneradorFichero
+	//Excepción por tablero con coordenadas en 3D en creaGeneradorFichero
 	@Test
 	public void testCreaGeneradorFicheroExcepcion4() {
 		    IGeneradorFichero gf = null;
-		    Tablero t = null; 
+		    Tablero<Coordenada2D> t = null; 
 			try {
-				t = new TableroNoImprimible(new Coordenada2D(10,30));
+				t = new TableroNoImprimible(new Coordenada2D(10,10));
 				gf = Factory.creaGeneradorFichero(t, "txt");
-			} catch (ExcepcionEjecucion e) {
+				gf.generaFichero(new File("fichero.txt"), new Juego<Coordenada2D>(t,new ReglaConway()), 10);
+				fail ("Debio haberse producido ExcepcionGeneracion");
+			} catch (ExcepcionGeneracion e) {
+				
+			} catch (Exception e) {
+				fail("Se esperaba ExcepcionEjecucion, pero se capturo "+e.getClass().getSimpleName()); 
+			}
+	
+	}
+	//Tablero que usa Coordenada3D (no existe)
+	@Test
+	public void testCreaGeneradorFicheroExcepcion5() {
+		    IGeneradorFichero gf = null;
+		    Tablero<Coordenada2D> t = null; 
+			try {
+				t = new TableroNoImprimible(new Coordenada3D());
+				gf = Factory.creaGeneradorFichero(t, "txt");
+				fail ("Debio haberse producido ExcepcionGeneracion");
+			} catch (ExcepcionGeneracion e) {
 				assertNull(gf);
+				assertEquals("nombre clase erronea ","entradasalida.txt.GeneradorTableroCoordenada3D",e.getMessage());
 			} catch (Exception e) {
 				fail("Se esperaba ExcepcionEjecucion, pero se capturo "+e.getClass().getSimpleName()); 
 			}
 	
 	}
 	
-	
 	@Test
 	public void testCreaGeneradorFicheroTableroPlano() {
 		IGeneradorFichero gf1,gf2,gf3;
 		gf1=gf2=gf3=null;
-		Tablero t = null; 
+		Tablero<Coordenada1D> t1 = null; 
+		Tablero<Coordenada2D> t2 = null; 
 		try {
-				t = new Tablero1D(10);
-				gf1 = Factory.creaGeneradorFichero(t, "txt");
-				t = new TableroCeldasCuadradas(5,7);
-				gf2 = Factory.creaGeneradorFichero(t, "txt");
-				t = new OtroTablero2D(6,6);
-				gf3 = Factory.creaGeneradorFichero(t, "txt");
+				t1 = new Tablero1D(10);
+				gf1 = Factory.creaGeneradorFichero(t1, "txt");
+				t2 = new TableroCeldasCuadradas(5,7);
+				gf2 = Factory.creaGeneradorFichero(t2, "txt");
+				t2 = new OtroTablero2D(6,6);
+				gf3 = Factory.creaGeneradorFichero(t2, "txt");
 				
 		} catch (Exception e) {
 				fail("No se esperaba excepcion, pero se capturo "+e.getClass().getSimpleName()); 
@@ -145,11 +169,55 @@ public class FactoryTest {
 		}
 	}
 	
-		
+	
+	
 	@Test
-	public void testCreaGeneradorFicheroGIFTablero1D() {
+	public void testCreaGeneradorFicheroTableroCoordenada1Dtxt() {
+		IGeneradorFichero gf;
+		gf=null;
+		Tablero<Coordenada1D> t = null; 
+		try {
+				t = new Tablero1D(10);
+				gf = Factory.creaGeneradorFichero(t, "txt");
+				
+		} catch (Exception e) {
+				fail("No se esperaba excepcion, pero se capturo "+e.getClass().getSimpleName()); 
+		}
+
+		if (!(gf instanceof entradasalida.txt.GeneradorTableroCoordenada1D)) {
+			fail ("Se esperaba un GeneradorTableroCoordenada1D pero se obtuvo "+ gf.getClass().getSimpleName());
+		}
+	
+	}	
+	
+	@Test
+	public void testCreaGeneradorFicheroTableroCoordenada2Dtxt() {
+		IGeneradorFichero gf1,gf2;
+		gf1=gf2=null;
+		Tablero<Coordenada2D> t = null; 
+		try {
+		
+				t = new TableroCeldasCuadradas(5,7);
+				gf1 = Factory.creaGeneradorFichero(t, "txt");
+				t = new OtroTablero2D(6,6);
+				gf2 = Factory.creaGeneradorFichero(t, "txt");
+				
+		} catch (Exception e) {
+				fail("No se esperaba excepcion, pero se capturo "+e.getClass().getSimpleName()); 
+		}
+
+		if (!(gf1 instanceof entradasalida.txt.GeneradorTableroCoordenada2D)) {
+			fail ("Se esperaba un GeneradorTableroCoordenada2D pero se obtuvo "+ gf1.getClass().getSimpleName());
+		}
+		if (!(gf2 instanceof entradasalida.txt.GeneradorTableroCoordenada2D)) {
+			fail ("Se esperaba un GeneradorTableroCoordenada2D pero se obtuvo "+ gf2.getClass().getSimpleName());
+		}
+	}
+	
+	@Test
+	public void testCreaGeneradorFicheroTableroCoordenada1D() {
 		    IGeneradorFichero gf = null;
-		    Tablero t = null; 
+		    Tablero<Coordenada1D> t = null; 
 			try {
 				t = new Tablero1D(10);
 				gf = Factory.creaGeneradorFichero(t, "gif");
@@ -157,17 +225,17 @@ public class FactoryTest {
 				fail("No se esperaba excepcion, pero se capturo "+e.getClass().getSimpleName()); 
 			}
 			
-		if (!(gf instanceof GeneradorGIFTablero1D)) {
-			fail ("Se esperaba un GeneradorGIFTablero1D pero se obtuvo "+ gf.getClass().getSimpleName());
+		if (!(gf instanceof entradasalida.gif.GeneradorTableroCoordenada1D)) {
+			fail ("Se esperaba un GeneradorTableroCoordenada1D pero se obtuvo "+ gf.getClass().getSimpleName());
 		}
 	}
 	
 	
 	@Test
-	public void testCreaGeneradorFicheroGifAnimadoTablero2D() {
+	public void testCreaGeneradorFicheroTableroCoordenada2D() {
 		    IGeneradorFichero gf1, gf2;
 		    gf1=gf2= null;
-		    Tablero t = null; 
+		    Tablero<Coordenada2D> t = null; 
 			try {
 				t = new TableroCeldasCuadradas(10,7);
 				gf1 = Factory.creaGeneradorFichero(t, "gif");
@@ -177,11 +245,11 @@ public class FactoryTest {
 				fail("No se esperaba excepcion, pero se capturo "+e.getClass().getSimpleName()); 
 			}
 			
-		if (!(gf1 instanceof GeneradorGifAnimadoTablero2D)) {
-			fail ("Se esperaba un GeneradorGifAnimadoTablero2D pero se obtuvo "+ gf1.getClass().getSimpleName());
+		if (!(gf1 instanceof entradasalida.gif.GeneradorTableroCoordenada2D)) {
+			fail ("Se esperaba un GeneradorTableroCoordenada2D pero se obtuvo "+ gf1.getClass().getSimpleName());
 		}
-		if (!(gf2 instanceof GeneradorGifAnimadoTablero2D)) {
-			fail ("Se esperaba un GeneradorGifAnimadoTablero2D pero se obtuvo "+ gf2.getClass().getSimpleName());
+		if (!(gf2 instanceof entradasalida.gif.GeneradorTableroCoordenada2D)) {
+			fail ("Se esperaba un GeneradorTableroCoordenada2D pero se obtuvo "+ gf2.getClass().getSimpleName());
 		}
 	}
 	
@@ -204,7 +272,7 @@ public class FactoryTest {
 
 	@Test
 	public void testCreaRegla30() {
-		Regla regla = null;
+		Regla<Coordenada1D> regla = null;
 		try {
 			regla=Factory.creaRegla(new Tablero1D(20));
 			if (!(regla instanceof Regla30)) {
@@ -217,7 +285,7 @@ public class FactoryTest {
 
 	@Test
 	public void testCreaReglaConway() {
-		Regla regla =null;
+		Regla<Coordenada2D> regla =null;
 		try {
 			regla=Factory.creaRegla(new TableroCeldasCuadradas(20,30));
 			if (!(regla instanceof ReglaConway)) {
@@ -246,7 +314,7 @@ public class FactoryTest {
 	@Test(expected=ExcepcionEjecucion.class)
 	public void testCreaTableroExcepcion2() {
 		try {
-			Factory.creaTablero(new OtraCoordenada());
+			Factory.creaTablero(new Coordenada3D());
 		} catch (ExcepcionCoordenadaIncorrecta e) {
 			fail("No debió dar ExcepcionCoordenadaIncorrecta");
 		}
@@ -255,16 +323,17 @@ public class FactoryTest {
 		
 	@Test
 	public void testCreaTablero() {
-		Tablero tablero = null;
+		Tablero<Coordenada1D> tablero1 = null;
+		Tablero<Coordenada2D> tablero2 = null;
 		try {
-			tablero=Factory.creaTablero(new Coordenada1D(30));
-			if (!(tablero instanceof Tablero1D)){
-				fail ("Se esperaba un Tablero1D pero se obtuvo "+ tablero.getClass().getSimpleName());
+			tablero1=Factory.creaTablero(new Coordenada1D(30));
+			if (!(tablero1 instanceof Tablero1D)){
+				fail ("Se esperaba un Tablero1D pero se obtuvo "+ tablero2.getClass().getSimpleName());
 			}
 			
-			tablero=Factory.creaTablero(new Coordenada2D(30,40));
-			if (!(tablero instanceof TableroCeldasCuadradas)){
-				fail ("Se esperaba un TableroCeldasCuadradas pero se obtuvo "+ tablero.getClass().getSimpleName());
+			tablero2=Factory.creaTablero(new Coordenada2D(30,40));
+			if (!(tablero2 instanceof TableroCeldasCuadradas)){
+				fail ("Se esperaba un TableroCeldasCuadradas pero se obtuvo "+ tablero2.getClass().getSimpleName());
 			}
 		} catch (Exception e) {
 			fail("No se esperaba excepcion, pero se capturo "+e.getClass().getSimpleName());
@@ -281,21 +350,16 @@ public class FactoryTest {
 		}
 
 		@Override
-		public ArrayList<Coordenada> getPosicionesVecinasCCW(Coordenada posicion)
-				throws ExcepcionPosicionFueraTablero {
+		public ArrayList<Coordenada2D> getPosicionesVecinasCCW(
+				Coordenada2D posicion) throws ExcepcionPosicionFueraTablero {
 			// TODO Auto-generated method stub
 			return null;
 		}	
 	}
 	
-	final private class OtraCoordenada extends Coordenada {
+	final private class Coordenada3D extends Coordenada {
 
 		
-		public OtraCoordenada() throws ExcepcionCoordenadaIncorrecta {
-			super();
-			// TODO Auto-generated constructor stub
-		}
-
 		@Override
 		public Coordenada suma(final Coordenada otra)
 				throws ExcepcionCoordenadaIncorrecta {

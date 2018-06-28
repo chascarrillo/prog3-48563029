@@ -15,16 +15,16 @@ import modelo.excepciones.ExcepcionPosicionFueraTablero;
  *
  */
 
-final public class TableroNoImprimible extends Tablero {
+final public class TableroNoImprimible<TipoCoordenada extends Coordenada> extends Tablero<TipoCoordenada> {
 			
-		public TableroNoImprimible(Coordenada dimensiones)
+		public TableroNoImprimible(TipoCoordenada dimensiones)
 				throws ExcepcionCoordenadaIncorrecta {
 			super(dimensiones);
 			// TODO Auto-generated constructor stub
 		}
 
 		@Override
-		public ArrayList<Coordenada> getPosicionesVecinasCCW(Coordenada posicion)
+		public ArrayList<TipoCoordenada> getPosicionesVecinasCCW(Coordenada posicion)
 				throws ExcepcionPosicionFueraTablero {
 			// TODO Auto-generated method stub
 			return null;

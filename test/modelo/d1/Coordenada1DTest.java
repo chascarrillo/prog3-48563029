@@ -1,10 +1,12 @@
 /**
  * 
  */
-package modelo;
+package modelo.d1;
 
 import static org.junit.Assert.*;
 
+import modelo.Coordenada;
+import modelo.d1.Coordenada1D;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 
 import org.junit.Before;
@@ -34,14 +36,8 @@ Coordenada1D c;
 	@Test
 	public final void testInicializacion() {
 	
-		Coordenada1D c2;
-		try {
-			c2 = new Coordenada1D(c);
-			assertEquals("c2.x", 5,c2.getX());
-		} catch (ExcepcionCoordenadaIncorrecta e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Coordenada1D c2 = new Coordenada1D(c);
+		assertEquals("c2.x", 5,c2.getX());
 		
 		
 	}

@@ -1,4 +1,4 @@
-package modelo;
+package modelo.d1;
 
 import static org.junit.Assert.*;
 
@@ -8,7 +8,17 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import modelo.excepciones.ExcepcionCoordenada1DIncorrecta;
+import modelo.Coordenada;
+import modelo.EstadoCelda;
+import modelo.Juego;
+import modelo.Patron;
+import modelo.Tablero;
+import modelo.d1.Coordenada1D;
+import modelo.d1.ExcepcionCoordenada1DIncorrecta;
+import modelo.d1.Regla30;
+import modelo.d1.Tablero1D;
+import modelo.d2.Coordenada2D;
+import modelo.d2.TableroCeldasCuadradas;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
 import org.junit.Before;
@@ -18,13 +28,13 @@ import org.junit.Test;
 public class Juego1DP3Test {
 
     Regla30 regla;
-    ArrayList<Patron> patrones;
-    Tablero tablero;
-    Juego juego;
+    ArrayList<Patron<Coordenada1D>> patrones;
+    Tablero<Coordenada1D> tablero;
+    Juego<Coordenada1D> juego;
     Coordenada dimension;
-    static Patron patronsimple, patrontrio, patronsos;
+    static Patron<Coordenada1D> patronsimple, patrontrio, patronsos;
     static String tablero1, tablero2, tablero3, tablero4;
-    static Tablero tablerodelmain, tablerosos, tableroconmaspatrones;
+    static Tablero<Coordenada2D> tablerodelmain, tablerosos, tableroconmaspatrones;
  
 	/**
 	 * @throws java.lang.Exception
@@ -47,7 +57,7 @@ public class Juego1DP3Test {
 		dimension = new Coordenada1D(43);
 		tablero = new Tablero1D(43);
 		regla = new Regla30();
-		juego = new Juego(tablero,regla);
+		juego = new Juego<Coordenada1D>(tablero,regla);
 		patrones = juego.getPatrones();	
 	}
 
@@ -67,9 +77,9 @@ public class Juego1DP3Test {
 	@Test
 	public void testCargaPatron() {
 		
-			Coordenada cerr = null;
+			//Coordenada cerr = null;
 			try {
-				cerr = new Coordenada1D(43);
+				//cerr = new Coordenada1D(43);
 				juego.cargaPatron(patrontrio, new Coordenada1D(41));
 				fail("Se debió producir ExcepcionPosicionFueraTablero");
 			} catch (ExcepcionPosicionFueraTablero e) {
@@ -115,9 +125,9 @@ public class Juego1DP3Test {
 	@Test
 	public void testActualizaTableroDelMain() {
 		
-		Juego juego1=null;
+		Juego<Coordenada1D> juego1=null;
 		try {
-			juego1 = new Juego(new Tablero1D(43),regla);
+			juego1 = new Juego<Coordenada1D>(new Tablero1D(43),regla);
 			juego1.cargaPatron(patronsimple, new Coordenada1D(22));
 
 		} catch (Exception e) {
@@ -150,7 +160,7 @@ public class Juego1DP3Test {
 		s.close();
 		
 		//Comprobación de las iteraciones de los tableros finales del alumno.
-		Coordenada c;
+		Coordenada2D c;
 		for (int j=0; j<22; j++)
 			for (int i=0; i<43; i++) {
 				try {
@@ -165,9 +175,9 @@ public class Juego1DP3Test {
 	@Test
 	public void testActualizaSOS() {
 		
-		Juego juego1=null;
+		Juego<Coordenada1D> juego1=null;
 		try {
-			juego1 = new Juego(new Tablero1D(60),regla);
+			juego1 = new Juego<Coordenada1D>(new Tablero1D(60),regla);
 			juego1.cargaPatron(patronsos, new Coordenada1D(45));
 		} catch (Exception e) {
 			fail("No se esperaba excepcion, pero se capturo "+e.getClass().getSimpleName());
@@ -200,7 +210,7 @@ public class Juego1DP3Test {
 		}
 	
 		//Comprobamos el contenido del tablero del alumno
-		Coordenada c;
+		Coordenada2D c;
 		for (int j=0; j<30; j++) //sucesivas iteraciones
 			for (int i=0; i<60; i++) { //índice tabla
 				try {
@@ -214,9 +224,9 @@ public class Juego1DP3Test {
 	
 	@Test
 	public void testActualizaConMasPatrones() {
-		Juego juego1=null;
+		Juego<Coordenada1D> juego1=null;
 		try {
-			juego1 = new Juego(new Tablero1D(60),regla);
+			juego1 = new Juego<Coordenada1D>(new Tablero1D(60),regla);
 			
 			juego1.cargaPatron(patronsimple, new Coordenada1D(0));
 			juego1.cargaPatron(patrontrio, new Coordenada1D(8)); 
@@ -246,7 +256,7 @@ public class Juego1DP3Test {
 			
 		
 		//Comprobación del contenido del tablero del alumno
-		Coordenada c;
+		Coordenada2D c;
 		for (int j=0; j<40; j++)
 			for (int i=0; i<60; i++) {
 				c = new Coordenada2D(i,j);
@@ -260,9 +270,9 @@ public class Juego1DP3Test {
 	@Test
 	public void testActualizaTodoVivo() {
 	
-		Juego juego1;
+		Juego<Coordenada1D> juego1;
 		try {
-			juego1 = new Juego(new Tablero1D(12),regla);
+			juego1 = new Juego<Coordenada1D>(new Tablero1D(12),regla);
 			juego1.cargaPatron(patrontrio, new Coordenada1D(0));
 			juego1.cargaPatron(patrontrio, new Coordenada1D(3)); 
 			juego1.cargaPatron(patrontrio, new Coordenada1D(6));
@@ -289,7 +299,7 @@ public class Juego1DP3Test {
 			}
 			s.close();
 		//Comprobación del contenido del tablero del alumno
-			Coordenada c;
+			Coordenada2D c;
 			for (int j=0; j<2; j++)
 				for (int i=0; i<12; i++) {
 					c = new Coordenada2D(i,j);
@@ -322,13 +332,13 @@ public class Juego1DP3Test {
 	/* FUNCIONES AUXILIARES */
 	
 	private static void CreaPatrones() {
-		Tablero tableroPatron;
+		Tablero<Coordenada1D> tableroPatron;
 		try {
 			tableroPatron = new Tablero1D(1);
 		
 		tableroPatron.setCelda(new Coordenada1D(0), EstadoCelda.VIVA);
 		
-		patronsimple = new Patron("Simple", tableroPatron);	
+		patronsimple = new Patron<Coordenada1D>("Simple", tableroPatron);	
 
 		// creamos otro patrón
 		tableroPatron = new Tablero1D(3);
@@ -336,7 +346,7 @@ public class Juego1DP3Test {
 		tableroPatron.setCelda(new Coordenada1D(1), EstadoCelda.VIVA);
 		tableroPatron.setCelda(new Coordenada1D(2), EstadoCelda.VIVA);
 
-		patrontrio = new Patron("Trio", tableroPatron);		
+		patrontrio = new Patron<Coordenada1D>("Trio", tableroPatron);		
 		
 			
 		tableroPatron = new Tablero1D(9);
@@ -351,7 +361,7 @@ public class Juego1DP3Test {
 		tableroPatron.setCelda(new Coordenada1D(6), EstadoCelda.VIVA);
 		tableroPatron.setCelda(new Coordenada1D(7), EstadoCelda.VIVA);
 		tableroPatron.setCelda(new Coordenada1D(8), EstadoCelda.VIVA);
-		patronsos = new Patron("SOS", tableroPatron);
+		patronsos = new Patron<Coordenada1D>("SOS", tableroPatron);
 		
 		} catch (Exception e) {
 			fail("No se esperaba excepcion, pero se capturo "+e.getClass().getSimpleName());
@@ -371,9 +381,9 @@ public class Juego1DP3Test {
 	}
 	
   //Inicia un tablero con dimensiones dim a partir del contenido de un fichero
-  private static Tablero IniciaTablerosResultado(Coordenada dim,String fichero) {
+  private static Tablero<Coordenada2D> IniciaTablerosResultado(Coordenada dim,String fichero) {
 	   Scanner s;
-	   Tablero tablero=null;
+	   Tablero<Coordenada2D> tablero=null;
 	   Coordenada2D dim2d= (Coordenada2D) dim;
 	try {
 		s = new Scanner(new File(fichero));

@@ -15,22 +15,22 @@ import modelo.Regla;
 import modelo.Tablero;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
-
 import entradasalida.Factory;
 import entradasalida.IGeneradorFichero;
 import entradasalida.ParserTableros;
 import entradasalida.excepciones.ExcepcionGeneracion;
 import entradasalida.excepciones.ExcepcionLectura;
 
-public class MetodosAuxiliares {
+public class MetodosAuxiliares<TipoCoordenada extends Coordenada> {
 	
-	 protected void run(Coordenada dimensiones, Coordenada posicionCargaPatron, String cadena, String fichero, int iteraciones) throws ExcepcionPosicionFueraTablero, ExcepcionGeneracion, ExcepcionCoordenadaIncorrecta, ExcepcionLectura {
-		Tablero tablero = Factory.creaTablero(dimensiones);
-		Regla regla = Factory.creaRegla(tablero);		
-		Tablero tableroPatron = ParserTableros.leeTablero(cadena);
-		Patron p = new Patron("Entrada", tableroPatron);
+	 @SuppressWarnings("unchecked")
+	protected void run(TipoCoordenada dimensiones, TipoCoordenada posicionCargaPatron, String cadena, String fichero, int iteraciones) throws ExcepcionPosicionFueraTablero, ExcepcionGeneracion, ExcepcionCoordenadaIncorrecta, ExcepcionLectura {
+		Tablero<TipoCoordenada> tablero = Factory.creaTablero(dimensiones);
+		Regla<TipoCoordenada> regla = Factory.creaRegla(tablero);		
+		Tablero<TipoCoordenada> tableroPatron = ParserTableros.leeTablero(cadena);
+		Patron<TipoCoordenada> p = new Patron<TipoCoordenada>("Entrada", tableroPatron);
 		
-		Juego juego = new Juego(tablero, regla);
+		Juego<TipoCoordenada> juego = new Juego<TipoCoordenada>(tablero, regla);
 		juego.cargaPatron(p, posicionCargaPatron);
 		IGeneradorFichero generador = Factory.creaGeneradorFichero(tablero, FileUtils.getFileExtension(fichero));
 		generador.generaFichero(new File(fichero), juego, iteraciones);		
@@ -38,22 +38,13 @@ public class MetodosAuxiliares {
 
 
 	protected boolean ComparaFicheros(String f1, String f2) {
-		String comando = null;
-		if (FileUtils.getFileExtension(f1).equals("txt"))
-			comando = new String("diff "+f1+" "+f2);
-		else 
-			if(FileUtils.getFileExtension(f1).equals("gif"))
-				comando = new String("cmp -b "+f1+" "+f2);
-			else {
-				System.out.println("Error, el fichero "+f1+" no tiene ni extensión txt ni gif");
-				return false;
-			}
+		String comando[] = {"diff",f1,f2};
 		if (!new File(f1).exists())  {
 			System.out.println("El fichero "+f1+ "no existe.");
 			return false;
 		}
-		if (!new File(f2).exists())  {
-			System.out.println("El fichero "+f2+ "no existe.");
+		if (!new File(f1).exists())  {
+			System.out.println("El fichero "+f1+ "no existe.");
 			return false;
 		}
 		try {
