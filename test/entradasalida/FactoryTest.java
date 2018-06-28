@@ -115,7 +115,7 @@ public class FactoryTest {
 				gf = Factory.creaGeneradorFichero(t, "txt");
 				gf.generaFichero(new File("fichero.txt"), new Juego<Coordenada2D>(t,new ReglaConway()), 10);
 				fail ("Debio haberse producido ExcepcionGeneracion");
-			} catch (ExcepcionGeneracion e) {
+			} catch (ExcepcionEjecucion e) {
 				
 			} catch (Exception e) {
 				fail("Se esperaba ExcepcionEjecucion, pero se capturo "+e.getClass().getSimpleName()); 
@@ -131,7 +131,7 @@ public class FactoryTest {
 				t = new TableroNoImprimible(new Coordenada3D());
 				gf = Factory.creaGeneradorFichero(t, "txt");
 				fail ("Debio haberse producido ExcepcionGeneracion");
-			} catch (ExcepcionGeneracion e) {
+			} catch (ExcepcionEjecucion e) {
 				assertNull(gf);
 				assertEquals("nombre clase erronea ","entradasalida.txt.GeneradorTableroCoordenada3D",e.getMessage());
 			} catch (Exception e) {

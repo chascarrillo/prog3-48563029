@@ -47,10 +47,10 @@ public class Factory
 	public static IGeneradorFichero creaGeneradorFichero(Tablero tablero, String extension)
 	throws ExcepcionGeneracion
 	{
-		if(tablero == null) throw new ExcepcionArgumentosIncorrectos();
+		if(tablero == null  ||  extension == null) throw new ExcepcionArgumentosIncorrectos();
 		if(extension.isEmpty()  ||  (!extension.contentEquals("txt")  &&  !extension.contentEquals("gif")))
 			throw new ExcepcionGeneracion("El argumento extension no contenia un valor dentro del rango de valores validos (txt/gif)");
-		if(!(tablero instanceof Tablero1D)  &&  !(tablero instanceof TableroCeldasCuadradas))
+		if(!(tablero instanceof Tablero1D)  &&  !(tablero instanceof Tablero2D))
 			throw new ExcepcionEjecucion("Tablero de tipo incorrecto");
 
 		IGeneradorFichero generador = null;
@@ -65,7 +65,7 @@ public class Factory
 		}
 		catch (ClassNotFoundException e)
 		{
-			throw new ExcepcionGeneracion("GeneradorTablero" + tablero.getDimensiones().getClass().getSimpleName());
+			throw new ExcepcionGeneracion("entradasalida."+ extension + ".GeneradorTablero" + tablero.getDimensiones().getClass().getSimpleName());
 		}
 
 		return generador;

@@ -43,7 +43,7 @@ implements IParserTablero
 
 			for(int i = 0; i < cadena.length(); i++)
 			{
-				if(cadena.charAt(i) != ' '  ||  cadena.charAt(i) != '*')
+				if(cadena.charAt(i) != ' '  &&  cadena.charAt(i) != '*')
 					throw new ExcepcionLectura("La cadena argumento contiene caracteres invalidos");
 
 				if(cadena.charAt(i) == ' ')
