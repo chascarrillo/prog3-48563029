@@ -359,7 +359,12 @@ public class FactoryTest {
 	
 	final private class Coordenada3D extends Coordenada {
 
-		
+		// ESTE METODO NO ESTA EN EL CORRECTOR OFICIAL
+		public Coordenada3D() throws ExcepcionCoordenadaIncorrecta {
+			super();
+			// TODO Auto-generated constructor stub
+		}
+
 		@Override
 		public Coordenada suma(final Coordenada otra)
 				throws ExcepcionCoordenadaIncorrecta {

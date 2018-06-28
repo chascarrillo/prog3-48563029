@@ -20,7 +20,7 @@ public abstract class Coordenada
 	 */
 	public Coordenada()
 	throws ExcepcionCoordenadaIncorrecta
-	{ }
+	{ };
 
 	/**
 	 * Suma.
