@@ -16,6 +16,7 @@ import java.nio.charset.StandardCharsets;
 
 import entradasalida.IGeneradorFichero;
 import entradasalida.excepciones.ExcepcionGeneracion;
+import modelo.Imprimible;
 import modelo.Juego;
 import modelo.d1.Tablero1D;
 import modelo.d2.TableroCeldasCuadradas;
@@ -40,6 +41,7 @@ implements IGeneradorFichero
 	{
 		if(file == null  ||  juego == null) throw new ExcepcionArgumentosIncorrectos();
 		if(iteraciones <= 0) throw new ExcepcionGeneracion("el parametro iteraciones debe ser mayor que 0");
+		if( !(juego.getTablero() instanceof Imprimible) ) throw new ExcepcionGeneracion("tablero no imprimible");
 
 		OutputStreamWriter osw = null;
 		try
