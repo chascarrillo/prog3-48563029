@@ -41,7 +41,7 @@ implements IGeneradorFichero
 	{
 		if(file == null  ||  juego == null) throw new ExcepcionArgumentosIncorrectos();
 		if(iteraciones <= 0) throw new ExcepcionGeneracion("el parametro iteraciones debe ser mayor que 0");
-		if( !(juego.getTablero() instanceof Imprimible) ) throw new ExcepcionGeneracion("tablero no imprimible");
+		if((juego.getTablero() instanceof Imprimible) == false) throw new ExcepcionGeneracion("tablero no imprimible");
 
 		OutputStreamWriter osw = null;
 		try
