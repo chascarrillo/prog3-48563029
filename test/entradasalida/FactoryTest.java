@@ -115,10 +115,10 @@ public class FactoryTest {
 				gf = Factory.creaGeneradorFichero(t, "txt");
 				gf.generaFichero(new File("fichero.txt"), new Juego<Coordenada2D>(t,new ReglaConway()), 10);
 				fail ("Debio haberse producido ExcepcionGeneracion");
-			} catch (ExcepcionEjecucion e) {
+			} catch (ExcepcionGeneracion e) {
 				
 			} catch (Exception e) {
-				fail("Se esperaba ExcepcionEjecucion, pero se capturo "+e.getClass().getSimpleName()); 
+				fail("Se esperaba ExcepcionGeneracion, pero se capturo "+e.getClass().getSimpleName()); 
 			}
 	
 	}
@@ -131,11 +131,11 @@ public class FactoryTest {
 				t = new TableroNoImprimible(new Coordenada3D());
 				gf = Factory.creaGeneradorFichero(t, "txt");
 				fail ("Debio haberse producido ExcepcionGeneracion");
-			} catch (ExcepcionEjecucion e) {
+			} catch (ExcepcionGeneracion e) {
 				assertNull(gf);
 				assertEquals("nombre clase erronea ","entradasalida.txt.GeneradorTableroCoordenada3D",e.getMessage());
 			} catch (Exception e) {
-				fail("Se esperaba ExcepcionEjecucion, pero se capturo "+e.getClass().getSimpleName()); 
+				fail("Se esperaba ExcepcionGeneracion, pero se capturo "+e.getClass().getSimpleName()); 
 			}
 	
 	}
@@ -358,12 +358,6 @@ public class FactoryTest {
 	}
 	
 	final private class Coordenada3D extends Coordenada {
-
-		// ESTE METODO NO ESTA EN EL CORRECTOR OFICIAL
-		public Coordenada3D() throws ExcepcionCoordenadaIncorrecta {
-			super();
-			// TODO Auto-generated constructor stub
-		}
 
 		@Override
 		public Coordenada suma(final Coordenada otra)
