@@ -19,7 +19,6 @@ public abstract class Coordenada
 	 * @throws ExcepcionCoordenadaIncorrecta the excepcion coordenada incorrecta
 	 */
 	public Coordenada()
-	throws ExcepcionCoordenadaIncorrecta
 	{ };
 
 	/**
