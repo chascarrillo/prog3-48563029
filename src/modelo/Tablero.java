@@ -8,10 +8,13 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Iterator;
+import java.util.Map;
 
 import modelo.EstadoCelda;
 import modelo.Patron;
@@ -29,7 +32,7 @@ import modelo.excepciones.ExcepcionPosicionFueraTablero;
 public abstract class Tablero<TipoCoordenada extends Coordenada>
 {
 	/** The celdas. */
-	protected HashMap<TipoCoordenada, EstadoCelda> celdas;
+	protected Map<TipoCoordenada, EstadoCelda> celdas;
 
 	/** The dimensiones. */
 	protected TipoCoordenada dimensiones;
@@ -54,19 +57,6 @@ public abstract class Tablero<TipoCoordenada extends Coordenada>
 	 */
 	public TipoCoordenada getDimensiones()
 	{
-		TipoCoordenada dimensiones = null;
-		try
-		{
-			if (this instanceof Tablero1D)
-				dimensiones = (TipoCoordenada) new Coordenada1D(anchuraColeccion(getPosiciones()));
-			else
-				dimensiones = (TipoCoordenada) new Coordenada2D(anchuraColeccion(getPosiciones()), alturaColeccion(getPosiciones()));
-			return dimensiones;
-		}
-		catch (ExcepcionCoordenadaIncorrecta e)
-		{
-			e.printStackTrace();
-		}
 		return dimensiones;
 	}
 
@@ -76,7 +66,7 @@ public abstract class Tablero<TipoCoordenada extends Coordenada>
 	 * @return coleccion de coordenadas
 	 */
 	public Collection<TipoCoordenada> getPosiciones()
-	{
+	{/*
 		if (this instanceof Tablero1D)
 		{
 			Set<TipoCoordenada> ts = new TreeSet<TipoCoordenada>(
@@ -90,7 +80,39 @@ public abstract class Tablero<TipoCoordenada extends Coordenada>
 					ComparadorCoordenada.getComparator(ComparadorCoordenada.Y_SORT, ComparadorCoordenada.X_SORT));
 			ts.addAll(celdas.keySet());
 			return (Collection<TipoCoordenada>) ts;
-		}
+		}*/
+		Map<TipoCoordenada, EstadoCelda> treeMap = new TreeMap<TipoCoordenada, EstadoCelda>(
+			new Comparator<TipoCoordenada>()
+			{
+				@Override
+				public int compare(TipoCoordenada c1, TipoCoordenada c2)
+				{
+					if (c1 instanceof Coordenada1D)
+					{
+						Integer aux1 = ((Coordenada1D) c1).getX();
+						Integer aux2 = ((Coordenada1D) c2).getX();
+						return aux1.compareTo(aux2);
+					}
+					else //c1 instanceof Coordenada2D
+					{
+						Integer aux1x = ((Coordenada2D) c1).getX();
+						Integer aux1y = ((Coordenada2D) c1).getY();
+						Integer aux2x = ((Coordenada2D) c2).getX();
+						Integer aux2y = ((Coordenada2D) c2).getY();
+						if(aux1y.compareTo(aux2y) != 0)
+						{ // c1 y c2 tienen distinta y
+							return aux1y.compareTo(aux2y);
+						}
+						else
+						{ // c1 y c2 tienen igual y
+							return aux1x.compareTo(aux2x);
+						}
+					}
+				}
+			}
+		);
+		treeMap.putAll(celdas);
+		return (Collection<TipoCoordenada>) treeMap.keySet();
 	}
 
 	/**

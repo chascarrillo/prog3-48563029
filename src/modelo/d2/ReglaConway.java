@@ -48,7 +48,7 @@ extends Regla<Coordenada2D>
 		Iterator<Coordenada2D> iterator = aux.iterator();
 		while (iterator.hasNext())
 		{
-			Coordenada2D caux = (Coordenada2D) iterator.next();
+			Coordenada2D caux = iterator.next();
 			if (tablero.getCelda(caux) == EstadoCelda.VIVA)
 				cuenta++;
 		}

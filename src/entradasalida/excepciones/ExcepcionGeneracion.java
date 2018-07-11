@@ -16,6 +16,7 @@ extends Exception
 	
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	String mensaje = "";
 
 	/**
 	 * Instantiates a new excepcion generacion.
@@ -30,6 +31,7 @@ extends Exception
 	 */
 	public ExcepcionGeneracion(String mensaje)
 	{
+		this.mensaje = mensaje;
 		System.err.println(mensaje);
 	}
 
@@ -41,5 +43,11 @@ extends Exception
 	public ExcepcionGeneracion(Throwable causa)
 	{
 		causa.printStackTrace();
+	}
+
+	@Override
+	public String getMessage()
+	{
+		return mensaje;
 	}
 }

@@ -50,8 +50,6 @@ public class Factory
 		if(tablero == null  ||  extension == null) throw new ExcepcionArgumentosIncorrectos();
 		if(extension.isEmpty()  ||  (!extension.contentEquals("txt")  &&  !extension.contentEquals("gif")))
 			throw new ExcepcionGeneracion("El argumento extension no contenia un valor dentro del rango de valores validos (txt/gif)");
-		if(!(tablero instanceof Tablero1D)  &&  !(tablero instanceof Tablero2D))
-			throw new ExcepcionEjecucion("Tablero de tipo incorrecto");
 
 		IGeneradorFichero generador = null;
 
