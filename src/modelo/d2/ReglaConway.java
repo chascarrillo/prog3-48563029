@@ -47,7 +47,7 @@ extends Regla<Coordenada2D>
 		ArrayList<Coordenada2D> celdasVecinas = tablero.getPosicionesVecinasCCW(posicion);
 		Iterator<Coordenada2D> iterator = celdasVecinas.iterator();
 		while (iterator.hasNext())
-		{ // este bucle escribe en cuenta la cantidad de vecinas de posicion vivas
+		{ // este bucle escribe en la variable cuenta la cantidad de vecinas de posicion vivas
 			Coordenada2D caux = iterator.next();
 			if (tablero.getCelda(caux) == EstadoCelda.VIVA)
 				cuenta++;
@@ -60,7 +60,7 @@ extends Regla<Coordenada2D>
 				estado = EstadoCelda.MUERTA;
 		}
 		else if (cuenta == 3)
-			// la posicion actual esta muerta
+		// la posicion actual esta muerta
 			estado = EstadoCelda.VIVA;
 		else
 			estado = EstadoCelda.MUERTA;
