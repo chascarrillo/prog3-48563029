@@ -9,6 +9,7 @@ package modelo;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.TreeSet;
 
 import modelo.Tablero;
 import modelo.d1.Coordenada1D;
@@ -68,7 +69,7 @@ public class Juego<TipoCoordenada extends Coordenada>
 	 */
 	public void actualiza()
 	{
-		Collection<TipoCoordenada> cds = tablero.getPosiciones();
+		TreeSet<TipoCoordenada> cds = new TreeSet<TipoCoordenada>((TreeSet<TipoCoordenada>) tablero.getPosiciones());
 		Iterator<TipoCoordenada> iterator = cds.iterator();
 
 		while (iterator.hasNext())
