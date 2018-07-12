@@ -60,8 +60,8 @@ implements Imprimible
 	public ArrayList<Coordenada2D> getPosicionesVecinasCCW(Coordenada2D posicion)
 	throws ExcepcionPosicionFueraTablero
 	{
-		if (posicion == null)
-			throw new ExcepcionArgumentosIncorrectos();
+		if (posicion == null) throw new ExcepcionArgumentosIncorrectos();
+
 		ArrayList<Coordenada2D> cds = null;
 		if (!contiene(posicion))
 			throw new ExcepcionPosicionFueraTablero(posicion, getDimensiones());
@@ -71,57 +71,64 @@ implements Imprimible
 			{
 				int x = posicion.getX(), y = posicion.getY();
 				Coordenada2D aux = null;
-				int anchura = anchuraColeccion(getPosiciones()), altura = alturaColeccion(getPosiciones());
+				// int anchura = anchuraColeccion(getPosiciones()), altura = alturaColeccion(getPosiciones());
 				cds = new ArrayList<Coordenada2D>();
 
-				if (x > 0 && y > 0)
+				// vecina 0
+				if(x > 0  &&  y > 0)
 				{
 					aux = new Coordenada2D(x - 1, y - 1);
 					if (contiene(aux))
 						cds.add(aux);
 				}
-				if (x > 0)
+
+				// vecina 1
+				if(x > 0)
 				{
 					aux = new Coordenada2D(x - 1, y);
 					if (contiene(aux))
 						cds.add(aux);
 				}
-				if (x > 0 && y < altura - 1)
+
+				// vecina 2
+				if(x > 0)
 				{
 					aux = new Coordenada2D(x - 1, y + 1);
 					if (contiene(aux))
 						cds.add(aux);
 				}
-				if (y < altura - 1)
-				{
-					aux = new Coordenada2D(x, y + 1);
-					if (contiene(aux))
-						cds.add(aux);
-				}
-				if (x < anchura - 1 && y < altura - 1)
-				{
-					aux = new Coordenada2D(x + 1, y + 1);
-					if (contiene(aux))
-						cds.add(aux);
-				}
-				if (x < anchura - 1)
-				{
-					aux = new Coordenada2D(x + 1, y);
-					if (contiene(aux))
-						cds.add(aux);
-				}
-				if (x < anchura - 1 && y > 0)
+
+				// vecina 3
+				aux = new Coordenada2D(x, y + 1);
+				if (contiene(aux))
+					cds.add(aux);
+
+				// vecina 4
+				aux = new Coordenada2D(x + 1, y + 1);
+				if (contiene(aux))
+					cds.add(aux);
+			
+				// vecina 5
+				aux = new Coordenada2D(x + 1, y);
+				if (contiene(aux))
+					cds.add(aux);
+			
+				// vecina 6
+				if(y > 0)
 				{
 					aux = new Coordenada2D(x + 1, y - 1);
 					if (contiene(aux))
 						cds.add(aux);
 				}
-				if (y > 0)
+			
+				// vecina 7
+				if(y > 0)
 				{
 					aux = new Coordenada2D(x, y - 1);
 					if (contiene(aux))
 						cds.add(aux);
 				}
+				
 			}
 			catch (ExcepcionCoordenadaIncorrecta e)
 			{

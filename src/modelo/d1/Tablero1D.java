@@ -72,21 +72,20 @@ implements Imprimible
 			{
 				int x = posicion.getX();
 				Coordenada1D aux = null;
-				int anchura = anchuraColeccion(getPosiciones());
+				// int anchura = anchuraColeccion(getPosiciones());
 				cds = new ArrayList<Coordenada1D>();
 
-				if (x > 0)
+				if(x > 0)
 				{
 					aux = new Coordenada1D(x - 1);
 					if (contiene(aux))
 						cds.add(aux);
 				}
-				if (x < anchura - 1)
-				{
-					aux = new Coordenada1D(x + 1);
-					if (contiene(aux))
-						cds.add(aux);
-				}
+
+				aux = new Coordenada1D(x + 1);
+				if (contiene(aux))
+					cds.add(aux);
+
 			}
 			catch (ExcepcionCoordenadaIncorrecta e)
 			{

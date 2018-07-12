@@ -241,7 +241,7 @@ public abstract class Tablero<TipoCoordenada extends Coordenada>
 	}
 
 	/**
-	 * Contiene.
+	 * Devuelve true si el tablero contiene la posicion
 	 *
 	 * @param posicion la posicion
 	 * @return true, if successful
