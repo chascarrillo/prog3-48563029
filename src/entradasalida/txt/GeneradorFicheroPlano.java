@@ -48,19 +48,18 @@ implements IGeneradorFichero
 		{
 			osw = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
 			PrintWriter pw = new PrintWriter(osw, true);
-			pw.flush();
-			boolean es1D = false;
-
-			if(juego.getTablero() instanceof Tablero1D)
-				es1D = true;
 
 			for(int i = 0; i < iteraciones; i++)
 			{
 				juego.actualiza();
-				if(es1D)
-					pw.println(((Tablero1D) juego.getTablero()).generaCadena());
-				else
-					pw.println(((TableroCeldasCuadradas) juego.getTablero()).generaCadena());
+				if(juego.getTablero() instanceof Tablero1D)
+				{
+					pw.print(((Tablero1D) juego.getTablero()).generaCadena());
+				}
+				else if(juego.getTablero() instanceof TableroCeldasCuadradas)
+				{
+					pw.print(((TableroCeldasCuadradas) juego.getTablero()).generaCadena());
+				}
 			}
 			pw.close();
 		}
