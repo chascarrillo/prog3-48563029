@@ -74,36 +74,27 @@ public class Juego<TipoCoordenada extends Coordenada>
 			Tablero<TipoCoordenada> copiaTablero = null;
 			if(tablero instanceof Tablero1D)
 			{
-				copiaTablero = (Tablero<TipoCoordenada>) 
-				new Tablero1D(((Coordenada1D) tablero.getDimensiones()).getX());
+				copiaTablero = (Tablero<TipoCoordenada>) new Tablero1D(((Coordenada1D) tablero.getDimensiones()).getX());
 			}
 			else if(tablero instanceof TableroCeldasCuadradas)
 			{
-				copiaTablero = (Tablero<TipoCoordenada>) 
-				new TableroCeldasCuadradas(((Coordenada2D) tablero.getDimensiones()).getX(), ((Coordenada2D) tablero.getDimensiones()).getY());
+				copiaTablero = (Tablero<TipoCoordenada>) new TableroCeldasCuadradas(((Coordenada2D) tablero.getDimensiones()).getX(), ((Coordenada2D) tablero.getDimensiones()).getY());
 			}
 			else
-				throw new ExcepcionEjecucion("se intento actualizar un tablero de tipo no valido");
-
-			Iterator<TipoCoordenada> iterator = tablero.getPosiciones().iterator();
-
-			while (iterator.hasNext())
 			{
-				TipoCoordenada caux = iterator.next();
-				if(caux instanceof Coordenada1D)
-				{
-					copiaTablero.setCelda((TipoCoordenada) new Coordenada1D((Coordenada1D) caux), tablero.getCelda(caux));
-				}
-				else if(caux instanceof Coordenada2D)
-				{
-					copiaTablero.setCelda((TipoCoordenada) new Coordenada2D((Coordenada2D) caux), tablero.getCelda(caux));
-				}
-				else
-					throw new ExcepcionEjecucion("el tablero a actualizar contenia coordenadas de tipo no valido (1D/2D)");
+				throw new ExcepcionEjecucion("se intento actualizar un tablero de tipo no valido");
 			}
 
-			iterator = copiaTablero.getPosiciones().iterator();
 
+			Iterator<TipoCoordenada> iterator = tablero.getPosiciones().iterator();
+			while(iterator.hasNext())
+			{
+				TipoCoordenada caux = iterator.next();
+				copiaTablero.setCelda(caux, tablero.getCelda(caux));
+			}
+
+
+			iterator = copiaTablero.getPosiciones().iterator();
 			while (iterator.hasNext())
 			{
 				TipoCoordenada caux = iterator.next();
