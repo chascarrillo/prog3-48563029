@@ -24,6 +24,7 @@ import modelo.d2.Coordenada2D;
 import modelo.d2.TableroCeldasCuadradas;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
 import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
+import modelo.excepciones.ExcepcionEjecucion;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
 /**
@@ -47,7 +48,37 @@ public abstract class Tablero<TipoCoordenada extends Coordenada>
 		if (dimensiones == null)
 			throw new ExcepcionArgumentosIncorrectos();
 		this.dimensiones = dimensiones;
-		celdas = new HashMap<TipoCoordenada, EstadoCelda>();
+		//celdas = new HashMap<TipoCoordenada, EstadoCelda>();
+		celdas = new TreeMap<TipoCoordenada, EstadoCelda>(
+				new Comparator<TipoCoordenada>()
+				{
+					@Override
+					public int compare(TipoCoordenada c1, TipoCoordenada c2)
+					{
+						if (c1 instanceof Coordenada1D)
+						{
+							Integer aux1 = ((Coordenada1D) c1).getX();
+							Integer aux2 = ((Coordenada1D) c2).getX();
+							return aux1.compareTo(aux2);
+						}
+						else //c1 instanceof Coordenada2D
+						{
+							Integer aux1x = ((Coordenada2D) c1).getX();
+							Integer aux1y = ((Coordenada2D) c1).getY();
+							Integer aux2x = ((Coordenada2D) c2).getX();
+							Integer aux2y = ((Coordenada2D) c2).getY();
+							if(aux1y.compareTo(aux2y) != 0)
+							{ // c1 y c2 tienen distinta y
+								return aux1y.compareTo(aux2y);
+							}
+							else
+							{ // c1 y c2 tienen igual y
+								return aux1x.compareTo(aux2x);
+							}
+						}
+					}
+				}
+			);
 	}
 
 	/**
@@ -61,62 +92,17 @@ public abstract class Tablero<TipoCoordenada extends Coordenada>
 	}
 
 	/**
-	 * Gets the posiciones.
+	 * Devuelve un keySet de las celdas del tablero, ordenado por valor de Y y por valor de X
 	 *
 	 * @return coleccion de coordenadas
 	 */
 	public Collection<TipoCoordenada> getPosiciones()
-	{/*
-		if (this instanceof Tablero1D)
-		{
-			Set<TipoCoordenada> ts = new TreeSet<TipoCoordenada>(
-					ComparadorCoordenada.getComparator(ComparadorCoordenada.X_SORT));
-			ts.addAll(celdas.keySet());
-			return (Collection<TipoCoordenada>) ts;
-		}
-		else
-		{
-			Set<TipoCoordenada> ts = new TreeSet<TipoCoordenada>(
-					ComparadorCoordenada.getComparator(ComparadorCoordenada.Y_SORT, ComparadorCoordenada.X_SORT));
-			ts.addAll(celdas.keySet());
-			return (Collection<TipoCoordenada>) ts;
-		}*/
-		Map<TipoCoordenada, EstadoCelda> treeMap = new TreeMap<TipoCoordenada, EstadoCelda>(
-			new Comparator<TipoCoordenada>()
-			{
-				@Override
-				public int compare(TipoCoordenada c1, TipoCoordenada c2)
-				{
-					if (c1 instanceof Coordenada1D)
-					{
-						Integer aux1 = ((Coordenada1D) c1).getX();
-						Integer aux2 = ((Coordenada1D) c2).getX();
-						return aux1.compareTo(aux2);
-					}
-					else //c1 instanceof Coordenada2D
-					{
-						Integer aux1x = ((Coordenada2D) c1).getX();
-						Integer aux1y = ((Coordenada2D) c1).getY();
-						Integer aux2x = ((Coordenada2D) c2).getX();
-						Integer aux2y = ((Coordenada2D) c2).getY();
-						if(aux1y.compareTo(aux2y) != 0)
-						{ // c1 y c2 tienen distinta y
-							return aux1y.compareTo(aux2y);
-						}
-						else
-						{ // c1 y c2 tienen igual y
-							return aux1x.compareTo(aux2x);
-						}
-					}
-				}
-			}
-		);
-		treeMap.putAll(celdas);
-		return (Collection<TipoCoordenada>) treeMap.keySet();
+	{
+		return (Collection<TipoCoordenada>) celdas.keySet();
 	}
 
 	/**
-	 * Obtiene el estado de la celda.
+	 * Obtiene el estado de la celda (VIVA/MUERTA).
 	 *
 	 * @param posicion the posicion
 	 * @return celda viva/muerta
@@ -134,7 +120,7 @@ public abstract class Tablero<TipoCoordenada extends Coordenada>
 	}
 
 	/**
-	 * Sets the celda.
+	 * Añade al mapa celdas el par Clave-Valor con los valores argumento1-argumento2
 	 *
 	 * @param posicion the posicion
 	 * @param e el estado

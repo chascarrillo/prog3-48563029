@@ -7,15 +7,14 @@
 package modelo;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
-import java.util.TreeSet;
-
 import modelo.Tablero;
 import modelo.d1.Coordenada1D;
 import modelo.d1.Tablero1D;
 import modelo.d2.Coordenada2D;
+import modelo.d2.TableroCeldasCuadradas;
 import modelo.excepciones.ExcepcionArgumentosIncorrectos;
+import modelo.excepciones.ExcepcionCoordenadaIncorrecta;
 import modelo.excepciones.ExcepcionEjecucion;
 import modelo.excepciones.ExcepcionPosicionFueraTablero;
 
@@ -67,22 +66,57 @@ public class Juego<TipoCoordenada extends Coordenada>
 	/**
 	 * Actualiza.
 	 */
+	@SuppressWarnings("unchecked")
 	public void actualiza()
 	{
-		TreeSet<TipoCoordenada> cds = new TreeSet<TipoCoordenada>((TreeSet<TipoCoordenada>) tablero.getPosiciones());
-		Iterator<TipoCoordenada> iterator = cds.iterator();
-
-		while (iterator.hasNext())
+		try
 		{
-			TipoCoordenada caux = iterator.next();
-			try
+			Tablero<TipoCoordenada> copiaTablero = null;
+			if(tablero instanceof Tablero1D)
 			{
-				tablero.setCelda(caux, regla.calculaSiguienteEstadoCelda(tablero, caux));
+				copiaTablero = (Tablero<TipoCoordenada>) 
+				new Tablero1D(((Coordenada1D) tablero.getDimensiones()).getX());
 			}
-			catch (ExcepcionPosicionFueraTablero e)
+			else if(tablero instanceof TableroCeldasCuadradas)
 			{
-				throw new ExcepcionEjecucion(e);
+				copiaTablero = (Tablero<TipoCoordenada>) 
+				new TableroCeldasCuadradas(((Coordenada2D) tablero.getDimensiones()).getX(), ((Coordenada2D) tablero.getDimensiones()).getY());
 			}
+			else
+				throw new ExcepcionEjecucion("se intento actualizar un tablero de tipo no valido");
+
+			Iterator<TipoCoordenada> iterator = tablero.getPosiciones().iterator();
+
+			while (iterator.hasNext())
+			{
+				TipoCoordenada caux = iterator.next();
+				if(caux instanceof Coordenada1D)
+				{
+					copiaTablero.setCelda((TipoCoordenada) new Coordenada1D((Coordenada1D) caux), tablero.getCelda(caux));
+				}
+				else if(caux instanceof Coordenada2D)
+				{
+					copiaTablero.setCelda((TipoCoordenada) new Coordenada2D((Coordenada2D) caux), tablero.getCelda(caux));
+				}
+				else
+					throw new ExcepcionEjecucion("el tablero a actualizar contenia coordenadas de tipo no valido (1D/2D)");
+			}
+
+			iterator = copiaTablero.getPosiciones().iterator();
+
+			while (iterator.hasNext())
+			{
+				TipoCoordenada caux = iterator.next();
+				tablero.setCelda(caux, regla.calculaSiguienteEstadoCelda(copiaTablero, caux));
+			}
+		}
+		catch (ExcepcionPosicionFueraTablero e)
+		{
+			throw new ExcepcionEjecucion(e);
+		}
+		catch (ExcepcionCoordenadaIncorrecta e)
+		{
+			throw new ExcepcionEjecucion(e);
 		}
 	}
 
