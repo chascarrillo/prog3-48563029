@@ -1,4 +1,4 @@
-48563029
+4
 
 # Prácticas de Programación 3: Juego de la vida de Conway
 **Alumno/a:** Alfonso Aracil Andrés
